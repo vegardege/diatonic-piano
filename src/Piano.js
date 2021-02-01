@@ -21,7 +21,9 @@ export function Piano(props) {
     return <g key={octaveNum}
        transform={`translate(${700 * octaveNum})`}>
       <Octave octaveNum={firstOctave + octaveNum}
-              strokeWidth={strokeWidth} />
+              strokeWidth={strokeWidth}
+              pressed={props.pressed}
+              highlighted={props.highlighted} />
     </g>
   })
 
@@ -41,6 +43,8 @@ Piano.propTypes = {
   width: PropTypes.string,
   height: PropTypes.string,
   octaves: PropTypes.number,
+  pressed: PropTypes.Array,
+  highlighted: PropTypes.Array,
 }
 
 Piano.defaultProps = {

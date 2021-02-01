@@ -13,7 +13,9 @@ export function Octave(props) {
                transform={`translate(${100 * ix})`}>
       <DiatonicKey note={note}
                    octaveNum={props.octaveNum}
-                   strokeWidth={props.strokeWidth} />
+                   strokeWidth={props.strokeWidth}
+                   isPressed={props.pressed.includes(note)}
+                   isHighlighted={props.highlighted.includes(note)} />
     </g>
   })
   const chromaticKeys = chromatic.map((note, ix) => {
@@ -21,11 +23,15 @@ export function Octave(props) {
     // Skip non-existing chromatic keys
     if (!note) return undefined
 
+    note = note + '#'
+
     return <g key={note}
               transform={`translate(${100 * ix + 75})`}>
       <ChromaticKey note={note}
                     octaveNum={props.octaveNum}
-                    strokeWidth={props.strokeWidth} />
+                    strokeWidth={props.strokeWidth}
+                    isPressed={props.pressed.includes(note)}
+                    isHighlighted={props.highlighted.includes(note)} />
     </g>
   })
 
@@ -41,4 +47,11 @@ export function Octave(props) {
 Octave.propTypes = {
   octaveNum: PropTypes.number.isRequired,
   strokeWidth: PropTypes.number.isRequired,
+  pressed: PropTypes.Array,
+  highlighted: PropTypes.Array,
+}
+
+Octave.defaultProps = {
+  pressed: [],
+  highlighted: [],
 }

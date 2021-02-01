@@ -4,17 +4,16 @@ import { Octave } from './Octave.js'
 
 export function Piano(props) {
 
-  // The SVG element fills its container unless otherwise specified
-  // Viewbox is set to 700x400 to give us round numbers in each octave
-  const viewBoxWidth = 700,
-        viewBoxHeight = 400
-
   // Center around octave number 4
-  const octaveCount = +props.octaves || 2,
+  const octaveCount = +props.octaves,
         firstOctave = 4 - Math.floor((octaveCount - 1) / 2)
 
+  // The SVG element fills its container unless otherwise specified
+  // Viewbox is set to 700x400 to give us round numbers in each octave
   // viewBox must add the stroke width to prevent clipping on edges
   const strokeWidth = 4,
+        viewBoxWidth = 700,
+        viewBoxHeight = 400,
         viewBox = `0 0 ${viewBoxWidth * octaveCount + strokeWidth}
                        ${viewBoxHeight + strokeWidth}`
 
@@ -27,7 +26,9 @@ export function Piano(props) {
   })
 
   return (
-    <svg className="diatonic-piano"
+    <svg xmlns="http://www.w3.org/2000/svg"
+         preserveAspectRatio="xMinYMin meet"
+         className="diatonic-piano"
          viewBox={viewBox}
          width={props.width}
          height={props.height}>

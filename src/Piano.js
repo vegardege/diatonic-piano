@@ -34,7 +34,10 @@ export function Piano(props) {
       <Octave octaveNum={firstOctave + octaveNum}
               pressed={pressed}
               highlighted={highlighted}
-              style={style} />
+              style={style}
+              onClick={props.onClick}
+              onMouseEnter={props.onMouseEnter}
+              onMouseLeave={props.onMouseLeave} />
     </g>
   })
 
@@ -57,12 +60,18 @@ Piano.propTypes = {
   pressed: PropTypes.any,
   highlighted: PropTypes.any,
   style: PropTypes.object,
+  onClick: PropTypes.func,
+  onMouseEnter: PropTypes.func,
+  onMouseLeave: PropTypes.func,
 }
 
 Piano.defaultProps = {
   width: '100%',
   height: '100%',
   octaves: 2,
+  onClick: () => undefined,
+  onMouseEnter: () => undefined,
+  onMouseLeave: () => undefined,
 }
 
 function ensureType(object, cls) {

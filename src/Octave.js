@@ -13,26 +13,47 @@ export function Octave(props) {
     n => n ? new Note(n, '#') : ''
   )
 
-  const diatonicKeys = diatonic.map((note, ix) => {
-    return <g key={note.toString()}
+  const isPressed = (pitch, pitchClass) => {
+    return props.pressed.includes(pitch, true)
+        || props.pressed.includes(pitchClass, true)
+  }
+
+  const isHighlighted = (pitch, pitchClass) => {
+    return props.highlighted.includes(pitch, true)
+        || props.highlighted.includes(pitchClass, true)
+  }
+
+  const diatonicKeys = diatonic.map((pitchClass, ix) => {
+
+    const pitch = pitchClass.toPitch(props.octaveNum)
+
+    return <g key={pitchClass.toString()}
                transform={`translate(${100 * ix})`}>
-      <DiatonicKey note={note}
+      <DiatonicKey note={pitch}
                    style={props.style}
-                   isPressed={props.pressed.includes(note, true)}
-                   isHighlighted={props.highlighted.includes(note, true)} />
+                   isPressed={isPressed(pitch, pitchClass)}
+                   isHighlighted={isHighlighted(pitch, pitchClass)}
+                   onClick={props.onClick}
+                   onMouseEnter={props.onMouseEnter}
+                   onMouseLeave={props.onMouseLeave} />
     </g>
   })
-  const chromaticKeys = chromatic.map((note, ix) => {
+  const chromaticKeys = chromatic.map((pitchClass, ix) => {
 
     // Skip non-existing chromatic keys
-    if (!note) return undefined
+    if (!pitchClass) return undefined
 
-    return <g key={note.toString()}
+    const pitch = pitchClass.toPitch(props.octaveNum)
+
+    return <g key={pitchClass.toString()}
               transform={`translate(${100 * ix + 75})`}>
-      <ChromaticKey note={note}
+      <ChromaticKey note={pitch}
                     style={props.style}
-                    isPressed={props.pressed.includes(note, true)}
-                    isHighlighted={props.highlighted.includes(note, true)} />
+                    isPressed={isPressed(pitch, pitchClass)}
+                    isHighlighted={isHighlighted(pitch, pitchClass)}
+                    onClick={props.onClick}
+                    onMouseEnter={props.onMouseEnter}
+                    onMouseLeave={props.onMouseLeave} />
     </g>
   })
 
@@ -51,6 +72,9 @@ Octave.propTypes = {
   pressed: PropTypes.object,
   highlighted: PropTypes.object,
   style: PropTypes.object,
+  onClick: PropTypes.func,
+  onMouseEnter: PropTypes.func,
+  onMouseLeave: PropTypes.func,
 }
 
 Octave.defaultProps = {

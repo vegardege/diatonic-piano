@@ -12,7 +12,10 @@ export function ChromaticKey(props) {
                d={`M0 0 l0 190 c0 0 0 10 10 10 l30 0 c0 0 10 0 10 -10 l0 -190 Z`}
                fill={color}
                stroke='#000'
-               strokeWidth={props.style.strokeWidth} />
+               strokeWidth={props.style.strokeWidth}
+               onClick={() => props.onClick(props.note.toString())}
+               onMouseEnter={() => props.onMouseEnter(props.note.toString())}
+               onMouseLeave={() => props.onMouseLeave(props.note.toString())} />
 }
 
 ChromaticKey.propTypes = {
@@ -20,4 +23,7 @@ ChromaticKey.propTypes = {
   isPressed: PropTypes.bool,
   isHighlighted: PropTypes.bool,
   style: PropTypes.object,
+  onClick: PropTypes.func,
+  onMouseEnter: PropTypes.func,
+  onMouseLeave: PropTypes.func,
 }

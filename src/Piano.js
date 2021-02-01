@@ -7,23 +7,29 @@ export function Piano(props) {
   // Center around octave number 4
   const octaveCount = +props.octaves,
         firstOctave = 4 - Math.floor((octaveCount - 1) / 2)
+  
+  // Style can be overwritten by the prop
+  const style = {
+    strokeWidth: props.style?.strokeWidth || 4,
+    pressedColor: props.style?.pressedColor || '#E84855',
+    highlightedColor: props.style?.highlightedColor || '#F2929A',
+  }
 
   // The SVG element fills its container unless otherwise specified
   // Viewbox is set to 700x400 to give us round numbers in each octave
   // viewBox must add the stroke width to prevent clipping on edges
-  const strokeWidth = 4,
-        viewBoxWidth = 700,
+  const viewBoxWidth = 700,
         viewBoxHeight = 400,
-        viewBox = `0 0 ${viewBoxWidth * octaveCount + strokeWidth}
-                       ${viewBoxHeight + strokeWidth}`
+        viewBox = `0 0 ${viewBoxWidth * octaveCount + style.strokeWidth}
+                       ${viewBoxHeight + style.strokeWidth}`
 
   const octaves = [...Array(octaveCount).keys()].map(octaveNum => {
     return <g key={octaveNum}
        transform={`translate(${700 * octaveNum})`}>
       <Octave octaveNum={firstOctave + octaveNum}
-              strokeWidth={strokeWidth}
               pressed={props.pressed}
-              highlighted={props.highlighted} />
+              highlighted={props.highlighted}
+              style={style} />
     </g>
   })
 
@@ -45,6 +51,7 @@ Piano.propTypes = {
   octaves: PropTypes.number,
   pressed: PropTypes.Array,
   highlighted: PropTypes.Array,
+  style: PropTypes.object,
 }
 
 Piano.defaultProps = {

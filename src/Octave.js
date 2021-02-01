@@ -12,8 +12,8 @@ export function Octave(props) {
     return <g key={note}
                transform={`translate(${100 * ix})`}>
       <DiatonicKey note={note}
+                   style={props.style}
                    octaveNum={props.octaveNum}
-                   strokeWidth={props.strokeWidth}
                    isPressed={props.pressed.includes(note)}
                    isHighlighted={props.highlighted.includes(note)} />
     </g>
@@ -28,8 +28,8 @@ export function Octave(props) {
     return <g key={note}
               transform={`translate(${100 * ix + 75})`}>
       <ChromaticKey note={note}
+                    style={props.style}
                     octaveNum={props.octaveNum}
-                    strokeWidth={props.strokeWidth}
                     isPressed={props.pressed.includes(note)}
                     isHighlighted={props.highlighted.includes(note)} />
     </g>
@@ -37,7 +37,8 @@ export function Octave(props) {
 
   return (
     <g className={`diatonic-octave-${props.octaveNum}`}
-       transform={`translate(${props.strokeWidth/2} ${props.strokeWidth/2})`}>
+       transform={`translate(${props.style.strokeWidth/2}
+                             ${props.style.strokeWidth/2})`}>
       {diatonicKeys}
       {chromaticKeys}
     </g>
@@ -46,9 +47,9 @@ export function Octave(props) {
 
 Octave.propTypes = {
   octaveNum: PropTypes.number.isRequired,
-  strokeWidth: PropTypes.number.isRequired,
   pressed: PropTypes.Array,
   highlighted: PropTypes.Array,
+  style: PropTypes.object,
 }
 
 Octave.defaultProps = {

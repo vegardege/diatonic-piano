@@ -1,13 +1,12 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Octave } from './Octave.js'
 
 export function Piano(props) {
 
   // The SVG element fills its container unless otherwise specified
   // Viewbox is set to 700x400 to give us round numbers in each octave
-  const width = props.width || '100%',
-        height = props.height || '100%',
-        viewBoxWidth = 700,
+  const viewBoxWidth = 700,
         viewBoxHeight = 400
 
   // Center around octave number 4
@@ -30,9 +29,21 @@ export function Piano(props) {
   return (
     <svg className="diatonic-piano"
          viewBox={viewBox}
-         width={width}
-         height={height}>
+         width={props.width}
+         height={props.height}>
            {octaves}
     </svg>
   )
+}
+
+Piano.propTypes = {
+  width: PropTypes.string,
+  height: PropTypes.string,
+  octaves: PropTypes.number,
+}
+
+Piano.defaultProps = {
+  width: '100%',
+  height: '100%',
+  octaves: 2,
 }

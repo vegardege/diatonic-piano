@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 export function ChromaticKey(props) {
   return <path className={`diatonic-key-${props.note}s
@@ -7,4 +8,10 @@ export function ChromaticKey(props) {
                fill='#000'
                stroke='#000'
                strokeWidth={props.strokeWidth} />
+}
+
+ChromaticKey.propTypes = {
+  note: PropTypes.string.isRequired,
+  octaveNum: PropTypes.number.isRequired,
+  strokeWidth: PropTypes.number.isRequired,
 }

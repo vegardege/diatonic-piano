@@ -8,11 +8,13 @@ export default [
       format: 'umd',
       name: 'diatonic-piano',
       globals: {
-        react: 'React'
+        'react': 'React',
+        'prop-types': 'PropTypes',
       }
     },
     external: [
-      'react'
+      'react',
+      'prop-types',
     ],
     plugins: [
       babel({babelHelpers: 'bundled'})

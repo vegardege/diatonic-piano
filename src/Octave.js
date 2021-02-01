@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { DiatonicKey } from './DiatonicKey.js'
 import { ChromaticKey } from './ChromaticKey.js'
 
@@ -35,4 +36,9 @@ export function Octave(props) {
       {chromaticKeys}
     </g>
   )
+}
+
+Octave.propTypes = {
+  octaveNum: PropTypes.number.isRequired,
+  strokeWidth: PropTypes.number.isRequired,
 }

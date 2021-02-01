@@ -7,8 +7,8 @@ export function DiatonicKey(props) {
               : props.isHighlighted ? props.style.highlightedColor
               : '#fff'
 
-  return <path className={`diatonic-key-${props.note}
-                           diatonic-key-${props.note}${props.octaveNum}`}
+  return <path className={`diatonic-key-${props.note.toString()}
+                           diatonic-key-${props.note.toPitchClass().toString()}`}
                d={`M0 0 l0 390 c0 0 0 10 10 10 l80 0 c0 0 10 0 10 -10 l0 -390 Z`}
                fill={color}
                stroke='#000'
@@ -16,8 +16,7 @@ export function DiatonicKey(props) {
 }
 
 DiatonicKey.propTypes = {
-  note: PropTypes.string.isRequired,
-  octaveNum: PropTypes.number.isRequired,
+  note: PropTypes.object.isRequired,
   isPressed: PropTypes.bool,
   isHighlighted: PropTypes.bool,
   style: PropTypes.object,

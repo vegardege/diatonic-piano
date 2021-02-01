@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { NoteList } from 'kamasi'
 import { Octave } from './Octave.js'
 
 export function Piano(props) {
@@ -23,12 +24,16 @@ export function Piano(props) {
         viewBox = `0 0 ${viewBoxWidth * octaveCount + style.strokeWidth}
                        ${viewBoxHeight + style.strokeWidth}`
 
+  // Create kamasi note lists to help us compare enharmonic notes
+  const pressed = ensureType(props.pressed, NoteList),
+        highlighted = ensureType(props.highlighted, NoteList)
+
   const octaves = [...Array(octaveCount).keys()].map(octaveNum => {
     return <g key={octaveNum}
        transform={`translate(${700 * octaveNum})`}>
       <Octave octaveNum={firstOctave + octaveNum}
-              pressed={props.pressed}
-              highlighted={props.highlighted}
+              pressed={pressed}
+              highlighted={highlighted}
               style={style} />
     </g>
   })
@@ -49,8 +54,8 @@ Piano.propTypes = {
   width: PropTypes.string,
   height: PropTypes.string,
   octaves: PropTypes.number,
-  pressed: PropTypes.Array,
-  highlighted: PropTypes.Array,
+  pressed: PropTypes.any,
+  highlighted: PropTypes.any,
   style: PropTypes.object,
 }
 
@@ -58,4 +63,9 @@ Piano.defaultProps = {
   width: '100%',
   height: '100%',
   octaves: 2,
+}
+
+function ensureType(object, cls) {
+  return object instanceof cls ? object
+                               : new cls(object)
 }

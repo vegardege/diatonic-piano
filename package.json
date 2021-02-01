@@ -32,6 +32,7 @@
     "react-dom": "^17.0.1"
   },
   "dependencies": {
+    "kamasi": "file:../kamasi",
     "prop-types": "^15.7.2"
   }
 }

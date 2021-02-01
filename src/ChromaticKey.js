@@ -7,8 +7,8 @@ export function ChromaticKey(props) {
               : props.isHighlighted ? props.style.highlightedColor
               : '#000'
 
-  return <path className={`diatonic-key-${props.note}s
-                           diatonic-key-${props.note}s${props.octaveNum}`}
+  return <path className={`diatonic-key-${props.note.toString().replace('#', 's')}
+                           diatonic-key-${props.note.toPitchClass().toString().replace('#', 's')}`}
                d={`M0 0 l0 190 c0 0 0 10 10 10 l30 0 c0 0 10 0 10 -10 l0 -190 Z`}
                fill={color}
                stroke='#000'
@@ -16,8 +16,7 @@ export function ChromaticKey(props) {
 }
 
 ChromaticKey.propTypes = {
-  note: PropTypes.string.isRequired,
-  octaveNum: PropTypes.number.isRequired,
+  note: PropTypes.object.isRequired,
   isPressed: PropTypes.bool,
   isHighlighted: PropTypes.bool,
   style: PropTypes.object,

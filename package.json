@@ -1,0 +1,34 @@
+{
+  "name": "diatonic-piano",
+  "version": "0.1.0",
+  "description": "Interactive SVG piano for React",
+  "author": "Vegard Egeland",
+  "license": "MIT",
+  "main": "dist/diatonic-piano.js",
+  "scripts": {
+    "build": "rollup -c",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vegardege/diatonic-piano.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vegardege/diatonic-piano/issues"
+  },
+  "homepage": "https://github.com/vegardege/diatonic-piano#readme",
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-react": "^7.12.10",
+    "@rollup/plugin-babel": "^5.2.3",
+    "eslint": "^7.19.0",
+    "eslint-plugin-react": "^7.22.0",
+    "rollup": "^2.38.3"
+  },
+  "peerDependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  }
+}

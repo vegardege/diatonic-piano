@@ -11,7 +11,8 @@ export function Key(props) {
         height = props.style.height,
         rx = Math.min(props.style.rx, props.style.width / 2)
 
-  return <path className={`diatonic-key-${props.note.toString().replace('#', 's')}
+  return <path className={`diatonic-key
+                           diatonic-key-${props.note.toString().replace('#', 's')}
                            diatonic-key-${props.note.toPitchClass().toString().replace('#', 's')}`}
                d={`M0 0
                    l0 ${height - rx}

@@ -2,27 +2,27 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { NoteList } from 'kamasi'
 import { Octave } from './Octave.js'
+import { THEMES } from './themes.js'
 
 export function Piano(props) {
+  
+  // Theme is overwritten by any style specified
+  const theme = THEMES[props.theme] || THEMES['default']
+  const style = {
+    diatonic: {...theme.diatonic, ...props?.style?.diatonic},
+    chromatic: {...theme.chromatic, ...props?.style?.chromatic},
+  }
 
   // Center around octave number 4
   const octaveCount = +props.octaves,
         firstOctave = 4 - Math.floor((octaveCount - 1) / 2)
-  
-  // Style can be overwritten by the prop
-  const style = {
-    strokeWidth: props.style?.strokeWidth || 4,
-    pressedColor: props.style?.pressedColor || '#E84855',
-    highlightedColor: props.style?.highlightedColor || '#F2929A',
-  }
 
   // The SVG element fills its container unless otherwise specified
-  // Viewbox is set to 700x400 to give us round numbers in each octave
-  // viewBox must add the stroke width to prevent clipping on edges
-  const viewBoxWidth = 700,
-        viewBoxHeight = 400,
-        viewBox = `0 0 ${viewBoxWidth * octaveCount + style.strokeWidth}
-                       ${viewBoxHeight + style.strokeWidth}`
+  // ViewBox must add the stroke width to prevent clipping on edges
+  const viewBoxWidth = 7 * octaveCount * style.diatonic.width,
+        viewBoxHeight = style.diatonic.height,
+        viewBox = `0 0 ${viewBoxWidth + style.diatonic.strokeWidth}
+                       ${viewBoxHeight + style.diatonic.strokeWidth}`
 
   // Create kamasi note lists to help us compare enharmonic notes
   const pressed = ensureType(props.pressed, NoteList),
@@ -30,7 +30,7 @@ export function Piano(props) {
 
   const octaves = [...Array(octaveCount).keys()].map(octaveNum => {
     return <g key={octaveNum}
-       transform={`translate(${700 * octaveNum})`}>
+       transform={`translate(${7 * style.diatonic.width * octaveNum})`}>
       <Octave octaveNum={firstOctave + octaveNum}
               pressed={pressed}
               highlighted={highlighted}
@@ -60,6 +60,7 @@ Piano.propTypes = {
   pressed: PropTypes.any,
   highlighted: PropTypes.any,
   style: PropTypes.object,
+  theme: PropTypes.string,
   onClick: PropTypes.func,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,
@@ -69,6 +70,7 @@ Piano.defaultProps = {
   width: '100%',
   height: '100%',
   octaves: 2,
+  theme: 'default',
   onClick: () => undefined,
   onMouseEnter: () => undefined,
   onMouseLeave: () => undefined,

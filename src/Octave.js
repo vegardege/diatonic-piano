@@ -26,11 +26,12 @@ export function Octave(props) {
   const diatonicKeys = diatonic.map((pitchClass, ix) => {
 
     const pitch = pitchClass.toPitch(props.octaveNum)
+    const offset = props.style.diatonic.width * ix
 
     return <g key={pitchClass.toString()}
-               transform={`translate(${100 * ix})`}>
+               transform={`translate(${offset})`}>
       <DiatonicKey note={pitch}
-                   style={props.style}
+                   style={props.style.diatonic}
                    isPressed={isPressed(pitch, pitchClass)}
                    isHighlighted={isHighlighted(pitch, pitchClass)}
                    onClick={props.onClick}
@@ -44,11 +45,13 @@ export function Octave(props) {
     if (!pitchClass) return undefined
 
     const pitch = pitchClass.toPitch(props.octaveNum)
+    const offset = (props.style.diatonic.width * (ix + 1)
+                  - props.style.chromatic.width / 2)
 
     return <g key={pitchClass.toString()}
-              transform={`translate(${100 * ix + 75})`}>
+              transform={`translate(${offset})`}>
       <ChromaticKey note={pitch}
-                    style={props.style}
+                    style={props.style.chromatic}
                     isPressed={isPressed(pitch, pitchClass)}
                     isHighlighted={isHighlighted(pitch, pitchClass)}
                     onClick={props.onClick}
@@ -59,8 +62,8 @@ export function Octave(props) {
 
   return (
     <g className={`diatonic-octave-${props.octaveNum}`}
-       transform={`translate(${props.style.strokeWidth/2}
-                             ${props.style.strokeWidth/2})`}>
+       transform={`translate(${props.style.diatonic.strokeWidth/2}
+                             ${props.style.diatonic.strokeWidth/2})`}>
       {diatonicKeys}
       {chromaticKeys}
     </g>

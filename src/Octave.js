@@ -1,8 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Note } from 'kamasi'
-import { DiatonicKey } from './DiatonicKey.js'
-import { ChromaticKey } from './ChromaticKey.js'
+import { Key } from './Key.js'
 
 export function Octave(props) {
 
@@ -30,13 +29,14 @@ export function Octave(props) {
 
     return <g key={pitchClass.toString()}
                transform={`translate(${offset})`}>
-      <DiatonicKey note={pitch}
-                   style={props.style.diatonic}
-                   isPressed={isPressed(pitch, pitchClass)}
-                   isHighlighted={isHighlighted(pitch, pitchClass)}
-                   onClick={props.onClick}
-                   onMouseEnter={props.onMouseEnter}
-                   onMouseLeave={props.onMouseLeave} />
+      <Key note={pitch}
+           style={props.style.diatonic}
+           isPressed={isPressed(pitch, pitchClass)}
+           isHighlighted={isHighlighted(pitch, pitchClass)}
+           onClick={props.onClick}
+           onMouseEnter={props.onMouseEnter}
+           onMouseLeave={props.onMouseLeave}
+      />
     </g>
   })
   const chromaticKeys = chromatic.map((pitchClass, ix) => {
@@ -50,13 +50,14 @@ export function Octave(props) {
 
     return <g key={pitchClass.toString()}
               transform={`translate(${offset})`}>
-      <ChromaticKey note={pitch}
-                    style={props.style.chromatic}
-                    isPressed={isPressed(pitch, pitchClass)}
-                    isHighlighted={isHighlighted(pitch, pitchClass)}
-                    onClick={props.onClick}
-                    onMouseEnter={props.onMouseEnter}
-                    onMouseLeave={props.onMouseLeave} />
+      <Key note={pitch}
+           style={props.style.chromatic}
+           isPressed={isPressed(pitch, pitchClass)}
+           isHighlighted={isHighlighted(pitch, pitchClass)}
+           onClick={props.onClick}
+           onMouseEnter={props.onMouseEnter}
+           onMouseLeave={props.onMouseLeave}
+      />
     </g>
   })
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export function DiatonicKey(props) {
+export function Key(props) {
 
   const color = props.isPressed ? props.style.pressed
               : props.isHighlighted ? props.style.highlighted
@@ -11,8 +11,8 @@ export function DiatonicKey(props) {
         height = props.style.height,
         rx = Math.min(props.style.rx, props.style.width / 2)
 
-  return <path className={`diatonic-key-${props.note.toString()}
-                           diatonic-key-${props.note.toPitchClass().toString()}`}
+  return <path className={`diatonic-key-${props.note.toString().replace('#', 's')}
+                           diatonic-key-${props.note.toPitchClass().toString().replace('#', 's')}`}
                d={`M0 0
                    l0 ${height - rx}
                    c0 0 0 ${rx} ${rx} ${rx}
@@ -28,7 +28,7 @@ export function DiatonicKey(props) {
                onMouseLeave={() => props.onMouseLeave(props.note.toString())} />
 }
 
-DiatonicKey.propTypes = {
+Key.propTypes = {
   note: PropTypes.object.isRequired,
   isPressed: PropTypes.bool,
   isHighlighted: PropTypes.bool,

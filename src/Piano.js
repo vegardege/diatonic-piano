@@ -79,6 +79,7 @@ Piano.defaultProps = {
 }
 
 function ensureType(object, cls) {
-  return typeof object === "string" ? new cls(object)
-                                    : object
+  return object instanceof Array ? new cls(object)
+       : typeof object === "string" ? cls.fromString(object)
+       : object
 }

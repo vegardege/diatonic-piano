@@ -71,12 +71,14 @@ Piano.defaultProps = {
   height: '100%',
   octaves: 2,
   theme: 'default',
+  pressed: [],
+  highlighted: [],
   onClick: () => undefined,
   onMouseEnter: () => undefined,
   onMouseLeave: () => undefined,
 }
 
 function ensureType(object, cls) {
-  return object instanceof cls ? object
-                               : new cls(object)
+  return typeof object === "string" ? new cls(object)
+                                    : object
 }

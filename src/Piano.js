@@ -5,7 +5,7 @@ import { Octave } from './Octave.js'
 import { THEMES } from './themes.js'
 
 export function Piano(props) {
-  
+
   // Theme is overwritten by any style specified
   const theme = THEMES[props.theme] || THEMES['default']
   const style = {
@@ -43,7 +43,7 @@ export function Piano(props) {
 
   return (
     <svg xmlns="http://www.w3.org/2000/svg"
-         preserveAspectRatio="xMinYMin meet"
+         preserveAspectRatio={props.preserveAspectRatio}
          className="diatonic-piano"
          viewBox={viewBox}
          width={props.width}
@@ -54,6 +54,7 @@ export function Piano(props) {
 }
 
 Piano.propTypes = {
+  preserveAspectRatio: PropTypes.string,
   width: PropTypes.string,
   height: PropTypes.string,
   octaves: PropTypes.number,
@@ -67,6 +68,7 @@ Piano.propTypes = {
 }
 
 Piano.defaultProps = {
+  preserveAspectRatio: 'xMinYMin meet',
   width: '100%',
   height: '100%',
   octaves: 2,

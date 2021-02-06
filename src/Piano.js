@@ -1,10 +1,31 @@
 import React from 'react'
+import { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { NoteList } from 'kamasi'
 import { Octave } from './Octave.js'
 import { THEMES } from './themes.js'
 
 export function Piano(props) {
+
+  if (props.keyboardShortcuts) {
+    useEffect(() => {
+      document.addEventListener('keydown', handleKeyDown)
+
+      return () => {
+        document.removeEventListener('keydown', handleKeyDown)
+      }
+    })
+  }
+
+  function handleKeyDown(e) {
+    const note = {
+      65: 'C4', 87: 'C#4', 83: 'D4', 69: 'D#4', 68: 'E4', 70: 'F4',
+      84: 'F#4', 71: 'G4', 89: 'G#4', 72: 'A4', 85: 'A#4', 74: 'B4',
+    }[e.keyCode]
+    if (note !== undefined) {
+      props.onClick(note)
+    }
+  }
 
   // Theme is overwritten by any style specified
   const theme = THEMES[props.theme] || THEMES['default']
@@ -62,6 +83,7 @@ Piano.propTypes = {
   highlighted: PropTypes.any,
   style: PropTypes.object,
   theme: PropTypes.string,
+  keyboardShortcuts: PropTypes.bool,
   onClick: PropTypes.func,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,
@@ -75,6 +97,7 @@ Piano.defaultProps = {
   theme: 'default',
   pressed: [],
   highlighted: [],
+  keyboardShortcuts: false,
   onClick: () => undefined,
   onMouseEnter: () => undefined,
   onMouseLeave: () => undefined,

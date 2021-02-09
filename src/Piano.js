@@ -1,5 +1,5 @@
 import React from 'react'
-import { useEffect } from 'react'
+import { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { NoteList } from 'kamasi'
 import { Octave } from './Octave.js'
@@ -66,9 +66,13 @@ export function Piano(props) {
     <svg xmlns="http://www.w3.org/2000/svg"
          preserveAspectRatio={props.preserveAspectRatio}
          className="diatonic-piano"
+         role="img"
+         aria-label={`Piano: ${pressed.toString()}`}
          viewBox={viewBox}
          width={props.width}
          height={props.height}>
+           <title>Piano</title>
+           <desc>Pressed keys: {pressed.toString()}</desc>
            {octaves}
     </svg>
   )

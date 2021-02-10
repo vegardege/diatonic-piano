@@ -5,11 +5,9 @@ import { Key } from './Key.js'
 
 export function Octave(props) {
 
-  const diatonic = ['C', 'D', 'E', 'F', 'G', 'A', 'B'].map(
-    n => new Note(n)
-  )
-  const chromatic = ['C', 'D', '', 'F', 'G', 'A', ''].map(
-    n => n ? new Note(n, '#') : ''
+  const notes = ['C', 'D', 'E', 'F', 'G', 'A', 'B',
+                 'C#', 'D#', 'F#', 'G#', 'A#'].map(
+    n => new Note(n[0], n[1])
   )
 
   const isPressed = (pitch, pitchClass) => {
@@ -22,15 +20,21 @@ export function Octave(props) {
         || props.highlighted.includes(pitchClass, true)
   }
 
-  const diatonicKeys = diatonic.map((pitchClass, ix) => {
+  const keys = notes.map(pitchClass => {
 
     const pitch = pitchClass.toPitch(props.octaveNum)
-    const offset = props.style.diatonic.width * ix
+
+    const isChromatic = pitchClass.accidentals.length > 0
+    const diatonicPos = props.style.diatonic.width * pitchClass.diatonicOffset
+    const chromatcPos = isChromatic ?
+      props.style.diatonic.width - (props.style.chromatic.width / 2) : 0
+
+    const style = isChromatic ? props.style.chromatic : props.style.diatonic
 
     return <g key={pitchClass.toString()}
-               transform={`translate(${offset})`}>
+               transform={`translate(${diatonicPos + chromatcPos})`}>
       <Key note={pitch}
-           style={props.style.diatonic}
+           style={style}
            focusable={props.focusable}
            isPressed={isPressed(pitch, pitchClass)}
            isHighlighted={isHighlighted(pitch, pitchClass)}
@@ -41,38 +45,14 @@ export function Octave(props) {
            onBlur={props.onBlur}
       />
     </g>
-  })
-  const chromaticKeys = chromatic.map((pitchClass, ix) => {
 
-    // Skip non-existing chromatic keys
-    if (!pitchClass) return undefined
-
-    const pitch = pitchClass.toPitch(props.octaveNum)
-    const offset = (props.style.diatonic.width * (ix + 1)
-                  - props.style.chromatic.width / 2)
-
-    return <g key={pitchClass.toString()}
-              transform={`translate(${offset})`}>
-      <Key note={pitch}
-           style={props.style.chromatic}
-           focusable={props.focusable}
-           isPressed={isPressed(pitch, pitchClass)}
-           isHighlighted={isHighlighted(pitch, pitchClass)}
-           onClick={props.onClick}
-           onMouseEnter={props.onMouseEnter}
-           onMouseLeave={props.onMouseLeave}
-           onFocus={props.onFocus}
-           onBlur={props.onBlur}
-      />
-    </g>
   })
 
   return (
     <g className={`diatonic-octave-${props.octaveNum}`}
        transform={`translate(${props.style.diatonic.strokeWidth/2}
                              ${props.style.diatonic.strokeWidth/2})`}>
-      {diatonicKeys}
-      {chromaticKeys}
+      {keys}
     </g>
   )
 }

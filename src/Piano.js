@@ -59,7 +59,10 @@ export function Piano(props) {
               focusable={props.focusable}
               onClick={props.onClick}
               onMouseEnter={props.onMouseEnter}
-              onMouseLeave={props.onMouseLeave} />
+              onMouseLeave={props.onMouseLeave}
+              onFocus={props.onFocus}
+              onBlur={props.onBlur}
+      />
     </g>
   })
 
@@ -93,6 +96,8 @@ Piano.propTypes = {
   onClick: PropTypes.func,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
 }
 
 Piano.defaultProps = {
@@ -108,6 +113,8 @@ Piano.defaultProps = {
   onClick: () => undefined,
   onMouseEnter: () => undefined,
   onMouseLeave: () => undefined,
+  onFocus: () => undefined,
+  onBlur: () => undefined,
 }
 
 function ensureType(object, cls) {

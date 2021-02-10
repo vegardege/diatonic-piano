@@ -30,7 +30,10 @@ export function Key(props) {
                } : undefined}
                onClick={() => props.onClick(props.note.toString())}
                onMouseEnter={() => props.onMouseEnter(props.note.toString())}
-               onMouseLeave={() => props.onMouseLeave(props.note.toString())} />
+               onMouseLeave={() => props.onMouseLeave(props.note.toString())}
+               onFocus={() => props.onFocus(props.note.toString())}
+               onBlur={() => props.onBlur(props.note.toString())}
+          />
 }
 
 Key.propTypes = {
@@ -42,4 +45,6 @@ Key.propTypes = {
   onClick: PropTypes.func,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
 }

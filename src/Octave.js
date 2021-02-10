@@ -37,6 +37,8 @@ export function Octave(props) {
            onClick={props.onClick}
            onMouseEnter={props.onMouseEnter}
            onMouseLeave={props.onMouseLeave}
+           onFocus={props.onFocus}
+           onBlur={props.onBlur}
       />
     </g>
   })
@@ -59,6 +61,8 @@ export function Octave(props) {
            onClick={props.onClick}
            onMouseEnter={props.onMouseEnter}
            onMouseLeave={props.onMouseLeave}
+           onFocus={props.onFocus}
+           onBlur={props.onBlur}
       />
     </g>
   })
@@ -82,6 +86,8 @@ Octave.propTypes = {
   onClick: PropTypes.func,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
 }
 
 Octave.defaultProps = {

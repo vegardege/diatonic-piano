@@ -31,6 +31,7 @@ export function Octave(props) {
                transform={`translate(${offset})`}>
       <Key note={pitch}
            style={props.style.diatonic}
+           focusable={props.focusable}
            isPressed={isPressed(pitch, pitchClass)}
            isHighlighted={isHighlighted(pitch, pitchClass)}
            onClick={props.onClick}
@@ -52,6 +53,7 @@ export function Octave(props) {
               transform={`translate(${offset})`}>
       <Key note={pitch}
            style={props.style.chromatic}
+           focusable={props.focusable}
            isPressed={isPressed(pitch, pitchClass)}
            isHighlighted={isHighlighted(pitch, pitchClass)}
            onClick={props.onClick}
@@ -76,6 +78,7 @@ Octave.propTypes = {
   pressed: PropTypes.object,
   highlighted: PropTypes.object,
   style: PropTypes.object,
+  focusable: PropTypes.bool,
   onClick: PropTypes.func,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,

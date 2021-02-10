@@ -56,6 +56,7 @@ export function Piano(props) {
               pressed={pressed}
               highlighted={highlighted}
               style={style}
+              focusable={props.focusable}
               onClick={props.onClick}
               onMouseEnter={props.onMouseEnter}
               onMouseLeave={props.onMouseLeave} />
@@ -88,6 +89,7 @@ Piano.propTypes = {
   style: PropTypes.object,
   theme: PropTypes.string,
   keyboardShortcuts: PropTypes.bool,
+  focusable: PropTypes.bool,
   onClick: PropTypes.func,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,
@@ -102,6 +104,7 @@ Piano.defaultProps = {
   pressed: [],
   highlighted: [],
   keyboardShortcuts: false,
+  focusable: false,
   onClick: () => undefined,
   onMouseEnter: () => undefined,
   onMouseLeave: () => undefined,

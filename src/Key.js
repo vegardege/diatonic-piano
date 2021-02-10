@@ -24,6 +24,10 @@ export function Key(props) {
                fill={color}
                stroke={props.style.stroke}
                strokeWidth={props.style.strokeWidth}
+               tabIndex={props.focusable ? "0" : "-1"}
+               onKeyPress={props.focusable ? e => {
+                 e.key === 'Enter' ? props.onClick(props.note.toString()) : undefined
+               } : undefined}
                onClick={() => props.onClick(props.note.toString())}
                onMouseEnter={() => props.onMouseEnter(props.note.toString())}
                onMouseLeave={() => props.onMouseLeave(props.note.toString())} />
@@ -34,6 +38,7 @@ Key.propTypes = {
   isPressed: PropTypes.bool,
   isHighlighted: PropTypes.bool,
   style: PropTypes.object,
+  focusable: PropTypes.bool,
   onClick: PropTypes.func,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,

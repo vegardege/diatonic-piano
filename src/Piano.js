@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { NoteList } from 'kamasi'
+import { Note, NoteList } from 'kamasi'
 import { Octave } from './Octave.js'
 import { THEMES } from './themes.js'
 
@@ -18,12 +18,15 @@ export function Piano(props) {
   }
 
   function handleKeyDown(e) {
-    const note = {
-      65: 'C4', 87: 'C#4', 83: 'D4', 69: 'D#4', 68: 'E4', 70: 'F4',
-      84: 'F#4', 71: 'G4', 89: 'G#4', 72: 'A4', 85: 'A#4', 74: 'B4',
-    }[e.keyCode]
-    if (note !== undefined) {
-      props.onClick(note)
+    const noteMap = {
+      81: 'C3', 87: 'D3', 69: 'E3', 82: 'F3', 84: 'G3', 89: 'A3', 85: 'B3',
+      65: 'C4', 83: 'D4', 68: 'E4', 70: 'F4', 71: 'G4', 72: 'A4', 74: 'B4',
+      90: 'C5', 88: 'D5', 67: 'E5', 86: 'F5', 66: 'G5', 78: 'A5', 77: 'B5',
+    }
+    if (noteMap[e.keyCode] !== undefined) {
+      const note = Note.fromString(noteMap[e.keyCode])
+      props.onClick(e.shiftKey ? note.transpose('m2').simplify().toString()
+                               : note.toString())
     }
   }
 

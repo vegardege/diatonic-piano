@@ -5,8 +5,16 @@ import { Note, NoteList } from 'kamasi'
 import { Octave } from './Octave.js'
 import { THEMES } from './themes.js'
 
+/**
+ * A piano is a sequence of octaves, which in terms is a sequence of keys.
+ * 
+ * This component draws the piano as an <svg> element. It also adds keyboard
+ * shortcuts, mouse, and focus events.
+ */
 export function Piano(props) {
 
+  // If configured, map keyboard to notes. The shift key will transpose the 
+  // note up one semitone, allowing you to play black keys.
   if (props.keyboardShortcuts) {
     useEffect(() => {
       document.addEventListener('keydown', handleKeyDown)
@@ -89,13 +97,18 @@ Piano.propTypes = {
   preserveAspectRatio: PropTypes.string,
   width: PropTypes.string,
   height: PropTypes.string,
+
   octaves: PropTypes.number,
+
   pressed: PropTypes.any,
   highlighted: PropTypes.any,
+
   style: PropTypes.object,
   theme: PropTypes.string,
+
   keyboardShortcuts: PropTypes.bool,
   focusable: PropTypes.bool,
+
   onClick: PropTypes.func,
   onMouseEnter: PropTypes.func,
   onMouseLeave: PropTypes.func,

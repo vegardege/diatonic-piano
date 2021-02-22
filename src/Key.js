@@ -1,6 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+/**
+ * A key is either a white key (diatonic) or a black key (chromatic).
+ * 
+ * It is uniquely definied by a note, which contains the note letter,
+ * accidentals, and an octave number.
+ * 
+ * This component draws the key as an SVG <path> element.
+ */
 export function Key(props) {
 
   const color = props.isPressed ? props.style.pressed
@@ -38,13 +46,17 @@ export function Key(props) {
 
 Key.propTypes = {
   note: PropTypes.object.isRequired,
-  isPressed: PropTypes.bool,
-  isHighlighted: PropTypes.bool,
-  style: PropTypes.object,
-  focusable: PropTypes.bool,
-  onClick: PropTypes.func,
-  onMouseEnter: PropTypes.func,
-  onMouseLeave: PropTypes.func,
-  onFocus: PropTypes.func,
-  onBlur: PropTypes.func,
+
+  isPressed: PropTypes.bool.isRequired,
+  isHighlighted: PropTypes.bool.isRequired,
+
+  style: PropTypes.object.isRequired,
+
+  focusable: PropTypes.bool.isRequired,
+
+  onClick: PropTypes.func.isRequired,
+  onMouseEnter: PropTypes.func.isRequired,
+  onMouseLeave: PropTypes.func.isRequired,
+  onFocus: PropTypes.func.isRequired,
+  onBlur: PropTypes.func.isRequired,
 }

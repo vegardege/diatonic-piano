@@ -3,6 +3,15 @@ import PropTypes from 'prop-types'
 import { Note } from 'kamasi'
 import { Key } from './Key.js'
 
+/**
+ * An octave is a collection of seven white keys (diatonic notes) and five
+ * black keys (chromatic notes).
+ * 
+ * It is uniquely definied by an octave number, which in turn defines the
+ * frequencies produced by each key.
+ * 
+ * This component draws an octave as an SVG <g> element.
+ */
 export function Octave(props) {
 
   const notes = ['C', 'D', 'E', 'F', 'G', 'A', 'B',
@@ -50,8 +59,8 @@ export function Octave(props) {
 
   return (
     <g className={`diatonic-octave-${props.octaveNum}`}
-       transform={`translate(${props.style.diatonic.strokeWidth/2}
-                             ${props.style.diatonic.strokeWidth/2})`}>
+       transform={`translate(${props.style.diatonic.strokeWidth / 2}
+                             ${props.style.diatonic.strokeWidth / 2})`}>
       {keys}
     </g>
   )
@@ -59,15 +68,19 @@ export function Octave(props) {
 
 Octave.propTypes = {
   octaveNum: PropTypes.number.isRequired,
+
   pressed: PropTypes.object,
   highlighted: PropTypes.object,
-  style: PropTypes.object,
-  focusable: PropTypes.bool,
-  onClick: PropTypes.func,
-  onMouseEnter: PropTypes.func,
-  onMouseLeave: PropTypes.func,
-  onFocus: PropTypes.func,
-  onBlur: PropTypes.func,
+
+  style: PropTypes.object.isRequired,
+
+  focusable: PropTypes.bool.isRequired,
+
+  onClick: PropTypes.func.isRequired,
+  onMouseEnter: PropTypes.func.isRequired,
+  onMouseLeave: PropTypes.func.isRequired,
+  onFocus: PropTypes.func.isRequired,
+  onBlur: PropTypes.func.isRequired,
 }
 
 Octave.defaultProps = {

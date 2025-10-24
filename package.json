@@ -8,7 +8,11 @@
   "scripts": {
     "build": "rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint src"
+    "check": "biome check .",
+    "check:fix": "biome check . --write",
+    "format": "biome format .",
+    "format:fix": "biome format . --write",
+    "lint": "biome lint ."
   },
   "repository": {
     "type": "git",
@@ -22,9 +26,8 @@
     "@babel/core": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.12.10",
+    "@biomejs/biome": "^2.3.0",
     "@rollup/plugin-babel": "^5.2.3",
-    "eslint": "^7.19.0",
-    "eslint-plugin-react": "^7.22.0",
     "rollup": "^2.38.3"
   },
   "peerDependencies": {

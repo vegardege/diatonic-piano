@@ -1,4 +1,21 @@
-import PropTypes from 'prop-types'
+import type { Note } from 'kamasi'
+import type { KeyStyle } from './themes.js'
+
+/**
+ * Props for the Key component.
+ */
+export interface KeyProps {
+  note: Note
+  isPressed: boolean
+  isHighlighted: boolean
+  style: KeyStyle
+  focusable: boolean
+  onClick: (note: string) => void
+  onMouseEnter: (note: string) => void
+  onMouseLeave: (note: string) => void
+  onFocus: (note: string) => void
+  onBlur: (note: string) => void
+}
 
 /**
  * A key is either a white key (diatonic) or a black key (chromatic).
@@ -8,7 +25,7 @@ import PropTypes from 'prop-types'
  *
  * This component draws the key as an SVG <path> element.
  */
-export function Key(props) {
+export function Key(props: KeyProps) {
   const color = props.isPressed
     ? props.style.pressed
     : props.isHighlighted
@@ -35,7 +52,7 @@ export function Key(props) {
       fill={color}
       stroke={props.style.stroke}
       strokeWidth={props.style.strokeWidth}
-      tabIndex={props.focusable ? '0' : '-1'}
+      tabIndex={props.focusable ? 0 : -1}
       onKeyPress={
         props.focusable
           ? e => {
@@ -52,21 +69,4 @@ export function Key(props) {
       onBlur={() => props.onBlur(props.note.toString())}
     />
   )
-}
-
-Key.propTypes = {
-  note: PropTypes.object.isRequired,
-
-  isPressed: PropTypes.bool.isRequired,
-  isHighlighted: PropTypes.bool.isRequired,
-
-  style: PropTypes.object.isRequired,
-
-  focusable: PropTypes.bool.isRequired,
-
-  onClick: PropTypes.func.isRequired,
-  onMouseEnter: PropTypes.func.isRequired,
-  onMouseLeave: PropTypes.func.isRequired,
-  onFocus: PropTypes.func.isRequired,
-  onBlur: PropTypes.func.isRequired,
 }

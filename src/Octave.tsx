@@ -1,6 +1,22 @@
-import { Note } from 'kamasi'
-import PropTypes from 'prop-types'
+import { Note, type NoteList } from 'kamasi'
 import { Key } from './Key.js'
+import type { Theme } from './themes.js'
+
+/**
+ * Props for the Octave component.
+ */
+export interface OctaveProps {
+  octaveNum: number
+  pressed: NoteList
+  highlighted: NoteList
+  style: Theme
+  focusable: boolean
+  onClick: (note: string) => void
+  onMouseEnter: (note: string) => void
+  onMouseLeave: (note: string) => void
+  onFocus: (note: string) => void
+  onBlur: (note: string) => void
+}
 
 /**
  * An octave is a collection of seven white keys (diatonic notes) and five
@@ -11,7 +27,7 @@ import { Key } from './Key.js'
  *
  * This component draws an octave as an SVG <g> element.
  */
-export function Octave(props) {
+export function Octave(props: OctaveProps) {
   const notes = [
     'C',
     'D',
@@ -25,16 +41,16 @@ export function Octave(props) {
     'F#',
     'G#',
     'A#',
-  ].map(n => new Note(n[0], n[1]))
+  ].map(n => new Note(n[0] as string, n[1] || ''))
 
-  const isPressed = (pitch, pitchClass) => {
+  const isPressed = (pitch: Note, pitchClass: Note) => {
     return (
       props.pressed.includes(pitch, true) ||
       props.pressed.includes(pitchClass, true)
     )
   }
 
-  const isHighlighted = (pitch, pitchClass) => {
+  const isHighlighted = (pitch: Note, pitchClass: Note) => {
     return (
       props.highlighted.includes(pitch, true) ||
       props.highlighted.includes(pitchClass, true)
@@ -82,26 +98,4 @@ export function Octave(props) {
       {keys}
     </g>
   )
-}
-
-Octave.propTypes = {
-  octaveNum: PropTypes.number.isRequired,
-
-  pressed: PropTypes.object,
-  highlighted: PropTypes.object,
-
-  style: PropTypes.object.isRequired,
-
-  focusable: PropTypes.bool.isRequired,
-
-  onClick: PropTypes.func.isRequired,
-  onMouseEnter: PropTypes.func.isRequired,
-  onMouseLeave: PropTypes.func.isRequired,
-  onFocus: PropTypes.func.isRequired,
-  onBlur: PropTypes.func.isRequired,
-}
-
-Octave.defaultProps = {
-  pressed: [],
-  highlighted: [],
 }

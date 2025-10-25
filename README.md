@@ -78,13 +78,13 @@ A pitch can be any letter from A–G. Sharps are replaced with _s_, e.g. C#4 wou
 Below is an example of how you could use CSS to style a piano:
 
 ```css
-#rainbow .diatonic-key { stroke: #999; stroke-width: 2 }
-#rainbow .diatonic-key-G4 { fill: #F898A4 }
-#rainbow .diatonic-key-A4 { fill: #FCDA9C }
-#rainbow .diatonic-key-B4 { fill: #F7FAA1 }
-#rainbow .diatonic-key-C5 { fill: #B4F6A4 }
-#rainbow .diatonic-key-D5 { fill: #9BE0F1 }
-#rainbow .diatonic-key-E5 { fill: #A2ACEB }
+#rainbow .diatonic-piano-key { stroke: #999; stroke-width: 2 }
+#rainbow .diatonic-piano-key-G4 { fill: #F898A4 }
+#rainbow .diatonic-piano-key-A4 { fill: #FCDA9C }
+#rainbow .diatonic-piano-key-B4 { fill: #F7FAA1 }
+#rainbow .diatonic-piano-key-C5 { fill: #B4F6A4 }
+#rainbow .diatonic-piano-key-D5 { fill: #9BE0F1 }
+#rainbow .diatonic-piano-key-E5 { fill: #A2ACEB }
 ````
 
 ```js
@@ -225,4 +225,4 @@ The `focusable` allows the user to traverse through the keys using \<tab\>, and 
 
 Different browsers apply different styles to focused elements, but they tend not to work well with an \<SVG\> path element. As a result, it's encouraged to apply custom CSS.
 
-Use `.diatonic-key:focus` or `.diatonic-key:focus-visible` to style the keys (e.g. set `fill` and `outline`). Note that the implementation of these vary between browsers.
+Use `.diatonic-piano-key:focus` or `.diatonic-piano-key:focus-visible` to style the keys (e.g. set `fill` and `outline`). Note that the implementation of these vary between browsers.

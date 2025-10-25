@@ -1,4 +1,4 @@
-import babel from '@rollup/plugin-babel';
+import babel from '@rollup/plugin-babel'
 
 export default [
   {
@@ -8,16 +8,11 @@ export default [
       format: 'umd',
       name: 'diatonic-piano',
       globals: {
-        'react': 'React',
+        react: 'React',
         'prop-types': 'PropTypes',
-      }
+      },
     },
-    external: [
-      'react',
-      'prop-types',
-    ],
-    plugins: [
-      babel({babelHelpers: 'bundled'})
-    ]
-  }
+    external: ['react', 'prop-types'],
+    plugins: [babel({ babelHelpers: 'bundled' })],
+  },
 ]

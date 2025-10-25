@@ -3,7 +3,7 @@
  * will be overriden by anything in the `style` prop.
  */
 export const THEMES = {
-  'default': {
+  default: {
     diatonic: {
       fill: '#fff',
       pressed: '#E84855',

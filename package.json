@@ -43,8 +43,8 @@
   },
   "homepage": "https://github.com/vegardege/diatonic-piano#readme",
   "peerDependencies": {
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react": "^17.0.0 || ^18.0.0 || ^19.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0 || ^19.0.0"
   },
   "dependencies": {
     "kamasi": "^0.3.0"

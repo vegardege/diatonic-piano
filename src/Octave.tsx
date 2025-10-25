@@ -91,9 +91,9 @@ export function Octave(props: OctaveProps) {
 
   return (
     <g
-      className={`diatonic-octave-${props.octaveNum}`}
+      className={`diatonic-piano-octave-${props.octaveNum}`}
       transform={`translate(${props.style.diatonic.strokeWidth / 2}
-                             ${props.style.diatonic.strokeWidth / 2})`}
+                            ${props.style.diatonic.strokeWidth / 2})`}
     >
       {keys}
     </g>

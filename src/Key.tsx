@@ -39,16 +39,16 @@ export function Key(props: KeyProps) {
   return (
     <path
       role="button"
-      className={`diatonic-key
-                           diatonic-key-${props.note.toString().replace('#', 's')}
-                           diatonic-key-${props.note.toPitchClass().toString().replace('#', 's')}`}
+      className={`diatonic-piano-key
+                  diatonic-piano-key-${props.note.toString().replace('#', 's')}
+                  diatonic-piano-key-${props.note.toPitchClass().toString().replace('#', 's')}`}
       d={`M0 0
-                   l0 ${height - rx}
-                   c0 0 0 ${rx} ${rx} ${rx}
-                   l${width - 2 * rx} 0
-                   c0 0 ${rx} 0 ${rx} -${rx}
-                   l0 -${height - rx}
-                   Z`}
+          l0 ${height - rx}
+          c0 0 0 ${rx} ${rx} ${rx}
+          l${width - 2 * rx} 0
+          c0 0 ${rx} 0 ${rx} -${rx}
+          l0 -${height - rx}
+          Z`}
       fill={color}
       stroke={props.style.stroke}
       strokeWidth={props.style.strokeWidth}

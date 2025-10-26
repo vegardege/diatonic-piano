@@ -1,0 +1,15 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["src/index.ts"],
+  "out": "docs",
+  "plugin": [],
+  "tsconfig": "tsconfig.json",
+  "readme": "README.md",
+  "includeVersion": true,
+  "sort": ["kind", "source-order"],
+  "categorizeByGroup": false,
+  "excludePrivate": true,
+  "excludeInternal": true,
+  "hideGenerator": true,
+  "highlightLanguages": ["typescript", "tsx", "jsx", "javascript", "css"]
+}

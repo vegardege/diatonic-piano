@@ -5,6 +5,7 @@ export default defineConfig({
     globals: true,
     environment: 'happy-dom',
     setupFiles: './vitest.setup.ts',
+
     exclude: [
       '**/node_modules/**',
       '**/dist/**',
@@ -12,6 +13,7 @@ export default defineConfig({
       '**/{karma,rollup,webpack,vite,vitest,jest,ava,babel,nyc,cypress,tsup,build}.config.*',
       '**/*.stories.{ts,tsx}',
     ],
+
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],

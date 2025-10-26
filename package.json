@@ -15,6 +15,9 @@
   "author": "Vegard Egeland",
   "license": "MIT",
   "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -47,7 +50,8 @@
     "format": "biome format .",
     "format:fix": "biome format . --write",
     "docs": "typedoc",
-    "docs:watch": "typedoc --watch"
+    "docs:watch": "typedoc --watch",
+    "prepublishOnly": "npm run build && npm run test:run && npm run check"
   },
   "repository": {
     "type": "git",

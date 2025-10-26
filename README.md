@@ -1,6 +1,7 @@
 # Diatonic Piano
 
 [![Lint, Test, Type Check, Build](https://github.com/vegardege/diatonic-piano/actions/workflows/ci.yml/badge.svg)](https://github.com/vegardege/diatonic-piano/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/@diatonic/piano)](https://www.npmjs.com/package/@diatonic/piano)
 
 Interactive SVG piano as a React component.
 

@@ -134,7 +134,7 @@ describe('Piano', () => {
     const { container } = render(<Piano focusable={true} />)
     const keys = container.querySelectorAll('path')
     keys.forEach(key => {
-      expect(key.tabIndex).toBe(0)
+      expect(key.tabIndex).toBeGreaterThan(0)
     })
   })
 

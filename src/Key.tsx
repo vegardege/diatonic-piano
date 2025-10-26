@@ -36,12 +36,19 @@ export function Key(props: KeyProps) {
     height = props.style.height,
     rx = Math.min(props.style.rx, props.style.width / 2)
 
+  // Calculate tab index for left-to-right navigation across octaves
+  // Add offset of 24 (2 octaves) to handle negative octave numbers gracefully
+  const pitchClass = props.note.toPitchClass().toString()
+  const calculatedTabIndex = props.focusable
+    ? (props.note.octave + 2) * 12 + props.note.chromaticOffset
+    : -1
+
   return (
     <path
       role="button"
       className={`diatonic-piano-key
                   diatonic-piano-key-${props.note.toString().replace('#', 's')}
-                  diatonic-piano-key-${props.note.toPitchClass().toString().replace('#', 's')}`}
+                  diatonic-piano-key-${pitchClass.replace('#', 's')}`}
       d={`M0 0
           l0 ${height - rx}
           c0 0 0 ${rx} ${rx} ${rx}
@@ -52,7 +59,8 @@ export function Key(props: KeyProps) {
       fill={color}
       stroke={props.style.stroke}
       strokeWidth={props.style.strokeWidth}
-      tabIndex={props.focusable ? 0 : -1}
+      style={{ outline: 'none' }}
+      tabIndex={calculatedTabIndex}
       onKeyPress={
         props.focusable
           ? e => {

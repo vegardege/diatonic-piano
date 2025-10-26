@@ -170,15 +170,17 @@ The numbers only make sense in relation to each other. By default, the diatonic 
 
 ### Interactivity
 
-Finally, you can add interactivity using the `onClick`, `onMouseEnter`, and `onMouseLeave` events.
+You can add interactivity using the `onClick`, `onMouseEnter`, `onMouseLeave`, `onFocus`, and `onBlur` events.
 
 | Prop | Description |
 | ---- | ----------- |
 | onClick | Called with note string when a key is pressed |
 | onMouseEnter | Called with note string when the cursor enters a key |
 | onMouseLeave | Called with note string when the cursor leaves a key |
+| onFocus | Called with note string when a key receives focus (when focusable) |
+| onBlur | Called with note string when a key loses focus (when focusable) |
 
-The component does not have any internal state, and relies on the parent component to update the piano if you want to press or highlight keys. This gives the caller full control over how the piano can be used, and allow synchronization with other components.
+The component does not have any internal state, and relies on the parent component to update the piano if you want to press or highlight keys. This gives the caller full control over how the piano can be used, and allows synchronization with other components.
 
 Using [React hooks](https://reactjs.org/docs/hooks-intro.html), you only need a few lines of code to accomplish this. The following is the complete `App.js` file of two pianos, where the second mirrors the first, but transposed a perfect fifth.
 
@@ -211,18 +213,13 @@ See [kamasi's](https://github.com/vegardege/kamasi) documentation for more manip
 
 ### Accessibility
 
-If you enable interactivity through use of the mouse, it's stronly encouraged that you also enable keyboard access for users who can't (or prefers not to) use a mouse or track pad. The component offers two compatible modes of keyboard access:
-
+If you enable interactivity through use of the mouse, it's strongly encouraged that you also enable keyboard access for users who can't (or prefer not to) use a mouse or track pad. The component offers two compatible modes of keyboard access:
 
 | Prop | Description | Default |
 | ---- | ----------- | ------- |
 | keyboardShortcuts | Enables keyboard control of piano keys | `false` |
 | focusable | Enables browser keyboard navigation with \<tab\> and \<Enter\> | `false` |
 
-The `keyboardShortcuts` prop makes the keyboard into a virtual piano. 'Q'–'M' is used for the third octave, 'A'-'J' for the fourth, and 'Z'–'M'for the fifth. 'Shift' will increase the pitch by a half tone, allowing you to play the black keys.
+The `keyboardShortcuts` prop makes the keyboard into a virtual piano. 'Q'–'U' is used for the third octave, 'A'–'J' for the fourth, and 'Z'–'M' for the fifth. 'Shift' will increase the pitch by a half tone, allowing you to play the black keys.
 
-The `focusable` allows the user to traverse through the keys using \<tab\>, and click a key with \<Enter\>. This works for all visible keys on the piano.
-
-Different browsers apply different styles to focused elements, but they tend not to work well with an \<SVG\> path element. As a result, it's encouraged to apply custom CSS.
-
-Use `.diatonic-piano-key:focus` or `.diatonic-piano-key:focus-visible` to style the keys (e.g. set `fill` and `outline`). Note that the implementation of these vary between browsers.
+The `focusable` prop allows the user to traverse through the keys in chromatic order (left to right) using \<tab\>, and activate a key with \<Enter\>. This works for all visible keys on the piano. For visual feedback, you can use the `onFocus` and `onBlur` handlers to update the `highlighted` prop, just like you would with `onMouseEnter` and `onMouseLeave` for hover effects.

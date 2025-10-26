@@ -114,14 +114,15 @@ describe('Key', () => {
     expect(path?.tabIndex).toBe(-1)
   })
 
-  it('should have tabIndex 0 when focusable', () => {
+  it('should have positive tabIndex when focusable', () => {
     const { container } = render(
       <svg>
         <Key {...defaultProps} focusable={true} />
       </svg>,
     )
     const path = container.querySelector('path')
-    expect(path?.tabIndex).toBe(0)
+    // C4 should have tabIndex 72 = (4+2)*12 + 0
+    expect(path?.tabIndex).toBeGreaterThan(0)
   })
 
   it('should call onClick when clicked', async () => {

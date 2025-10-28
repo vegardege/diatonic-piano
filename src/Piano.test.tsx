@@ -3,7 +3,6 @@ import { userEvent } from '@testing-library/user-event'
 import { NoteList } from 'kamasi'
 import { describe, expect, it, vi } from 'vitest'
 import { Piano } from './Piano.js'
-import { THEMES } from './themes.js'
 
 describe('Piano', () => {
   it('should render an svg element', () => {
@@ -76,21 +75,21 @@ describe('Piano', () => {
     const e4 = container.querySelector('.diatonic-piano-key-E4')
     const g4 = container.querySelector('.diatonic-piano-key-G4')
 
-    expect(c4?.getAttribute('fill')).toBe(THEMES!.default!.diatonic!.pressed)
-    expect(e4?.getAttribute('fill')).toBe(THEMES!.default!.diatonic!.pressed)
-    expect(g4?.getAttribute('fill')).toBe(THEMES!.default!.diatonic!.pressed)
+    expect(c4?.getAttribute('data-pressed')).toBe('true')
+    expect(e4?.getAttribute('data-pressed')).toBe('true')
+    expect(g4?.getAttribute('data-pressed')).toBe('true')
   })
 
   it('should accept pressed keys as space-separated string', () => {
     const { container } = render(<Piano pressed="C4 E4 G4" />)
     const c4 = container.querySelector('.diatonic-piano-key-C4')
-    expect(c4?.getAttribute('fill')).toBe(THEMES!.default!.diatonic!.pressed)
+    expect(c4?.getAttribute('data-pressed')).toBe('true')
   })
 
   it('should accept pressed keys as NoteList', () => {
     const { container } = render(<Piano pressed={new NoteList(['C4', 'E4'])} />)
     const c4 = container.querySelector('.diatonic-piano-key-C4')
-    expect(c4?.getAttribute('fill')).toBe(THEMES!.default!.diatonic!.pressed)
+    expect(c4?.getAttribute('data-pressed')).toBe('true')
   })
 
   it('should accept highlighted keys', () => {
@@ -98,12 +97,8 @@ describe('Piano', () => {
     const d4 = container.querySelector('.diatonic-piano-key-D4')
     const f4 = container.querySelector('.diatonic-piano-key-F4')
 
-    expect(d4?.getAttribute('fill')).toBe(
-      THEMES!.default!.diatonic!.highlighted,
-    )
-    expect(f4?.getAttribute('fill')).toBe(
-      THEMES!.default!.diatonic!.highlighted,
-    )
+    expect(d4?.getAttribute('data-highlighted')).toBe('true')
+    expect(f4?.getAttribute('data-highlighted')).toBe('true')
   })
 
   it('should call onClick when a key is clicked', async () => {
@@ -146,43 +141,16 @@ describe('Piano', () => {
     })
   })
 
-  it('should apply custom diatonic styles', () => {
-    const { container } = render(
-      <Piano
-        style={{
-          diatonic: { fill: '#FF0000', height: 500 },
-        }}
-      />,
-    )
+  it('should have data-key-type="diatonic" for white keys', () => {
+    const { container } = render(<Piano />)
     const c4 = container.querySelector('.diatonic-piano-key-C4')
-    expect(c4?.getAttribute('fill')).toBe('#FF0000')
+    expect(c4?.getAttribute('data-key-type')).toBe('diatonic')
   })
 
-  it('should apply custom chromatic styles', () => {
-    const { container } = render(
-      <Piano
-        style={{
-          chromatic: { fill: '#00FF00' },
-        }}
-      />,
-    )
+  it('should have data-key-type="chromatic" for black keys', () => {
+    const { container } = render(<Piano />)
     const cs4 = container.querySelector('.diatonic-piano-key-Cs4')
-    expect(cs4?.getAttribute('fill')).toBe('#00FF00')
-  })
-
-  it('should merge custom styles with default theme', () => {
-    const { container } = render(
-      <Piano
-        style={{
-          diatonic: { fill: '#FF0000' }, // override fill only
-        }}
-      />,
-    )
-    const c4 = container.querySelector('.diatonic-piano-key-C4')
-    // Fill should be custom
-    expect(c4?.getAttribute('fill')).toBe('#FF0000')
-    // Stroke should be default
-    expect(c4?.getAttribute('stroke')).toBe(THEMES!.default!.chromatic!.stroke)
+    expect(cs4?.getAttribute('data-key-type')).toBe('chromatic')
   })
 
   it('should display aria-label with pressed notes', () => {

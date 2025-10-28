@@ -1,0 +1,86 @@
+/**
+ * Default styles for @diatonic/piano
+ *
+ * This stylesheet provides sensible defaults using CSS variables.
+ * You can customize the piano by:
+ * 1. Overriding CSS variables in your own stylesheet
+ * 2. Writing custom CSS targeting the data attributes
+ * 3. Not importing this file and providing all styles yourself
+ *
+ * CSS Variables (with defaults):
+ * - --piano-key-diatonic-fill: #fff
+ * - --piano-key-diatonic-pressed-fill: #E84855
+ * - --piano-key-diatonic-highlighted-fill: #F2929A
+ * - --piano-key-chromatic-fill: #000
+ * - --piano-key-chromatic-pressed-fill: #E84855
+ * - --piano-key-chromatic-highlighted-fill: #F2929A
+ * - --piano-key-diatonic-stroke: #000
+ * - --piano-key-chromatic-stroke: #000
+ * - --piano-key-stroke-width: 4
+ * - --piano-key-diatonic-pressed-stroke (optional)
+ * - --piano-key-diatonic-highlighted-stroke (optional)
+ * - --piano-key-chromatic-pressed-stroke (optional)
+ * - --piano-key-chromatic-highlighted-stroke (optional)
+ */
+
+.diatonic-piano-key {
+  cursor: pointer;
+  transition:
+    fill 150ms ease,
+    stroke 150ms ease,
+    stroke-width 150ms ease;
+}
+
+/* White keys (diatonic) - default state */
+.diatonic-piano-key[data-key-type="diatonic"] {
+  fill: var(--piano-key-diatonic-fill, #fff);
+  stroke: var(--piano-key-diatonic-stroke, #000);
+  stroke-width: var(--piano-key-stroke-width, 4);
+}
+
+/* White keys - pressed state */
+.diatonic-piano-key[data-key-type="diatonic"][data-pressed="true"] {
+  fill: var(--piano-key-diatonic-pressed-fill, #e84855);
+  stroke: var(
+    --piano-key-diatonic-pressed-stroke,
+    var(--piano-key-diatonic-stroke, #000)
+  );
+  stroke-width: var(--piano-key-stroke-width, 4);
+}
+
+/* White keys - highlighted state */
+.diatonic-piano-key[data-key-type="diatonic"][data-highlighted="true"] {
+  fill: var(--piano-key-diatonic-highlighted-fill, #f2929a);
+  stroke: var(
+    --piano-key-diatonic-highlighted-stroke,
+    var(--piano-key-diatonic-stroke, #000)
+  );
+  stroke-width: var(--piano-key-stroke-width, 4);
+}
+
+/* Black keys (chromatic) - default state */
+.diatonic-piano-key[data-key-type="chromatic"] {
+  fill: var(--piano-key-chromatic-fill, #000);
+  stroke: var(--piano-key-chromatic-stroke, #000);
+  stroke-width: var(--piano-key-stroke-width, 4);
+}
+
+/* Black keys - pressed state */
+.diatonic-piano-key[data-key-type="chromatic"][data-pressed="true"] {
+  fill: var(--piano-key-chromatic-pressed-fill, #e84855);
+  stroke: var(
+    --piano-key-chromatic-pressed-stroke,
+    var(--piano-key-chromatic-stroke, #000)
+  );
+  stroke-width: var(--piano-key-stroke-width, 4);
+}
+
+/* Black keys - highlighted state */
+.diatonic-piano-key[data-key-type="chromatic"][data-highlighted="true"] {
+  fill: var(--piano-key-chromatic-highlighted-fill, #f2929a);
+  stroke: var(
+    --piano-key-chromatic-highlighted-stroke,
+    var(--piano-key-chromatic-stroke, #000)
+  );
+  stroke-width: var(--piano-key-stroke-width, 4);
+}

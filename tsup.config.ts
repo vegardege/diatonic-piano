@@ -36,4 +36,10 @@ export default defineConfig({
 
   // Tree-shake for smaller bundles
   treeshake: true,
+
+  // Copy CSS file to dist
+  async onSuccess() {
+    const fs = await import('node:fs/promises')
+    await fs.copyFile('src/styles.css', 'dist/styles.css')
+  },
 })

@@ -1,7 +1,6 @@
 import { Note, NoteList } from 'kamasi'
 import { useEffect } from 'react'
 import { Octave } from './Octave.js'
-import { type KeyStyle, THEMES, type Theme } from './themes.js'
 
 /**
  * Flexible input type for pressed/highlighted keys.
@@ -26,35 +25,6 @@ import { type KeyStyle, THEMES, type Theme } from './themes.js'
 export type NoteInput = string | string[] | NoteList
 
 /**
- * Partial style overrides for diatonic (white) and chromatic (black) keys.
- *
- * Allows customization of individual style properties while keeping
- * the rest from the theme. Merged with the selected theme, with overrides
- * taking precedence.
- *
- * @example
- * ```tsx
- * // Override colors only
- * <Piano style={{
- *   diatonic: { fill: '#fff', pressed: '#f00' },
- *   chromatic: { fill: '#000', pressed: '#f00' }
- * }} />
- *
- * // Override dimensions
- * <Piano style={{
- *   diatonic: { height: 500, width: 120 },
- *   chromatic: { height: 250, width: 60 }
- * }} />
- * ```
- */
-export interface StyleOverride {
-  /** Style overrides for white keys */
-  diatonic?: Partial<KeyStyle>
-  /** Style overrides for black keys */
-  chromatic?: Partial<KeyStyle>
-}
-
-/**
  * Props for the Piano component.
  */
 export interface PianoProps {
@@ -75,12 +45,6 @@ export interface PianoProps {
 
   /** Keys to render as highlighted. @defaultValue `[]` */
   highlighted?: NoteInput
-
-  /** Style overrides for diatonic and chromatic keys. */
-  style?: StyleOverride
-
-  /** Theme name to use. @defaultValue `'default'` */
-  theme?: string
 
   /** Enable keyboard shortcuts (Q-U, A-J, Z-M). @defaultValue `false` */
   keyboardShortcuts?: boolean
@@ -136,6 +100,8 @@ export interface PianoProps {
  * @example
  * With hover and focus highlighting:
  * ```tsx
+ * import '@diatonic/piano/styles.css'
+ *
  * const [pressed, setPressed] = useState<string[]>([])
  * const [highlighted, setHighlighted] = useState<string[]>([])
  *
@@ -155,8 +121,18 @@ export interface PianoProps {
  * Displaying a musical scale:
  * ```tsx
  * import { NoteList } from 'kamasi'
+ * import '@diatonic/piano/styles.css'
  *
  * <Piano highlighted={new NoteList(['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4'])} />
+ * ```
+ *
+ * @example
+ * Custom styling with CSS variables:
+ * ```css
+ * :root {
+ *   --piano-key-diatonic-fill: #f0f0f0;
+ *   --piano-key-diatonic-pressed-fill: #ff0000;
+ * }
  * ```
  */
 export function Piano({
@@ -164,7 +140,6 @@ export function Piano({
   width = '100%',
   height = '100%',
   octaves = 2,
-  theme = 'default',
   pressed = [],
   highlighted = [],
   keyboardShortcuts = false,
@@ -174,7 +149,6 @@ export function Piano({
   onMouseLeave = () => undefined,
   onFocus = () => undefined,
   onBlur = () => undefined,
-  style: styleOverride,
 }: PianoProps) {
   // If configured, map keyboard to notes. The shift key will transpose the
   // note up one semitone, allowing you to play black keys.
@@ -223,12 +197,10 @@ export function Piano({
     }
   }, [keyboardShortcuts, onClick])
 
-  // Theme is overwritten by any style specified
-  const baseTheme = (THEMES[theme] ?? THEMES.default) as Theme
-  const style: Theme = {
-    diatonic: { ...baseTheme.diatonic, ...styleOverride?.diatonic },
-    chromatic: { ...baseTheme.chromatic, ...styleOverride?.chromatic },
-  }
+  // Fixed dimensions (not configurable)
+  const DIATONIC_WIDTH = 100
+  const DIATONIC_HEIGHT = 400
+  const STROKE_WIDTH = 4
 
   // Center around octave number 4
   const octaveCount = octaves
@@ -236,10 +208,10 @@ export function Piano({
 
   // The SVG element fills its container unless otherwise specified
   // ViewBox must add the stroke width to prevent clipping on edges
-  const viewBoxWidth = 7 * octaveCount * style.diatonic.width
-  const viewBoxHeight = style.diatonic.height
-  const viewBox = `0 0 ${viewBoxWidth + style.diatonic.strokeWidth}
-                       ${viewBoxHeight + style.diatonic.strokeWidth}`
+  const viewBoxWidth = 7 * octaveCount * DIATONIC_WIDTH
+  const viewBoxHeight = DIATONIC_HEIGHT
+  const viewBox = `0 0 ${viewBoxWidth + STROKE_WIDTH}
+                       ${viewBoxHeight + STROKE_WIDTH}`
 
   // Create kamasi note lists to help us compare enharmonic notes
   const pressedNotes = ensureNoteList(pressed)
@@ -249,13 +221,12 @@ export function Piano({
     return (
       <g
         key={octaveNum}
-        transform={`translate(${7 * style.diatonic.width * octaveNum})`}
+        transform={`translate(${7 * DIATONIC_WIDTH * octaveNum})`}
       >
         <Octave
           octaveNum={firstOctave + octaveNum}
           pressed={pressedNotes}
           highlighted={highlightedNotes}
-          style={style}
           focusable={focusable}
           onClick={onClick}
           onMouseEnter={onMouseEnter}

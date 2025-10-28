@@ -18,9 +18,22 @@
  *
  * @see {@link Piano} - Main component
  * @see {@link PianoProps} - Component props
- * @see {@link Theme} - Theming system
+ *
+ * ## Styling
+ *
+ * Import the default styles:
+ * ```tsx
+ * import '@diatonic/piano/styles.css'
+ * ```
+ *
+ * Customize with CSS variables:
+ * ```css
+ * :root {
+ *   --piano-key-diatonic-fill: #f0f0f0;
+ *   --piano-key-diatonic-pressed-fill: #ff0000;
+ * }
+ * ```
  */
 
-export type { NoteInput, PianoProps, StyleOverride } from './Piano.js'
+export type { NoteInput, PianoProps } from './Piano.js'
 export { Piano } from './Piano.js'
-export type { KeyStyle, Theme } from './themes.js'

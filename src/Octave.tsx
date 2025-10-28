@@ -1,6 +1,9 @@
 import { Note, type NoteList } from 'kamasi'
 import { Key } from './Key.js'
-import type { Theme } from './themes.js'
+
+// Fixed dimensions (not configurable)
+const DIATONIC_WIDTH = 100
+const STROKE_WIDTH = 4
 
 /**
  * Props for the Octave component.
@@ -9,7 +12,6 @@ export interface OctaveProps {
   octaveNum: number
   pressed: NoteList
   highlighted: NoteList
-  style: Theme
   focusable: boolean
   onClick: (note: string) => void
   onMouseEnter: (note: string) => void
@@ -61,12 +63,9 @@ export function Octave(props: OctaveProps) {
     const pitch = pitchClass.toPitch(props.octaveNum)
 
     const isChromatic = pitchClass.accidentals.length > 0
-    const diatonicPos = props.style.diatonic.width * pitchClass.diatonicOffset
-    const chromatcPos = isChromatic
-      ? props.style.diatonic.width - props.style.chromatic.width / 2
-      : 0
-
-    const style = isChromatic ? props.style.chromatic : props.style.diatonic
+    const chromaticWidth = DIATONIC_WIDTH / 2 // Black keys are half the width of white keys
+    const diatonicPos = DIATONIC_WIDTH * pitchClass.diatonicOffset
+    const chromatcPos = isChromatic ? DIATONIC_WIDTH - chromaticWidth / 2 : 0
 
     return (
       <g
@@ -75,7 +74,6 @@ export function Octave(props: OctaveProps) {
       >
         <Key
           note={pitch}
-          style={style}
           focusable={props.focusable}
           isPressed={isPressed(pitch, pitchClass)}
           isHighlighted={isHighlighted(pitch, pitchClass)}
@@ -92,8 +90,8 @@ export function Octave(props: OctaveProps) {
   return (
     <g
       className={`diatonic-piano-octave-${props.octaveNum}`}
-      transform={`translate(${props.style.diatonic.strokeWidth / 2}
-                            ${props.style.diatonic.strokeWidth / 2})`}
+      transform={`translate(${STROKE_WIDTH / 2}
+                            ${STROKE_WIDTH / 2})`}
     >
       {keys}
     </g>

@@ -1,5 +1,4 @@
 import type { Note } from 'kamasi'
-import type { KeyStyle } from './themes.js'
 
 /**
  * Props for the Key component.
@@ -8,7 +7,6 @@ export interface KeyProps {
   note: Note
   isPressed: boolean
   isHighlighted: boolean
-  style: KeyStyle
   focusable: boolean
   onClick: (note: string) => void
   onMouseEnter: (note: string) => void
@@ -24,17 +22,16 @@ export interface KeyProps {
  * accidentals, and an octave number.
  *
  * This component draws the key as an SVG <path> element.
+ * All styling is controlled via CSS using data attributes and CSS variables.
  */
 export function Key(props: KeyProps) {
-  const color = props.isPressed
-    ? props.style.pressed
-    : props.isHighlighted
-      ? props.style.highlighted
-      : props.style.fill
+  // Derive whether this is a chromatic (black) key from the note
+  const isChromatic = props.note.accidentals.length > 0
 
-  const width = props.style.width,
-    height = props.style.height,
-    rx = Math.min(props.style.rx, props.style.width / 2)
+  // Default dimensions (these will be overridden by CSS)
+  const width = isChromatic ? 50 : 100
+  const height = isChromatic ? 200 : 400
+  const rx = 10
 
   // Calculate tab index for left-to-right navigation across octaves
   // Add offset of 24 (2 octaves) to handle negative octave numbers gracefully
@@ -49,6 +46,9 @@ export function Key(props: KeyProps) {
       className={`diatonic-piano-key
                   diatonic-piano-key-${props.note.toString().replace('#', 's')}
                   diatonic-piano-key-${pitchClass.replace('#', 's')}`}
+      data-pressed={props.isPressed}
+      data-highlighted={props.isHighlighted}
+      data-key-type={isChromatic ? 'chromatic' : 'diatonic'}
       d={`M0 0
           l0 ${height - rx}
           c0 0 0 ${rx} ${rx} ${rx}
@@ -56,9 +56,6 @@ export function Key(props: KeyProps) {
           c0 0 ${rx} 0 ${rx} -${rx}
           l0 -${height - rx}
           Z`}
-      fill={color}
-      stroke={props.style.stroke}
-      strokeWidth={props.style.strokeWidth}
       style={{ outline: 'none' }}
       tabIndex={calculatedTabIndex}
       onKeyPress={

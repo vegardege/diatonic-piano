@@ -7,12 +7,32 @@ Interactive SVG piano as a React component.
 
 ## Reference
 
+- [Installation](#installation)
 - [Static Piano](#static-piano)
 - [Pressed and Highlighted keys](#pressed-and-highlighted-keys)
-- [Styling (CSS)](#css)
-- [Styling (prop themes)](#style-and-theme-props)
+- [Styling](#styling)
+  - [Basic CSS](#basic-css-styling)
+  - [CSS Variables](#css-variables)
+  - [Advanced CSS](#advanced-css-targeting)
 - [Interactivity](#interactivity)
 - [Accessibility](#accessibility)
+
+## Installation
+
+```bash
+npm install @diatonic/piano
+```
+
+Then import the component and default styles:
+
+```jsx
+import { Piano } from "@diatonic/piano";
+import "@diatonic/piano/styles.css";
+
+function App() {
+  return <Piano />;
+}
+```
 
 ### Static Piano
 
@@ -62,130 +82,129 @@ import { scale } from "kamasi";
 
 ### Styling
 
-There are two ways of styling a piano: CSS or the `style` and `theme` props. Both ways are illustrated below.
+The piano is styled using a CSS-first approach. You have three ways to customize the appearance:
 
-#### CSS
+#### Basic CSS Styling
 
-The SVG tags will be included in your DOM, and can be styled using normal CSS. The following classes are set in each piano:
+Import the default styles to get a classic black and white piano:
 
-| Class                                | Description                                       |
-| ------------------------------------ | ------------------------------------------------- |
-| .diatonic-piano                      | Top \<svg\> component                             |
-| .diatonic-piano-octave-_\<n\>_       | The \<g\> tag grouping all keys within one octave |
-| .diatonic-piano-key                  |  The \<path\> tag for all keys in the piano       |
-| .diatonic-piano-key-_\<pitchclass\>_ | The \<path\> tag of all keys of this pitch class  |
-| .diatonic-piano-key-_\<pitch\>_      | The \<path\> tag of all keys of this pitch        |
+```jsx
+import "@diatonic/piano/styles.css";
+```
 
-A pitch can be any letter from A–G. Sharps are replaced with _s_, e.g. C#4 woud be `.diatonic-piano-key-Cs4`.
+#### CSS Variables
 
-Below is an example of how you could use CSS to style a piano:
+The easiest way to customize colors is with CSS variables:
 
 ```css
-#rainbow .diatonic-piano-key {
-  stroke: #999;
-  stroke-width: 2;
+:root {
+  /* White keys */
+  --piano-key-diatonic-fill: #f0f0f0;
+  --piano-key-diatonic-pressed-fill: #4caf50;
+  --piano-key-diatonic-highlighted-fill: #81c784;
+  --piano-key-diatonic-stroke: #333;
+
+  /* Black keys */
+  --piano-key-chromatic-fill: #333;
+  --piano-key-chromatic-pressed-fill: #4caf50;
+  --piano-key-chromatic-highlighted-fill: #81c784;
+  --piano-key-chromatic-stroke: #000;
+
+  /* Global */
+  --piano-key-stroke-width: 4;
 }
-#rainbow .diatonic-piano-key-G4 {
+```
+
+**All available CSS variables:**
+
+| Variable                                   | Description                             | Default            |
+| ------------------------------------------ | --------------------------------------- | ------------------ |
+| `--piano-key-diatonic-fill`                | White key default color                 | `#fff`             |
+| `--piano-key-diatonic-pressed-fill`        | White key pressed color                 | `#E84855`          |
+| `--piano-key-diatonic-highlighted-fill`    | White key highlighted color             | `#F2929A`          |
+| `--piano-key-chromatic-fill`               | Black key default color                 | `#000`             |
+| `--piano-key-chromatic-pressed-fill`       | Black key pressed color                 | `#E84855`          |
+| `--piano-key-chromatic-highlighted-fill`   | Black key highlighted color             | `#F2929A`          |
+| `--piano-key-diatonic-stroke`              | White key border color                  | `#000`             |
+| `--piano-key-chromatic-stroke`             | Black key border color                  | `#000`             |
+| `--piano-key-stroke-width`                 | Border width for all keys               | `4`                |
+| `--piano-key-diatonic-pressed-stroke`      | (Optional) White key pressed border     | Falls back to base |
+| `--piano-key-diatonic-highlighted-stroke`  | (Optional) White key highlighted border | Falls back to base |
+| `--piano-key-chromatic-pressed-stroke`     | (Optional) Black key pressed border     | Falls back to base |
+| `--piano-key-chromatic-highlighted-stroke` | (Optional) Black key highlighted border | Falls back to base |
+
+#### Advanced CSS Targeting
+
+For maximum control, target CSS classes and data attributes directly:
+
+**Classes:**
+
+| Class                              | Description                                       |
+| ---------------------------------- | ------------------------------------------------- |
+| `.diatonic-piano`                  | Top \<svg\> component                             |
+| `.diatonic-piano-octave-<n>`       | The \<g\> tag grouping all keys within one octave |
+| `.diatonic-piano-key`              | The \<path\> tag for all keys                     |
+| `.diatonic-piano-key-<pitchclass>` | All keys of this pitch class (e.g., `C`, `Cs`)    |
+| `.diatonic-piano-key-<pitch>`      | Specific key (e.g., `C4`, `Cs4`)                  |
+
+**Data attributes:**
+
+| Attribute          | Values                  | Description                    |
+| ------------------ | ----------------------- | ------------------------------ |
+| `data-key-type`    | `diatonic`, `chromatic` | White or black key             |
+| `data-pressed`     | `true`, `false`         | Whether the key is pressed     |
+| `data-highlighted` | `true`, `false`         | Whether the key is highlighted |
+
+**Example: Rainbow keys**
+
+```css
+/* Using a parent class ensures proper specificity */
+#rainbow-piano {
+  --piano-key-diatonic-stroke: #999;
+  --piano-key-stroke-width: 2;
+}
+#rainbow-piano .diatonic-piano-key-G4 {
   fill: #f898a4;
 }
-#rainbow .diatonic-piano-key-A4 {
+#rainbow-piano .diatonic-piano-key-A4 {
   fill: #fcda9c;
 }
-#rainbow .diatonic-piano-key-B4 {
+#rainbow-piano .diatonic-piano-key-B4 {
   fill: #f7faa1;
 }
-#rainbow .diatonic-piano-key-C5 {
+#rainbow-piano .diatonic-piano-key-C5 {
   fill: #b4f6a4;
 }
-#rainbow .diatonic-piano-key-D5 {
+#rainbow-piano .diatonic-piano-key-D5 {
   fill: #9be0f1;
 }
-#rainbow .diatonic-piano-key-E5 {
+#rainbow-piano .diatonic-piano-key-E5 {
   fill: #a2aceb;
 }
 ```
 
-```js
-<div id="rainbow">
+```jsx
+<div id="rainbow-piano">
   <Piano />
 </div>
 ```
 
 ![CSS styled piano](https://raw.githubusercontent.com/vegardege/diatonic-piano/main/assets/diatonic-piano-css.png)
 
-#### Style and Theme props
+**Example: State-specific styling**
 
-The component also accepts two props to style the piano:
+```css
+/* Different stroke colors for pressed and highlighted states */
+.diatonic-piano-key[data-pressed="true"] {
+  stroke: darkred;
+  stroke-width: 3;
+}
 
-| Prop  | Description                  | Default     |
-| ----- | ---------------------------- | ----------- |
-| theme | Default style of piano       | `'default'` |
-| style | Styles you want to overwrite | `{}`        |
-
-At the moment, only one theme is included, so you can ignore that prop until later versions.
-
-`style` can be used to overwrite one or more style props. The `style` object will be merged with the theme, with `style` items taking precedence when present. The default theme looks like this:
-
-```js
-{
-    diatonic: {
-        fill: '#fff',
-        pressed: '#E84855',
-        highlighted: '#F2929A',
-
-        stroke: '#000',
-        strokeWidth: 4,
-
-        height: 400,
-        width: 100,
-        rx: 10,
-    },
-    chromatic: {
-        fill: '#000',
-        pressed: '#E84855',
-        highlighted: '#F2929A',
-
-        stroke: '#000',
-        strokeWidth: 4,
-
-        height: 200,
-        width: 50,
-        rx: 10,
-    },
+.diatonic-piano-key[data-highlighted="true"] {
+  stroke: lightblue;
+  stroke-width: 2;
 }
 ```
-
-You can overwrite any subset of these to modify the diatonic (white) or chromatic (black) keys.
-
-So if you want to recreate the [stylophone](https://en.wikipedia.org/wiki/Stylophone), I won't stand in your way:
-
-```jsx
-<Piano
-  style={{
-    diatonic: {
-      fill: "#ccc",
-      rx: 0,
-      height: 175,
-      strokeWidth: 3,
-    },
-    chromatic: {
-      fill: "#ccc",
-      rx: 25,
-      width: 100,
-      height: 100,
-      strokeWidth: 3,
-    },
-  }}
-/>
-```
-
-![Prop styled piano](https://raw.githubusercontent.com/vegardege/diatonic-piano/main/assets/diatonic-piano-style.png)
-
-#### Note about units
-
-If you want to change any of the sizes, note that there is no absolute unit for the numbers. The \<svg\> element will automatically fill its container unless otherwise specified using the `width` or `height` prop.
-
-The numbers only make sense in relation to each other. By default, the diatonic (white) keys are given a width of 100.
 
 ### Interactivity
 

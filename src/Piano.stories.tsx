@@ -2,6 +2,7 @@ import type { Story } from '@ladle/react'
 import { NoteList } from 'kamasi'
 import { useState } from 'react'
 import { Piano } from './Piano.js'
+import './styles.css'
 
 export const Default: Story = () => (
   <div style={{ width: '600px', height: '200px' }}>
@@ -143,77 +144,47 @@ WithKeyboardShortcuts.meta = {
 }
 
 export const CustomColors: Story = () => (
-  <div style={{ width: '600px', height: '200px' }}>
-    <Piano
-      pressed={['C4', 'E4', 'G4']}
-      style={{
-        diatonic: {
-          fill: '#f0f0f0',
-          pressed: '#4CAF50',
-          highlighted: '#81C784',
-          stroke: '#333',
-        },
-        chromatic: {
-          fill: '#333',
-          pressed: '#4CAF50',
-          highlighted: '#81C784',
-        },
-      }}
-    />
+  <div
+    style={{ width: '600px', height: '200px' }}
+    className="custom-colors-piano"
+  >
+    <Piano pressed={['C4', 'E4', 'G4']} />
+    <style>{`
+      .custom-colors-piano {
+        --piano-key-diatonic-fill: #f0f0f0;
+        --piano-key-diatonic-pressed-fill: #4CAF50;
+        --piano-key-diatonic-highlighted-fill: #81C784;
+        --piano-key-diatonic-stroke: #333;
+        --piano-key-chromatic-fill: #333;
+        --piano-key-chromatic-pressed-fill: #4CAF50;
+        --piano-key-chromatic-highlighted-fill: #81C784;
+      }
+    `}</style>
   </div>
 )
 
 CustomColors.meta = {
-  description: 'Piano with custom green color scheme',
-}
-
-export const Stylophone: Story = () => (
-  <div style={{ width: '600px', height: '100px' }}>
-    <Piano
-      style={{
-        diatonic: {
-          fill: '#ccc',
-          rx: 0,
-          height: 175,
-          strokeWidth: 3,
-        },
-        chromatic: {
-          fill: '#ccc',
-          rx: 25,
-          width: 100,
-          height: 100,
-          strokeWidth: 3,
-        },
-      }}
-    />
-  </div>
-)
-
-Stylophone.meta = {
-  description: 'Stylophone-inspired design from README',
+  description: 'Piano with custom green color scheme using CSS variables',
 }
 
 export const RainbowKeys: Story = () => (
-  <div style={{ width: '600px', height: '200px' }}>
-    <Piano
-      style={{
-        diatonic: {
-          stroke: '#999',
-          strokeWidth: 2,
-        },
-      }}
-    />
+  <div style={{ width: '600px', height: '200px' }} className="rainbow-piano">
+    <Piano />
     <style>{`
-      .diatonic-piano-key-G4 { fill: #F898A4 !important; }
-      .diatonic-piano-key-A4 { fill: #FCDA9C !important; }
-      .diatonic-piano-key-B4 { fill: #F7FAA1 !important; }
-      .diatonic-piano-key-C5 { fill: #B4F6A4 !important; }
-      .diatonic-piano-key-D5 { fill: #9BE0F1 !important; }
-      .diatonic-piano-key-E5 { fill: #A2ACEB !important; }
+      .rainbow-piano {
+        --piano-key-diatonic-stroke: #999;
+        --piano-key-stroke-width: 2;
+      }
+      .rainbow-piano .diatonic-piano-key-G4 { fill: #F898A4; }
+      .rainbow-piano .diatonic-piano-key-A4 { fill: #FCDA9C; }
+      .rainbow-piano .diatonic-piano-key-B4 { fill: #F7FAA1; }
+      .rainbow-piano .diatonic-piano-key-C5 { fill: #B4F6A4; }
+      .rainbow-piano .diatonic-piano-key-D5 { fill: #9BE0F1; }
+      .rainbow-piano .diatonic-piano-key-E5 { fill: #A2ACEB; }
     `}</style>
   </div>
 )
 
 RainbowKeys.meta = {
-  description: 'Rainbow-colored keys using CSS (from README)',
+  description: 'Rainbow-colored keys using CSS (no !important needed!)',
 }

@@ -2,7 +2,7 @@ import type { Story } from '@ladle/react'
 import { NoteList } from 'kamasi'
 import { useState } from 'react'
 import { Octave } from './Octave.js'
-import { THEMES } from './themes.js'
+import './styles.css'
 
 export const DefaultOctave: Story = () => (
   <svg width="800" height="450" viewBox="0 0 708 408">
@@ -10,7 +10,6 @@ export const DefaultOctave: Story = () => (
       octaveNum={4}
       pressed={new NoteList()}
       highlighted={new NoteList()}
-      style={THEMES.default!}
       focusable={false}
       onClick={note => console.log('Clicked:', note)}
       onMouseEnter={() => {}}
@@ -31,7 +30,6 @@ export const PressedChord: Story = () => (
       octaveNum={4}
       pressed={new NoteList(['C4', 'E4', 'G4'])}
       highlighted={new NoteList()}
-      style={THEMES.default!}
       focusable={false}
       onClick={note => console.log('Clicked:', note)}
       onMouseEnter={() => {}}
@@ -52,7 +50,6 @@ export const HighlightedScale: Story = () => (
       octaveNum={4}
       pressed={new NoteList()}
       highlighted={new NoteList(['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4'])}
-      style={THEMES.default!}
       focusable={false}
       onClick={note => console.log('Clicked:', note)}
       onMouseEnter={() => {}}
@@ -78,7 +75,6 @@ export const InteractiveOctave: Story = () => {
           octaveNum={4}
           pressed={new NoteList(pressed)}
           highlighted={new NoteList(highlighted)}
-          style={THEMES.default!}
           focusable={false}
           onClick={note => {
             setPressed(prev =>
@@ -118,7 +114,6 @@ export const DifferentOctaves: Story = () => (
           octaveNum={3}
           pressed={new NoteList(['C3'])}
           highlighted={new NoteList()}
-          style={THEMES.default!}
           focusable={false}
           onClick={() => {}}
           onMouseEnter={() => {}}
@@ -135,7 +130,6 @@ export const DifferentOctaves: Story = () => (
           octaveNum={4}
           pressed={new NoteList(['C4'])}
           highlighted={new NoteList()}
-          style={THEMES.default!}
           focusable={false}
           onClick={() => {}}
           onMouseEnter={() => {}}
@@ -152,7 +146,6 @@ export const DifferentOctaves: Story = () => (
           octaveNum={5}
           pressed={new NoteList(['C5'])}
           highlighted={new NoteList()}
-          style={THEMES.default!}
           focusable={false}
           onClick={() => {}}
           onMouseEnter={() => {}}

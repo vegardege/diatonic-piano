@@ -3,14 +3,12 @@ import { userEvent } from '@testing-library/user-event'
 import { Note } from 'kamasi'
 import { describe, expect, it, vi } from 'vitest'
 import { Key } from './Key.js'
-import { THEMES } from './themes.js'
 
 describe('Key', () => {
   const defaultProps = {
     note: new Note('C', '').toPitch(4),
     isPressed: false,
     isHighlighted: false,
-    style: THEMES.default!.diatonic,
     focusable: false,
     onClick: vi.fn(),
     onMouseEnter: vi.fn(),
@@ -62,46 +60,55 @@ describe('Key', () => {
     expect(path?.getAttribute('class')).toContain('diatonic-piano-key-Cs4')
   })
 
-  it('should use fill color when not pressed or highlighted', () => {
+  it('should have data-pressed="false" when not pressed', () => {
     const { container } = render(
       <svg>
         <Key {...defaultProps} />
       </svg>,
     )
     const path = container.querySelector('path')
-    expect(path?.getAttribute('fill')).toBe(THEMES.default!.diatonic!.fill)
+    expect(path?.getAttribute('data-pressed')).toBe('false')
   })
 
-  it('should use pressed color when pressed', () => {
+  it('should have data-pressed="true" when pressed', () => {
     const { container } = render(
       <svg>
         <Key {...defaultProps} isPressed={true} />
       </svg>,
     )
     const path = container.querySelector('path')
-    expect(path?.getAttribute('fill')).toBe(THEMES.default!.diatonic!.pressed)
+    expect(path?.getAttribute('data-pressed')).toBe('true')
   })
 
-  it('should use highlighted color when highlighted', () => {
+  it('should have data-highlighted="true" when highlighted', () => {
     const { container } = render(
       <svg>
         <Key {...defaultProps} isHighlighted={true} />
       </svg>,
     )
     const path = container.querySelector('path')
-    expect(path?.getAttribute('fill')).toBe(
-      THEMES.default!.diatonic!.highlighted,
-    )
+    expect(path?.getAttribute('data-highlighted')).toBe('true')
   })
 
-  it('should prefer pressed over highlighted', () => {
+  it('should have data-key-type="diatonic" for white keys', () => {
     const { container } = render(
       <svg>
-        <Key {...defaultProps} isPressed={true} isHighlighted={true} />
+        <Key {...defaultProps} />
       </svg>,
     )
     const path = container.querySelector('path')
-    expect(path?.getAttribute('fill')).toBe(THEMES.default!.diatonic!.pressed)
+    expect(path?.getAttribute('data-key-type')).toBe('diatonic')
+  })
+
+  it('should have data-key-type="chromatic" for black keys', () => {
+    const sharpNote = new Note('C', '#').toPitch(4)
+    const { container } = render(
+      <svg>
+        <Key {...defaultProps} note={sharpNote} />
+      </svg>,
+    )
+    const path = container.querySelector('path')
+    expect(path?.getAttribute('data-key-type')).toBe('chromatic')
   })
 
   it('should have tabIndex -1 when not focusable', () => {

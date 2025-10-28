@@ -2,14 +2,12 @@ import { render } from '@testing-library/react'
 import { NoteList } from 'kamasi'
 import { describe, expect, it, vi } from 'vitest'
 import { Octave } from './Octave.js'
-import { THEMES } from './themes.js'
 
 describe('Octave', () => {
   const defaultProps = {
     octaveNum: 4,
     pressed: new NoteList(),
     highlighted: new NoteList(),
-    style: THEMES.default!,
     focusable: false,
     onClick: vi.fn(),
     onMouseEnter: vi.fn(),
@@ -78,9 +76,9 @@ describe('Octave', () => {
     const e4 = container.querySelector('.diatonic-piano-key-E4')
     const d4 = container.querySelector('.diatonic-piano-key-D4')
 
-    expect(c4?.getAttribute('fill')).toBe(THEMES.default!.diatonic!.pressed)
-    expect(e4?.getAttribute('fill')).toBe(THEMES.default!.diatonic!.pressed)
-    expect(d4?.getAttribute('fill')).toBe(THEMES.default!.diatonic!.fill)
+    expect(c4?.getAttribute('data-pressed')).toBe('true')
+    expect(e4?.getAttribute('data-pressed')).toBe('true')
+    expect(d4?.getAttribute('data-pressed')).toBe('false')
   })
 
   it('should mark keys as highlighted when note is in highlighted list', () => {
@@ -93,8 +91,8 @@ describe('Octave', () => {
     const c4 = container.querySelector('.diatonic-piano-key-C4')
     const e4 = container.querySelector('.diatonic-piano-key-E4')
 
-    expect(c4?.getAttribute('fill')).toBe(THEMES.default!.diatonic!.highlighted)
-    expect(e4?.getAttribute('fill')).toBe(THEMES.default!.diatonic!.highlighted)
+    expect(c4?.getAttribute('data-highlighted')).toBe('true')
+    expect(e4?.getAttribute('data-highlighted')).toBe('true')
   })
 
   it('should work with pitch class matching (enharmonic equivalents)', () => {
@@ -105,7 +103,7 @@ describe('Octave', () => {
       </svg>,
     )
     const c4 = container.querySelector('.diatonic-piano-key-C4')
-    expect(c4?.getAttribute('fill')).toBe(THEMES.default!.diatonic!.pressed)
+    expect(c4?.getAttribute('data-pressed')).toBe('true')
   })
 
   it('should apply transform for positioning', () => {

@@ -1,6 +1,6 @@
 {
   "name": "@diatonic/piano",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Interactive SVG piano for React",
   "keywords": [
     "react",
@@ -16,7 +16,7 @@
   "license": "MIT",
   "type": "module",
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=20.0.0"
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

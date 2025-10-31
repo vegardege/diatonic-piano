@@ -191,20 +191,11 @@ For maximum control, target CSS classes and data attributes directly:
 
 ![CSS styled piano](https://raw.githubusercontent.com/vegardege/diatonic-piano/main/assets/diatonic-piano-css.png)
 
-**Example: State-specific styling**
+**Example: Diatonic**
 
-```css
-/* Different stroke colors for pressed and highlighted states */
-.diatonic-piano-key[data-pressed="true"] {
-  stroke: darkred;
-  stroke-width: 3;
-}
+For a more advanced example of CSS styling, have a look at [Diatonic](https://diatonic.pebblepatch.dev/) and its [source code](https://github.com/vegardege/diatonic):
 
-.diatonic-piano-key[data-highlighted="true"] {
-  stroke: lightblue;
-  stroke-width: 2;
-}
-```
+![Diatonic CSS styled piano](https://raw.githubusercontent.com/vegardege/diatonic-piano/main/assets/diatonic.png)
 
 ### Interactivity
 

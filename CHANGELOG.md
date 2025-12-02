@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.1] - 2025-12-02
+
+### Security
+
+- Updated `tsup` from 8.5.0 to 8.5.1 to address security vulnerabilities
+
 ## [0.3.0] - 2025-10-28
 
 ### Breaking Changes

@@ -119,19 +119,19 @@ The easiest way to customize colors is with CSS variables:
 
 | Variable                                   | Description                             | Default            |
 | ------------------------------------------ | --------------------------------------- | ------------------ |
-| `--piano-key-diatonic-fill`                | White key default color                 | `#fff`             |
-| `--piano-key-diatonic-pressed-fill`        | White key pressed color                 | `#E84855`          |
-| `--piano-key-diatonic-highlighted-fill`    | White key highlighted color             | `#F2929A`          |
-| `--piano-key-chromatic-fill`               | Black key default color                 | `#000`             |
-| `--piano-key-chromatic-pressed-fill`       | Black key pressed color                 | `#E84855`          |
-| `--piano-key-chromatic-highlighted-fill`   | Black key highlighted color             | `#F2929A`          |
-| `--piano-key-diatonic-stroke`              | White key border color                  | `#000`             |
-| `--piano-key-chromatic-stroke`             | Black key border color                  | `#000`             |
-| `--piano-key-stroke-width`                 | Border width for all keys               | `4`                |
-| `--piano-key-diatonic-pressed-stroke`      | (Optional) White key pressed border     | Falls back to base |
-| `--piano-key-diatonic-highlighted-stroke`  | (Optional) White key highlighted border | Falls back to base |
-| `--piano-key-chromatic-pressed-stroke`     | (Optional) Black key pressed border     | Falls back to base |
-| `--piano-key-chromatic-highlighted-stroke` | (Optional) Black key highlighted border | Falls back to base |
+| `--piano-key-diatonic-fill`                | White key default color                 | `#f7f5f0`          |
+| `--piano-key-diatonic-pressed-fill`        | White key pressed color                 | `#e07858`          |
+| `--piano-key-diatonic-highlighted-fill`    | White key highlighted color             | `#eca088`          |
+| `--piano-key-chromatic-fill`               | Black key default color                 | `#4a423c`          |
+| `--piano-key-chromatic-pressed-fill`       | Black key pressed color                 | `#c04838`          |
+| `--piano-key-chromatic-highlighted-fill`   | Black key highlighted color             | `#b86850`          |
+| `--piano-key-diatonic-stroke`              | White key border color                  | `#c0b8b0`          |
+| `--piano-key-chromatic-stroke`             | Black key border color                  | `#4a423c`          |
+| `--piano-key-stroke-width`                 | Border width for all keys               | `2`                |
+| `--piano-key-diatonic-pressed-stroke`      | (Optional) White key pressed border     | `#3d3530`          |
+| `--piano-key-diatonic-highlighted-stroke`  | (Optional) White key highlighted border | `#b8624c`          |
+| `--piano-key-chromatic-pressed-stroke`     | (Optional) Black key pressed border     | `#2d2520`          |
+| `--piano-key-chromatic-highlighted-stroke` | (Optional) Black key highlighted border | `#503028`          |
 
 #### Advanced CSS Targeting
 
@@ -190,12 +190,6 @@ For maximum control, target CSS classes and data attributes directly:
 ```
 
 ![CSS styled piano](https://raw.githubusercontent.com/vegardege/diatonic-piano/main/assets/diatonic-piano-css.png)
-
-**Example: Diatonic**
-
-For a more advanced example of CSS styling, have a look at [Diatonic](https://diatonic.pebblepatch.dev/) and its [source code](https://github.com/vegardege/diatonic):
-
-![Diatonic CSS styled piano](https://raw.githubusercontent.com/vegardege/diatonic-piano/main/assets/diatonic.png)
 
 ### Interactivity
 

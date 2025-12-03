@@ -5,7 +5,7 @@ import { Octave } from './Octave.js'
 import './styles.css'
 
 export const DefaultOctave: Story = () => (
-  <svg width="800" height="450" viewBox="0 0 708 408">
+  <svg width="300" viewBox="0 0 708 408">
     <Octave
       octaveNum={4}
       pressed={new NoteList()}
@@ -25,7 +25,7 @@ DefaultOctave.meta = {
 }
 
 export const PressedChord: Story = () => (
-  <svg width="800" height="450" viewBox="0 0 708 408">
+  <svg width="300" viewBox="0 0 708 408">
     <Octave
       octaveNum={4}
       pressed={new NoteList(['C4', 'E4', 'G4'])}
@@ -45,7 +45,7 @@ PressedChord.meta = {
 }
 
 export const HighlightedScale: Story = () => (
-  <svg width="800" height="450" viewBox="0 0 708 408">
+  <svg width="300" viewBox="0 0 708 408">
     <Octave
       octaveNum={4}
       pressed={new NoteList()}
@@ -70,7 +70,7 @@ export const InteractiveOctave: Story = () => {
 
   return (
     <div>
-      <svg width="800" height="450" viewBox="0 0 708 408">
+      <svg width="300" viewBox="0 0 708 408">
         <Octave
           octaveNum={4}
           pressed={new NoteList(pressed)}
@@ -109,7 +109,7 @@ export const DifferentOctaves: Story = () => (
   <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
     <div>
       <h3 style={{ margin: '0 0 10px 0' }}>Octave 3</h3>
-      <svg width="800" height="450" viewBox="0 0 708 408">
+      <svg width="300" viewBox="0 0 708 408">
         <Octave
           octaveNum={3}
           pressed={new NoteList(['C3'])}
@@ -125,7 +125,7 @@ export const DifferentOctaves: Story = () => (
     </div>
     <div>
       <h3 style={{ margin: '0 0 10px 0' }}>Octave 4</h3>
-      <svg width="800" height="450" viewBox="0 0 708 408">
+      <svg width="300" viewBox="0 0 708 408">
         <Octave
           octaveNum={4}
           pressed={new NoteList(['C4'])}
@@ -141,7 +141,7 @@ export const DifferentOctaves: Story = () => (
     </div>
     <div>
       <h3 style={{ margin: '0 0 10px 0' }}>Octave 5</h3>
-      <svg width="800" height="450" viewBox="0 0 708 408">
+      <svg width="300" viewBox="0 0 708 408">
         <Octave
           octaveNum={5}
           pressed={new NoteList(['C5'])}

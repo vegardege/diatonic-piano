@@ -58,7 +58,7 @@ export function Key(props: KeyProps) {
           Z`}
       style={{ outline: 'none' }}
       tabIndex={calculatedTabIndex}
-      onKeyPress={
+      onKeyDown={
         props.focusable
           ? e => {
               e.key === 'Enter'

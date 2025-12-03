@@ -1,11 +1,11 @@
 import type { Story } from '@ladle/react'
-import { NoteList } from 'kamasi'
+import { NoteList, scale } from 'kamasi'
 import { useState } from 'react'
 import { Piano } from './Piano.js'
 import './styles.css'
 
 export const Default: Story = () => (
-  <div style={{ width: '600px', height: '200px' }}>
+  <div style={{ width: '600px' }}>
     <Piano />
   </div>
 )
@@ -15,7 +15,7 @@ Default.meta = {
 }
 
 export const ThreeOctaves: Story = () => (
-  <div style={{ width: '800px', height: '200px' }}>
+  <div style={{ width: '800px' }}>
     <Piano octaves={3} />
   </div>
 )
@@ -25,8 +25,8 @@ ThreeOctaves.meta = {
 }
 
 export const PressedKeys: Story = () => (
-  <div style={{ width: '600px', height: '200px' }}>
-    <Piano pressed={['C4', 'E4', 'G4']} />
+  <div style={{ width: '600px' }}>
+    <Piano pressed={['F4', 'A4', 'C#5']} />
   </div>
 )
 
@@ -35,12 +35,8 @@ PressedKeys.meta = {
 }
 
 export const HighlightedScale: Story = () => (
-  <div style={{ width: '600px', height: '200px' }}>
-    <Piano
-      highlighted={
-        new NoteList(['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5'])
-      }
-    />
+  <div style={{ width: '600px' }}>
+    <Piano highlighted={scale('D blues minor')} />
   </div>
 )
 
@@ -49,7 +45,7 @@ HighlightedScale.meta = {
 }
 
 export const PressedAndHighlighted: Story = () => (
-  <div style={{ width: '600px', height: '200px' }}>
+  <div style={{ width: '600px' }}>
     <Piano
       pressed={['C4', 'E4', 'G4']}
       highlighted={['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4']}
@@ -67,7 +63,7 @@ export const Interactive: Story = () => {
 
   return (
     <div>
-      <div style={{ width: '600px', height: '200px', marginBottom: '20px' }}>
+      <div style={{ width: '600px', marginBottom: '20px' }}>
         <Piano
           pressed={pressed}
           highlighted={highlighted}
@@ -109,7 +105,7 @@ export const WithKeyboardShortcuts: Story = () => {
 
   return (
     <div>
-      <div style={{ width: '800px', height: '200px', marginBottom: '20px' }}>
+      <div style={{ width: '800px', marginBottom: '20px' }}>
         <Piano
           octaves={3}
           pressed={pressed}
@@ -144,10 +140,7 @@ WithKeyboardShortcuts.meta = {
 }
 
 export const CustomColors: Story = () => (
-  <div
-    style={{ width: '600px', height: '200px' }}
-    className="custom-colors-piano"
-  >
+  <div style={{ width: '600px' }} className="custom-colors-piano">
     <Piano pressed={['C4', 'E4', 'G4']} />
     <style>{`
       .custom-colors-piano {
@@ -168,7 +161,7 @@ CustomColors.meta = {
 }
 
 export const RainbowKeys: Story = () => (
-  <div style={{ width: '600px', height: '200px' }} className="rainbow-piano">
+  <div style={{ width: '600px' }} className="rainbow-piano">
     <Piano />
     <style>{`
       .rainbow-piano {
@@ -187,4 +180,49 @@ export const RainbowKeys: Story = () => (
 
 RainbowKeys.meta = {
   description: 'Rainbow-colored keys using CSS (no !important needed!)',
+}
+
+export const SynchronizedPianos: Story = () => {
+  const [pressed, setPressed] = useState(new NoteList())
+  const [highlighted, setHighlighted] = useState(new NoteList())
+
+  return (
+    <div>
+      <div style={{ marginBottom: '20px' }}>
+        <div style={{ width: '600px' }}>
+          <Piano
+            pressed={pressed}
+            highlighted={highlighted}
+            onClick={n => setPressed(state => state.toggle(n))}
+            onMouseEnter={n => setHighlighted(new NoteList([n]))}
+            onMouseLeave={() => setHighlighted(new NoteList())}
+          />
+        </div>
+      </div>
+      <div>
+        <div style={{ width: '600px' }}>
+          <Piano
+            pressed={pressed.transpose('P5')}
+            highlighted={highlighted.transpose('P5')}
+          />
+        </div>
+      </div>
+      <div
+        style={{
+          marginTop: '20px',
+          fontFamily: 'monospace',
+          fontSize: '12px',
+          color: '#666',
+        }}
+      >
+        Click keys on the top piano to toggle pressed state. The bottom piano
+        mirrors the top one, transposed by a perfect fifth (P5).
+      </div>
+    </div>
+  )
+}
+
+SynchronizedPianos.meta = {
+  description:
+    'Two synchronized pianos with transposition (from README example)',
 }

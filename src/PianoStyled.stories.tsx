@@ -89,9 +89,10 @@ export const Interactive: Story = () => {
 }
 
 export const GreenColors: Story = () => (
-  <div style={{ width: '600px' }} className="custom-colors-piano">
-    <Piano pressed={['C4', 'E4', 'G4']} />
-    <style>{`
+  <div>
+    <div style={{ width: '600px' }} className="custom-colors-piano">
+      <Piano pressed={['C4', 'E4', 'G4']} />
+      <style>{`
       .custom-colors-piano {
         --piano-key-diatonic-fill: #f0f0f0;
         --piano-key-diatonic-pressed-fill: #4CAF50;
@@ -102,6 +103,7 @@ export const GreenColors: Story = () => (
         --piano-key-chromatic-highlighted-fill: #81C784;
       }
     `}</style>
+    </div>
     <div
       style={{
         fontFamily: 'monospace',
@@ -116,9 +118,10 @@ export const GreenColors: Story = () => (
 )
 
 export const RainbowKeys: Story = () => (
-  <div style={{ width: '600px' }} className="rainbow-piano">
-    <Piano />
-    <style>{`
+  <div>
+    <div style={{ width: '600px' }} className="rainbow-piano">
+      <Piano />
+      <style>{`
       .rainbow-piano {
         --piano-key-diatonic-stroke: #999;
         --piano-key-stroke-width: 2;
@@ -130,6 +133,7 @@ export const RainbowKeys: Story = () => (
       .rainbow-piano .diatonic-piano-key-D5 { fill: #9BE0F1; }
       .rainbow-piano .diatonic-piano-key-E5 { fill: #A2ACEB; }
     `}</style>
+    </div>
     <div
       style={{
         fontFamily: 'monospace',

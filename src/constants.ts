@@ -25,11 +25,11 @@ export const KEY_COLORS = {
   diatonic: {
     default: { fill: '#f7f5f0', stroke: '#c0b8b0' },
     highlighted: { fill: '#eca088', stroke: '#b8624c' },
-    pressed: { fill: '#e07858', stroke: '#3d3530' },
+    pressed: { fill: '#e07858', stroke: '#b8624c' },
   },
   chromatic: {
     default: { fill: '#4a423c', stroke: '#4a423c' },
-    highlighted: { fill: '#b86850', stroke: '#503028' },
-    pressed: { fill: '#c04838', stroke: '#2d2520' },
+    highlighted: { fill: '#b86850', stroke: '#4a423c' },
+    pressed: { fill: '#c04838', stroke: '#4a423c' },
   },
 } as const

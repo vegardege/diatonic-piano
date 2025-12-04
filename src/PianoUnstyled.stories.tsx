@@ -190,6 +190,7 @@ export const SynchronizedPianos: Story = () => {
           <Piano
             pressed={pressed}
             highlighted={highlighted}
+            focusable={true}
             onClick={n => setPressed(state => state.toggle(n))}
             onMouseEnter={n => setHighlighted(new NoteList([n]))}
             onMouseLeave={() => setHighlighted(new NoteList())}

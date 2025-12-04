@@ -23,11 +23,10 @@ Interactive SVG piano as a React component.
 npm install @diatonic/piano
 ```
 
-Then import the component and default styles:
+Then import the component:
 
 ```jsx
 import { Piano } from "@diatonic/piano";
-import "@diatonic/piano/styles.css";
 
 function App() {
   return <Piano />;
@@ -48,7 +47,7 @@ The following props can be set to modify the static piano:
 
 | Prop                | Description                                                                                                               | Default           |
 | ------------------- | ------------------------------------------------------------------------------------------------------------------------- | ----------------- |
-| octaves             |  Number of octaves                                                                                                        | `2`               |
+| octaves             | Number of octaves                                                                                                         | `2`               |
 | width               | Width of the \<svg\> element                                                                                              | `'100%'`          |
 | height              | Height of the \<svg\> element                                                                                             | `'100%'`          |
 | preserveAspectRatio | Attribute for \<svg\> element [(details)](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/preserveAspectRatio) | `'xMinYMin meet'` |
@@ -60,7 +59,7 @@ Two props can be used to set a key as _pressed_ or _highlighted_. There are no r
 | Prop        | Description               | Default |
 | ----------- | ------------------------- | ------- |
 | pressed     | Keys will be pressed      | `[]`    |
-| highlighted |  Keys will be highlighted | `[]`    |
+| highlighted | Keys will be highlighted  | `[]`    |
 
 As an example, you can press _F4_, _A4_, and _C#5_ to highlight an F augmented chord:
 
@@ -82,19 +81,25 @@ import { scale } from "kamasi";
 
 ### Styling
 
-The piano is styled using a CSS-first approach. You have three ways to customize the appearance:
+#### No CSS (Default)
 
-#### Basic CSS Styling
+The piano includes built-in default colors via SVG presentation attributes, so it works out-of-the-box with sensible default colors:
 
-Import the default styles to get a classic black and white piano:
+```jsx
+import { Piano } from "@diatonic/piano";
+
+<Piano />
+```
+
+Colors are defined in `KEY_COLORS` (exported from the package) and can be referenced or modified if needed.
+
+#### CSS Variables
+
+Import the default stylesheet to override variables:
 
 ```jsx
 import "@diatonic/piano/styles.css";
 ```
-
-#### CSS Variables
-
-The easiest way to customize colors is with CSS variables:
 
 ```css
 :root {
@@ -126,12 +131,12 @@ The easiest way to customize colors is with CSS variables:
 | `--piano-key-chromatic-pressed-fill`       | Black key pressed color                 | `#c04838`          |
 | `--piano-key-chromatic-highlighted-fill`   | Black key highlighted color             | `#b86850`          |
 | `--piano-key-diatonic-stroke`              | White key border color                  | `#c0b8b0`          |
-| `--piano-key-chromatic-stroke`             | Black key border color                  | `#4a423c`          |
-| `--piano-key-stroke-width`                 | Border width for all keys               | `2`                |
-| `--piano-key-diatonic-pressed-stroke`      | (Optional) White key pressed border     | `#3d3530`          |
+| `--piano-key-diatonic-pressed-stroke`      | (Optional) White key pressed border     | `#b8624c`          |
 | `--piano-key-diatonic-highlighted-stroke`  | (Optional) White key highlighted border | `#b8624c`          |
-| `--piano-key-chromatic-pressed-stroke`     | (Optional) Black key pressed border     | `#2d2520`          |
-| `--piano-key-chromatic-highlighted-stroke` | (Optional) Black key highlighted border | `#503028`          |
+| `--piano-key-chromatic-stroke`             | Black key border color                  | `#4a423c`          |
+| `--piano-key-chromatic-pressed-stroke`     | (Optional) Black key pressed border     | `#4a423c`          |
+| `--piano-key-chromatic-highlighted-stroke` | (Optional) Black key highlighted border | `#4a423c`          |
+| `--piano-key-stroke-width`                 | Border width for all keys               | `2`                |
 
 #### Advanced CSS Targeting
 
@@ -160,26 +165,31 @@ For maximum control, target CSS classes and data attributes directly:
 ```css
 /* Using a parent class ensures proper specificity */
 #rainbow-piano {
-  --piano-key-diatonic-stroke: #999;
   --piano-key-stroke-width: 2;
 }
 #rainbow-piano .diatonic-piano-key-G4 {
   fill: #f898a4;
+  stroke: #f07090;
 }
 #rainbow-piano .diatonic-piano-key-A4 {
   fill: #fcda9c;
+  stroke: #f0c888;
 }
 #rainbow-piano .diatonic-piano-key-B4 {
   fill: #f7faa1;
+  stroke: #e8ec88;
 }
 #rainbow-piano .diatonic-piano-key-C5 {
   fill: #b4f6a4;
+  stroke: #98e088;
 }
 #rainbow-piano .diatonic-piano-key-D5 {
   fill: #9be0f1;
+  stroke: #80d0e0;
 }
 #rainbow-piano .diatonic-piano-key-E5 {
   fill: #a2aceb;
+  stroke: #8898d8;
 }
 ```
 
@@ -241,6 +251,11 @@ export default App;
 See [kamasi's](https://github.com/vegardege/kamasi) documentation for more manipulation you can do, or check the Diatonic web site for inspiration.
 
 ### Accessibility
+
+The component automatically adapts its ARIA roles based on usage:
+
+- **Display mode** (default): `role="img"` with descriptive labels for screen readers
+- **Interactive mode** (`focusable` or `keyboardShortcuts`): `role="group"` containing interactive buttons
 
 If you enable interactivity through use of the mouse, it's strongly encouraged that you also enable keyboard access for users who can't (or prefer not to) use a mouse or track pad. The component offers two compatible modes of keyboard access:
 

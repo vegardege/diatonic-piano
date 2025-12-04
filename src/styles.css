@@ -52,7 +52,7 @@
   fill: var(--piano-key-diatonic-pressed-fill, #e07858);
   stroke: var(
     --piano-key-diatonic-pressed-stroke,
-    var(--piano-key-diatonic-stroke, #3d3530)
+    var(--piano-key-diatonic-stroke, #b8624c)
   );
   stroke-width: var(--piano-key-stroke-width, 2);
 }
@@ -69,7 +69,7 @@
   fill: var(--piano-key-chromatic-highlighted-fill, #b86850);
   stroke: var(
     --piano-key-chromatic-highlighted-stroke,
-    var(--piano-key-chromatic-stroke, #503028)
+    var(--piano-key-chromatic-stroke, #4a423c)
   );
   stroke-width: var(--piano-key-stroke-width, 2);
 }
@@ -79,7 +79,7 @@
   fill: var(--piano-key-chromatic-pressed-fill, #c04838);
   stroke: var(
     --piano-key-chromatic-pressed-stroke,
-    var(--piano-key-chromatic-stroke, #2d2520)
+    var(--piano-key-chromatic-stroke, #4a423c)
   );
   stroke-width: var(--piano-key-stroke-width, 2);
 }

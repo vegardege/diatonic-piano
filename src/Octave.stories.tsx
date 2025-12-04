@@ -20,10 +20,6 @@ export const DefaultOctave: Story = () => (
   </svg>
 )
 
-DefaultOctave.meta = {
-  description: 'Single octave (octave 4)',
-}
-
 export const PressedChord: Story = () => (
   <svg width="300" viewBox="0 0 708 408">
     <Octave
@@ -40,10 +36,6 @@ export const PressedChord: Story = () => (
   </svg>
 )
 
-PressedChord.meta = {
-  description: 'C major chord pressed in octave 4',
-}
-
 export const HighlightedScale: Story = () => (
   <svg width="300" viewBox="0 0 708 408">
     <Octave
@@ -59,10 +51,6 @@ export const HighlightedScale: Story = () => (
     />
   </svg>
 )
-
-HighlightedScale.meta = {
-  description: 'C major scale highlighted',
-}
 
 export const InteractiveOctave: Story = () => {
   const [pressed, setPressed] = useState<string[]>([])
@@ -99,10 +87,6 @@ export const InteractiveOctave: Story = () => {
       </div>
     </div>
   )
-}
-
-InteractiveOctave.meta = {
-  description: 'Interactive octave - click to toggle, hover to highlight',
 }
 
 export const DifferentOctaves: Story = () => (
@@ -157,7 +141,3 @@ export const DifferentOctaves: Story = () => (
     </div>
   </div>
 )
-
-DifferentOctaves.meta = {
-  description: 'Comparison of different octave numbers',
-}

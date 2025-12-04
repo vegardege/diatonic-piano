@@ -2,60 +2,108 @@ import type { Story } from '@ladle/react'
 import { NoteList, scale } from 'kamasi'
 import { useState } from 'react'
 import { Piano } from './Piano.js'
-import './styles.css'
 
 export const Default: Story = () => (
-  <div style={{ width: '600px' }}>
-    <Piano />
+  <div>
+    <div style={{ width: '600px' }}>
+      <Piano />
+    </div>
+    <div
+      style={{
+        fontFamily: 'monospace',
+        fontSize: '12px',
+        color: '#666',
+        marginTop: '10px',
+      }}
+    >
+      <p>Default piano, no modifications</p>
+    </div>
   </div>
 )
-
-Default.meta = {
-  description: 'Default piano with 2 octaves',
-}
 
 export const ThreeOctaves: Story = () => (
-  <div style={{ width: '800px' }}>
-    <Piano octaves={3} />
+  <div>
+    <div style={{ width: '800px' }}>
+      <Piano octaves={3} />
+    </div>
+    <div
+      style={{
+        fontFamily: 'monospace',
+        fontSize: '12px',
+        color: '#666',
+        marginTop: '10px',
+      }}
+    >
+      <p>Piano with three octaves</p>
+    </div>
   </div>
 )
-
-ThreeOctaves.meta = {
-  description: 'Piano with three octaves',
-}
 
 export const PressedKeys: Story = () => (
-  <div style={{ width: '600px' }}>
-    <Piano pressed={['F4', 'A4', 'C#5']} />
+  <div>
+    <div style={{ width: '600px' }}>
+      <Piano pressed={['F4', 'A4', 'C#5']} />
+    </div>
+    <div
+      style={{
+        fontFamily: 'monospace',
+        fontSize: '12px',
+        color: '#666',
+        marginTop: '10px',
+      }}
+    >
+      <p>
+        <strong>Pressed:</strong> F4, A4, C#5
+      </p>
+    </div>
   </div>
 )
-
-PressedKeys.meta = {
-  description: 'C major chord (C4, E4, G4) pressed',
-}
 
 export const HighlightedScale: Story = () => (
-  <div style={{ width: '600px' }}>
-    <Piano highlighted={scale('D blues minor')} />
+  <div>
+    <div style={{ width: '600px' }}>
+      <Piano highlighted={scale('D blues minor')} />
+    </div>
+    <div
+      style={{
+        fontFamily: 'monospace',
+        fontSize: '12px',
+        color: '#666',
+        marginTop: '10px',
+      }}
+    >
+      <p>
+        <strong>Highlighted:</strong> D blues minor scale
+      </p>
+    </div>
   </div>
 )
-
-HighlightedScale.meta = {
-  description: 'C major scale highlighted',
-}
 
 export const PressedAndHighlighted: Story = () => (
-  <div style={{ width: '600px' }}>
-    <Piano
-      pressed={['C4', 'E4', 'G4']}
-      highlighted={['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4']}
-    />
+  <div>
+    <div style={{ width: '600px' }}>
+      <Piano
+        pressed={['C4', 'E4', 'G4']}
+        highlighted={['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4']}
+      />
+    </div>
+    <div
+      style={{
+        fontFamily: 'monospace',
+        fontSize: '12px',
+        color: '#666',
+        marginTop: '10px',
+      }}
+    >
+      <p>
+        <strong>Pressed:</strong> C4, E4, G4 (C major chord)
+      </p>
+      <p>
+        <strong>Highlighted:</strong> C4-B4 (C major scale)
+      </p>
+    </div>
   </div>
 )
-
-PressedAndHighlighted.meta = {
-  description: 'C major chord pressed with C major scale highlighted',
-}
 
 export const Interactive: Story = () => {
   const [pressed, setPressed] = useState<string[]>([])
@@ -89,15 +137,11 @@ export const Interactive: Story = () => {
           <strong>Highlighted:</strong> {highlighted.join(', ') || 'none'}
         </div>
         <div style={{ marginTop: '10px', fontSize: '12px', color: '#666' }}>
-          Click keys to toggle pressed state. Hover to highlight.
+          <p>Click keys to toggle pressed state. Hover or Tab to highlight.</p>
         </div>
       </div>
     </div>
   )
-}
-
-Interactive.meta = {
-  description: 'Interactive piano - click to press, hover to highlight',
 }
 
 export const WithKeyboardShortcuts: Story = () => {
@@ -135,53 +179,6 @@ export const WithKeyboardShortcuts: Story = () => {
   )
 }
 
-WithKeyboardShortcuts.meta = {
-  description: 'Piano with keyboard shortcuts enabled',
-}
-
-export const CustomColors: Story = () => (
-  <div style={{ width: '600px' }} className="custom-colors-piano">
-    <Piano pressed={['C4', 'E4', 'G4']} />
-    <style>{`
-      .custom-colors-piano {
-        --piano-key-diatonic-fill: #f0f0f0;
-        --piano-key-diatonic-pressed-fill: #4CAF50;
-        --piano-key-diatonic-highlighted-fill: #81C784;
-        --piano-key-diatonic-stroke: #333;
-        --piano-key-chromatic-fill: #333;
-        --piano-key-chromatic-pressed-fill: #4CAF50;
-        --piano-key-chromatic-highlighted-fill: #81C784;
-      }
-    `}</style>
-  </div>
-)
-
-CustomColors.meta = {
-  description: 'Piano with custom green color scheme using CSS variables',
-}
-
-export const RainbowKeys: Story = () => (
-  <div style={{ width: '600px' }} className="rainbow-piano">
-    <Piano />
-    <style>{`
-      .rainbow-piano {
-        --piano-key-diatonic-stroke: #999;
-        --piano-key-stroke-width: 2;
-      }
-      .rainbow-piano .diatonic-piano-key-G4 { fill: #F898A4; }
-      .rainbow-piano .diatonic-piano-key-A4 { fill: #FCDA9C; }
-      .rainbow-piano .diatonic-piano-key-B4 { fill: #F7FAA1; }
-      .rainbow-piano .diatonic-piano-key-C5 { fill: #B4F6A4; }
-      .rainbow-piano .diatonic-piano-key-D5 { fill: #9BE0F1; }
-      .rainbow-piano .diatonic-piano-key-E5 { fill: #A2ACEB; }
-    `}</style>
-  </div>
-)
-
-RainbowKeys.meta = {
-  description: 'Rainbow-colored keys using CSS (no !important needed!)',
-}
-
 export const SynchronizedPianos: Story = () => {
   const [pressed, setPressed] = useState(new NoteList())
   const [highlighted, setHighlighted] = useState(new NoteList())
@@ -215,14 +212,9 @@ export const SynchronizedPianos: Story = () => {
           color: '#666',
         }}
       >
-        Click keys on the top piano to toggle pressed state. The bottom piano
-        mirrors the top one, transposed by a perfect fifth (P5).
+        <p>Click or hover keys on the top piano to toggle pressed state.</p>
+        <p>The bottom mirrors the top transposed by a perfect fifth.</p>
       </div>
     </div>
   )
-}
-
-SynchronizedPianos.meta = {
-  description:
-    'Two synchronized pianos with transposition (from README example)',
 }

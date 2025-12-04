@@ -162,30 +162,30 @@ export function Piano({
     if (!keyboardShortcuts) return
 
     function handleKeyDown(e: KeyboardEvent) {
-      const noteMap: Record<number, string> = {
-        81: 'C3',
-        87: 'D3',
-        69: 'E3',
-        82: 'F3',
-        84: 'G3',
-        89: 'A3',
-        85: 'B3',
-        65: 'C4',
-        83: 'D4',
-        68: 'E4',
-        70: 'F4',
-        71: 'G4',
-        72: 'A4',
-        74: 'B4',
-        90: 'C5',
-        88: 'D5',
-        67: 'E5',
-        86: 'F5',
-        66: 'G5',
-        78: 'A5',
-        77: 'B5',
+      const noteMap: Record<string, string> = {
+        Q: 'C3',
+        W: 'D3',
+        E: 'E3',
+        R: 'F3',
+        T: 'G3',
+        Y: 'A3',
+        U: 'B3',
+        A: 'C4',
+        S: 'D4',
+        D: 'E4',
+        F: 'F4',
+        G: 'G4',
+        H: 'A4',
+        J: 'B4',
+        Z: 'C5',
+        X: 'D5',
+        C: 'E5',
+        V: 'F5',
+        B: 'G5',
+        N: 'A5',
+        M: 'B5',
       }
-      const noteString = noteMap[e.keyCode]
+      const noteString = noteMap[e.key.toUpperCase()]
       if (noteString !== undefined) {
         const note = Note.fromString(noteString)
         onClick(

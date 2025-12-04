@@ -196,10 +196,10 @@ describe('Piano', () => {
       const onClick = vi.fn()
       render(<Piano keyboardShortcuts={true} onClick={onClick} />)
 
-      // Simulate keydown event with keyCode for 'A' key (65)
+      // Simulate keydown event for 'A' key
       const event = new KeyboardEvent('keydown', {
-        keyCode: 65,
-      } as KeyboardEventInit)
+        key: 'A',
+      })
       document.dispatchEvent(event)
 
       expect(onClick).toHaveBeenCalledWith('C4')
@@ -211,9 +211,9 @@ describe('Piano', () => {
 
       // Simulate keydown event with shift key
       const event = new KeyboardEvent('keydown', {
-        keyCode: 65,
+        key: 'A',
         shiftKey: true,
-      } as KeyboardEventInit)
+      })
       document.dispatchEvent(event)
 
       expect(onClick).toHaveBeenCalledWith('C#4')
@@ -224,8 +224,8 @@ describe('Piano', () => {
       render(<Piano keyboardShortcuts={false} onClick={onClick} />)
 
       const event = new KeyboardEvent('keydown', {
-        keyCode: 65,
-      } as KeyboardEventInit)
+        key: 'A',
+      })
       document.dispatchEvent(event)
 
       expect(onClick).not.toHaveBeenCalled()

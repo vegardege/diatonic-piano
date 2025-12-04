@@ -35,5 +35,14 @@
  * ```
  */
 
+export {
+  CHROMATIC_KEY_HEIGHT,
+  CHROMATIC_KEY_WIDTH,
+  DIATONIC_KEY_HEIGHT,
+  DIATONIC_KEY_WIDTH,
+  KEY_BORDER_RADIUS,
+  KEY_COLORS,
+  KEY_STROKE_WIDTH,
+} from './constants.js'
 export type { NoteInput, PianoProps } from './Piano.js'
 export { Piano } from './Piano.js'

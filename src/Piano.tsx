@@ -1,8 +1,11 @@
 import { Note, NoteList } from 'kamasi'
 import { useEffect } from 'react'
-import { Octave } from './Octave.js'
-
-/**
+import {
+  DIATONIC_KEY_HEIGHT,
+  DIATONIC_KEY_WIDTH,
+  KEY_STROKE_WIDTH,
+} from './constants.js'
+import { Octave } from './Octave.js' /**
  * Flexible input type for pressed/highlighted keys.
  *
  * Can be provided in three formats:
@@ -20,6 +23,9 @@ import { Octave } from './Octave.js'
  *
  * // NoteList format
  * <Piano pressed={new NoteList(['C4', 'E4', 'G4'])} />
+ *
+ * // Scale
+ * <Piano pressed={scale('A minor')} />
  * ```
  */
 export type NoteInput = string | string[] | NoteList
@@ -197,21 +203,16 @@ export function Piano({
     }
   }, [keyboardShortcuts, onClick])
 
-  // Fixed dimensions (not configurable)
-  const DIATONIC_WIDTH = 100
-  const DIATONIC_HEIGHT = 400
-  const STROKE_WIDTH = 4
-
   // Center around octave number 4
   const octaveCount = octaves
   const firstOctave = 4 - Math.floor((octaveCount - 1) / 2)
 
   // The SVG element fills its container unless otherwise specified
   // ViewBox must add the stroke width to prevent clipping on edges
-  const viewBoxWidth = 7 * octaveCount * DIATONIC_WIDTH
-  const viewBoxHeight = DIATONIC_HEIGHT
-  const viewBox = `0 0 ${viewBoxWidth + STROKE_WIDTH}
-                       ${viewBoxHeight + STROKE_WIDTH}`
+  const viewBoxWidth = 7 * octaveCount * DIATONIC_KEY_WIDTH
+  const viewBoxHeight = DIATONIC_KEY_HEIGHT
+  const viewBox = `0 0 ${viewBoxWidth + KEY_STROKE_WIDTH}
+                       ${viewBoxHeight + KEY_STROKE_WIDTH}`
 
   // Create kamasi note lists to help us compare enharmonic notes
   const pressedNotes = ensureNoteList(pressed)
@@ -221,7 +222,7 @@ export function Piano({
     return (
       <g
         key={octaveNum}
-        transform={`translate(${7 * DIATONIC_WIDTH * octaveNum})`}
+        transform={`translate(${7 * DIATONIC_KEY_WIDTH * octaveNum})`}
       >
         <Octave
           octaveNum={firstOctave + octaveNum}

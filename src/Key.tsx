@@ -1,4 +1,13 @@
 import type { Note } from 'kamasi'
+import {
+  CHROMATIC_KEY_HEIGHT,
+  CHROMATIC_KEY_WIDTH,
+  DIATONIC_KEY_HEIGHT,
+  DIATONIC_KEY_WIDTH,
+  KEY_BORDER_RADIUS,
+  KEY_COLORS,
+  KEY_STROKE_WIDTH,
+} from './constants.js'
 
 /**
  * Props for the Key component.
@@ -13,35 +22,6 @@ export interface KeyProps {
   onMouseLeave: (note: string) => void
   onFocus: (note: string) => void
   onBlur: (note: string) => void
-}
-
-/**
- * Dimensions used to determine the relative size of the key.
- * Note that the key will scale to fit its surrounding container.
- */
-const DIATONIC_KEY_WIDTH = 100
-const DIATONIC_KEY_HEIGHT = 400
-const CHROMATIC_KEY_WIDTH = 50
-const CHROMATIC_KEY_HEIGHT = 200
-const KEY_BORDER_RADIUS = 10
-
-/**
- * Default color scheme for piano keys.
- * These serve as fallback presentation attributes when styles.css is not imported.
- * CSS rules can override these values (CSS has higher specificity than SVG attributes).
- */
-const DEFAULT_THEME = {
-  diatonic: {
-    default: { fill: '#f7f5f0', stroke: '#c0b8b0' },
-    highlighted: { fill: '#eca088', stroke: '#b8624c' },
-    pressed: { fill: '#e07858', stroke: '#3d3530' },
-  },
-  chromatic: {
-    default: { fill: '#4a423c', stroke: '#4a423c' },
-    highlighted: { fill: '#b86850', stroke: '#503028' },
-    pressed: { fill: '#c04838', stroke: '#2d2520' },
-  },
-  strokeWidth: 2,
 }
 
 /**
@@ -80,7 +60,7 @@ export function Key(props: KeyProps) {
     : props.isHighlighted
       ? 'highlighted'
       : 'default'
-  const colors = DEFAULT_THEME[keyType][state]
+  const colors = KEY_COLORS[keyType][state]
   const cursor = props.focusable ? 'pointer' : 'auto'
 
   return (
@@ -101,7 +81,7 @@ export function Key(props: KeyProps) {
           Z`}
       fill={colors.fill}
       stroke={colors.stroke}
-      strokeWidth={DEFAULT_THEME.strokeWidth}
+      strokeWidth={KEY_STROKE_WIDTH}
       style={{ outline: 'none', cursor: cursor }}
       tabIndex={calculatedTabIndex}
       onKeyDown={

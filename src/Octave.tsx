@@ -1,9 +1,10 @@
 import { Note, type NoteList } from 'kamasi'
+import {
+  CHROMATIC_KEY_WIDTH,
+  DIATONIC_KEY_WIDTH,
+  KEY_STROKE_WIDTH,
+} from './constants.js'
 import { Key } from './Key.js'
-
-// Fixed dimensions (not configurable)
-const DIATONIC_WIDTH = 100
-const STROKE_WIDTH = 4
 
 /**
  * Props for the Octave component.
@@ -63,9 +64,10 @@ export function Octave(props: OctaveProps) {
     const pitch = pitchClass.toPitch(props.octaveNum)
 
     const isChromatic = pitchClass.accidentals.length > 0
-    const chromaticWidth = DIATONIC_WIDTH / 2 // Black keys are half the width of white keys
-    const diatonicPos = DIATONIC_WIDTH * pitchClass.diatonicOffset
-    const chromatcPos = isChromatic ? DIATONIC_WIDTH - chromaticWidth / 2 : 0
+    const diatonicPos = DIATONIC_KEY_WIDTH * pitchClass.diatonicOffset
+    const chromatcPos = isChromatic
+      ? DIATONIC_KEY_WIDTH - CHROMATIC_KEY_WIDTH / 2
+      : 0
 
     return (
       <g
@@ -90,8 +92,8 @@ export function Octave(props: OctaveProps) {
   return (
     <g
       className={`diatonic-piano-octave-${props.octaveNum}`}
-      transform={`translate(${STROKE_WIDTH / 2}
-                            ${STROKE_WIDTH / 2})`}
+      transform={`translate(${KEY_STROKE_WIDTH / 2}
+                            ${KEY_STROKE_WIDTH / 2})`}
     >
       {keys}
     </g>

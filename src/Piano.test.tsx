@@ -18,10 +18,22 @@ describe('Piano', () => {
     expect(svg).toBeTruthy()
   })
 
-  it('should have role="img"', () => {
+  it('should have role="img" when not interactive', () => {
     const { container } = render(<Piano />)
     const svg = container.querySelector('svg')
     expect(svg?.getAttribute('role')).toBe('img')
+  })
+
+  it('should have role="group" when focusable', () => {
+    const { container } = render(<Piano focusable={true} />)
+    const svg = container.querySelector('svg')
+    expect(svg?.getAttribute('role')).toBe('group')
+  })
+
+  it('should have role="group" when keyboardShortcuts enabled', () => {
+    const { container } = render(<Piano keyboardShortcuts={true} />)
+    const svg = container.querySelector('svg')
+    expect(svg?.getAttribute('role')).toBe('group')
   })
 
   it('should have title element', () => {
@@ -153,16 +165,30 @@ describe('Piano', () => {
     expect(cs4?.getAttribute('data-key-type')).toBe('chromatic')
   })
 
-  it('should display aria-label with pressed notes', () => {
+  it('should display aria-label with pressed notes when not interactive', () => {
     const { container } = render(<Piano pressed={['C4', 'E4']} />)
     const svg = container.querySelector('svg')
     const ariaLabel = svg?.getAttribute('aria-label')
-    expect(ariaLabel).toContain('Piano:')
+    expect(ariaLabel).toBe('Piano with pressed keys: C4 E4')
   })
 
-  it('should have description with pressed notes', () => {
+  it('should display static aria-label when interactive', () => {
+    const { container } = render(
+      <Piano pressed={['C4', 'E4']} focusable={true} />,
+    )
+    const svg = container.querySelector('svg')
+    const ariaLabel = svg?.getAttribute('aria-label')
+    expect(ariaLabel).toBe('Piano keyboard')
+  })
+
+  it('should have description with pressed notes when not interactive', () => {
     render(<Piano pressed={['C4', 'E4']} />)
     expect(screen.getByText(/Pressed keys:/)).toBeTruthy()
+  })
+
+  it('should not have description when interactive', () => {
+    render(<Piano pressed={['C4', 'E4']} focusable={true} />)
+    expect(screen.queryByText(/Pressed keys:/)).toBeNull()
   })
 
   describe('keyboard shortcuts', () => {

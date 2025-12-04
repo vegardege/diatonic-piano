@@ -239,19 +239,32 @@ export function Piano({
     )
   })
 
+  // Determine if the piano is interactive or just a display
+  const isInteractive = focusable || keyboardShortcuts
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       preserveAspectRatio={preserveAspectRatio}
       className="diatonic-piano"
-      role="img"
-      aria-label={`Piano: ${pressedNotes.toString()}`}
+      role={isInteractive ? 'group' : 'img'}
+      aria-label={
+        isInteractive
+          ? 'Piano keyboard'
+          : `Piano with pressed keys: ${pressedNotes.toString() || 'none'}`
+      }
       viewBox={viewBox}
       width={width}
       height={height}
     >
-      <title>Piano</title>
-      <desc>Pressed keys: {pressedNotes.toString()}</desc>
+      {isInteractive ? (
+        <title>Piano keyboard</title>
+      ) : (
+        <>
+          <title>Piano</title>
+          <desc>Pressed keys: {pressedNotes.toString() || 'none'}</desc>
+        </>
+      )}
       {octaveElements}
     </svg>
   )

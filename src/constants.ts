@@ -33,3 +33,31 @@ export const KEY_COLORS = {
     pressed: { fill: '#c04838', stroke: '#4a423c' },
   },
 } as const
+
+/**
+ * QWERTY keyboard to note mapping for keyboard shortcuts.
+ * Q-U plays octave 3, A-J plays octave 4, Z-M plays octave 5.
+ */
+export const KEYBOARD_NOTE_MAP: Record<string, string> = {
+  Q: 'C3',
+  W: 'D3',
+  E: 'E3',
+  R: 'F3',
+  T: 'G3',
+  Y: 'A3',
+  U: 'B3',
+  A: 'C4',
+  S: 'D4',
+  D: 'E4',
+  F: 'F4',
+  G: 'G4',
+  H: 'A4',
+  J: 'B4',
+  Z: 'C5',
+  X: 'D5',
+  C: 'E5',
+  V: 'F5',
+  B: 'G5',
+  N: 'A5',
+  M: 'B5',
+} as const

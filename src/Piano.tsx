@@ -4,8 +4,11 @@ import {
   DIATONIC_KEY_HEIGHT,
   DIATONIC_KEY_WIDTH,
   KEY_STROKE_WIDTH,
+  KEYBOARD_NOTE_MAP,
 } from './constants.js'
-import { Octave } from './Octave.js' /**
+import { Octave } from './Octave.js'
+
+/**
  * Flexible input type for pressed/highlighted keys.
  *
  * Can be provided in three formats:
@@ -70,7 +73,7 @@ export interface PianoProps {
   /**
    * Called when a key is pressed via click, Enter key, or keyboard shortcut.
    * @param note - The note string (e.g., 'C4')
-   * @param event - The originating event (MouseEvent, KeyboardEvent, or FocusEvent)
+   * @param event - The originating event (MouseEvent or KeyboardEvent)
    */
   onPress?: (note: string, event: MouseEvent | KeyboardEvent) => void
 
@@ -141,10 +144,10 @@ export interface PianoProps {
  * @example
  * Displaying a musical scale:
  * ```tsx
- * import { NoteList } from 'kamasi'
+ * import { scale } from 'kamasi'
  * import '@diatonic/piano/styles.css'
  *
- * <Piano highlighted={new NoteList(['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4'])} />
+ * <Piano highlighted={scale('E minor'))} />
  * ```
  *
  * @example
@@ -169,61 +172,39 @@ export function Piano({
   onHighlightStart = () => undefined,
   onHighlightEnd = () => undefined,
 }: PianoProps) {
+  // Center around octave number 4
+  const firstOctave = 4 - Math.floor((octaves - 1) / 2)
+  const lastOctave = firstOctave + octaves - 1
+
   // If configured, map keyboard to notes. The shift key will transpose the
   // note up one semitone, allowing you to play black keys.
+  // Only map keys that correspond to visible octaves.
   useEffect(() => {
     if (!keyboardShortcuts) return
 
     function handleKeyDown(e: KeyboardEvent) {
-      const noteMap: Record<string, string> = {
-        Q: 'C3',
-        W: 'D3',
-        E: 'E3',
-        R: 'F3',
-        T: 'G3',
-        Y: 'A3',
-        U: 'B3',
-        A: 'C4',
-        S: 'D4',
-        D: 'E4',
-        F: 'F4',
-        G: 'G4',
-        H: 'A4',
-        J: 'B4',
-        Z: 'C5',
-        X: 'D5',
-        C: 'E5',
-        V: 'F5',
-        B: 'G5',
-        N: 'A5',
-        M: 'B5',
-      }
-      const noteString = noteMap[e.key.toUpperCase()]
+      const noteString = KEYBOARD_NOTE_MAP[e.key.toUpperCase()]
       if (noteString !== undefined) {
         const note = Note.fromString(noteString)
-        onPress(
-          e.shiftKey
-            ? note.transpose('m2').simplify().toString()
-            : note.toString(),
-          e,
-        )
+        if (note.octave >= firstOctave && note.octave <= lastOctave) {
+          onPress(
+            e.shiftKey
+              ? note.transpose('m2').simplify().toString()
+              : note.toString(),
+            e,
+          )
+        }
       }
     }
-
     document.addEventListener('keydown', handleKeyDown)
-
     return () => {
       document.removeEventListener('keydown', handleKeyDown)
     }
-  }, [keyboardShortcuts, onPress])
-
-  // Center around octave number 4
-  const octaveCount = octaves
-  const firstOctave = 4 - Math.floor((octaveCount - 1) / 2)
+  }, [keyboardShortcuts, onPress, firstOctave, lastOctave])
 
   // The SVG element fills its container unless otherwise specified
   // ViewBox must add the stroke width to prevent clipping on edges
-  const viewBoxWidth = 7 * octaveCount * DIATONIC_KEY_WIDTH
+  const viewBoxWidth = 7 * octaves * DIATONIC_KEY_WIDTH
   const viewBoxHeight = DIATONIC_KEY_HEIGHT
   const viewBox = `0 0 ${viewBoxWidth + KEY_STROKE_WIDTH}
                        ${viewBoxHeight + KEY_STROKE_WIDTH}`
@@ -232,7 +213,7 @@ export function Piano({
   const pressedNotes = ensureNoteList(pressed)
   const highlightedNotes = ensureNoteList(highlighted)
 
-  const octaveElements = [...Array(octaveCount).keys()].map(octaveNum => {
+  const octaveElements = [...Array(octaves).keys()].map(octaveNum => {
     return (
       <g
         key={octaveNum}
@@ -254,26 +235,10 @@ export function Piano({
   // Determine if the piano is interactive or just a display
   const isInteractive = interactive || keyboardShortcuts
 
-  // When keyboard shortcuts are enabled but keys aren't interactive,
-  // the SVG itself needs to be focusable to receive keyboard events
-  const needsPianoFocus = keyboardShortcuts && !interactive
-
-  // Generate appropriate aria-label based on interaction modes
-  const getAriaLabel = () => {
-    if (!isInteractive) {
-      return `Piano with pressed keys: ${pressedNotes.toString() || 'none'}`
-    }
-    if (interactive && keyboardShortcuts) {
-      return 'Piano keyboard - click keys or use QWERTY to play'
-    }
-    if (interactive) {
-      return 'Piano keyboard'
-    }
-    if (keyboardShortcuts) {
-      return 'Piano keyboard - use QWERTY to play'
-    }
-    return 'Piano keyboard'
-  }
+  // Description for browsers without SVG support
+  const ariaLabel = !pressedNotes.isEmpty()
+    ? `Pressed keys: ${pressedNotes.toString()}`
+    : 'No pressed keys'
 
   return (
     <svg
@@ -281,18 +246,17 @@ export function Piano({
       preserveAspectRatio={preserveAspectRatio}
       className="diatonic-piano"
       role={isInteractive ? 'group' : 'img'}
-      tabIndex={needsPianoFocus ? 0 : undefined}
-      aria-label={getAriaLabel()}
+      aria-label={`Piano - ${ariaLabel}`}
       viewBox={viewBox}
       width={width}
       height={height}
     >
       {isInteractive ? (
-        <title>Piano keyboard</title>
+        <title>Piano</title>
       ) : (
         <>
           <title>Piano</title>
-          <desc>Pressed keys: {pressedNotes.toString() || 'none'}</desc>
+          <desc>{ariaLabel}</desc>
         </>
       )}
       {octaveElements}

@@ -36,20 +36,6 @@ describe('Piano', () => {
     expect(svg?.getAttribute('role')).toBe('group')
   })
 
-  it('should have tabIndex={0} when keyboardShortcuts without interactive', () => {
-    const { container } = render(
-      <Piano keyboardShortcuts={true} interactive={false} />,
-    )
-    const svg = container.querySelector('svg')
-    expect(svg?.tabIndex).toBe(0)
-  })
-
-  it('should not have tabIndex when interactive', () => {
-    const { container } = render(<Piano interactive={true} />)
-    const svg = container.querySelector('svg')
-    expect(svg?.tabIndex).toBe(-1)
-  })
-
   it('should have title element', () => {
     render(<Piano />)
     expect(screen.getByText('Piano')).toBeTruthy()
@@ -185,36 +171,27 @@ describe('Piano', () => {
     expect(cs4?.getAttribute('data-key-type')).toBe('chromatic')
   })
 
-  it('should display aria-label with pressed notes when not interactive', () => {
+  it('should display aria-label with pressed notes', () => {
     const { container } = render(<Piano pressed={['C4', 'E4']} />)
     const svg = container.querySelector('svg')
     const ariaLabel = svg?.getAttribute('aria-label')
-    expect(ariaLabel).toBe('Piano with pressed keys: C4 E4')
+    expect(ariaLabel).toBe('Piano - Pressed keys: C4 E4')
   })
 
-  it('should display static aria-label when interactive', () => {
+  it('should display aria-label when no pressed notes', () => {
+    const { container } = render(<Piano />)
+    const svg = container.querySelector('svg')
+    const ariaLabel = svg?.getAttribute('aria-label')
+    expect(ariaLabel).toBe('Piano - No pressed keys')
+  })
+
+  it('should display aria-label with pressed notes even when interactive', () => {
     const { container } = render(
       <Piano pressed={['C4', 'E4']} interactive={true} />,
     )
     const svg = container.querySelector('svg')
     const ariaLabel = svg?.getAttribute('aria-label')
-    expect(ariaLabel).toBe('Piano keyboard')
-  })
-
-  it('should display keyboard shortcuts aria-label when only keyboardShortcuts enabled', () => {
-    const { container } = render(<Piano keyboardShortcuts={true} />)
-    const svg = container.querySelector('svg')
-    const ariaLabel = svg?.getAttribute('aria-label')
-    expect(ariaLabel).toBe('Piano keyboard - use QWERTY to play')
-  })
-
-  it('should display combined aria-label when both interactive and keyboardShortcuts enabled', () => {
-    const { container } = render(
-      <Piano interactive={true} keyboardShortcuts={true} />,
-    )
-    const svg = container.querySelector('svg')
-    const ariaLabel = svg?.getAttribute('aria-label')
-    expect(ariaLabel).toBe('Piano keyboard - click keys or use QWERTY to play')
+    expect(ariaLabel).toBe('Piano - Pressed keys: C4 E4')
   })
 
   it('should have description with pressed notes when not interactive', () => {

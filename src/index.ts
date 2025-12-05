@@ -43,6 +43,7 @@ export {
   KEY_BORDER_RADIUS,
   KEY_COLORS,
   KEY_STROKE_WIDTH,
+  KEYBOARD_NOTE_MAP,
 } from './constants.js'
 export type { NoteInput, PianoProps } from './Piano.js'
 export { Piano } from './Piano.js'

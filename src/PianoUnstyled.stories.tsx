@@ -115,18 +115,16 @@ export const Interactive: Story = () => {
         <Piano
           pressed={pressed}
           highlighted={highlighted}
-          focusable={true}
-          onClick={note => {
+          interactive={true}
+          onPress={note => {
             setPressed(prev =>
               prev.includes(note)
                 ? prev.filter(n => n !== note)
                 : [...prev, note],
             )
           }}
-          onPointerEnter={note => setHighlighted([note])}
-          onPointerLeave={() => setHighlighted([])}
-          onFocus={note => setHighlighted([note])}
-          onBlur={() => setHighlighted([])}
+          onHighlightStart={note => setHighlighted([note])}
+          onHighlightEnd={() => setHighlighted([])}
         />
       </div>
       <div style={{ fontFamily: 'monospace' }}>
@@ -154,7 +152,7 @@ export const WithKeyboardShortcuts: Story = () => {
           octaves={3}
           pressed={pressed}
           keyboardShortcuts={true}
-          onClick={note => {
+          onPress={note => {
             setPressed(prev =>
               prev.includes(note)
                 ? prev.filter(n => n !== note)
@@ -190,10 +188,10 @@ export const SynchronizedPianos: Story = () => {
           <Piano
             pressed={pressed}
             highlighted={highlighted}
-            focusable={true}
-            onClick={n => setPressed(state => state.toggle(n))}
-            onPointerEnter={n => setHighlighted(new NoteList([n]))}
-            onPointerLeave={() => setHighlighted(new NoteList())}
+            interactive={true}
+            onPress={n => setPressed(state => state.toggle(n))}
+            onHighlightStart={n => setHighlighted(new NoteList([n]))}
+            onHighlightEnd={() => setHighlighted(new NoteList())}
           />
         </div>
       </div>

@@ -10,12 +10,10 @@ export const DefaultOctave: Story = () => (
       octaveNum={4}
       pressed={new NoteList()}
       highlighted={new NoteList()}
-      focusable={false}
-      onClick={note => console.log('Clicked:', note)}
-      onPointerEnter={() => {}}
-      onPointerLeave={() => {}}
-      onFocus={() => {}}
-      onBlur={() => {}}
+      interactive={false}
+      onPress={note => console.log('Clicked:', note)}
+      onHighlightStart={() => {}}
+      onHighlightEnd={() => {}}
     />
   </svg>
 )
@@ -26,12 +24,10 @@ export const PressedChord: Story = () => (
       octaveNum={4}
       pressed={new NoteList(['C4', 'E4', 'G4'])}
       highlighted={new NoteList()}
-      focusable={false}
-      onClick={note => console.log('Clicked:', note)}
-      onPointerEnter={() => {}}
-      onPointerLeave={() => {}}
-      onFocus={() => {}}
-      onBlur={() => {}}
+      interactive={false}
+      onPress={note => console.log('Clicked:', note)}
+      onHighlightStart={() => {}}
+      onHighlightEnd={() => {}}
     />
   </svg>
 )
@@ -42,12 +38,10 @@ export const HighlightedScale: Story = () => (
       octaveNum={4}
       pressed={new NoteList()}
       highlighted={new NoteList(['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4'])}
-      focusable={false}
-      onClick={note => console.log('Clicked:', note)}
-      onPointerEnter={() => {}}
-      onPointerLeave={() => {}}
-      onFocus={() => {}}
-      onBlur={() => {}}
+      interactive={false}
+      onPress={note => console.log('Clicked:', note)}
+      onHighlightStart={() => {}}
+      onHighlightEnd={() => {}}
     />
   </svg>
 )
@@ -63,18 +57,16 @@ export const InteractiveOctave: Story = () => {
           octaveNum={4}
           pressed={new NoteList(pressed)}
           highlighted={new NoteList(highlighted)}
-          focusable={false}
-          onClick={note => {
+          interactive={true}
+          onPress={note => {
             setPressed(prev =>
               prev.includes(note)
                 ? prev.filter(n => n !== note)
                 : [...prev, note],
             )
           }}
-          onPointerEnter={note => setHighlighted([note])}
-          onPointerLeave={() => setHighlighted([])}
-          onFocus={() => {}}
-          onBlur={() => {}}
+          onHighlightStart={note => setHighlighted([note])}
+          onHighlightEnd={() => setHighlighted([])}
         />
       </svg>
       <div style={{ marginTop: '20px', fontFamily: 'monospace' }}>
@@ -98,12 +90,10 @@ export const DifferentOctaves: Story = () => (
           octaveNum={3}
           pressed={new NoteList(['C3'])}
           highlighted={new NoteList()}
-          focusable={false}
-          onClick={() => {}}
-          onPointerEnter={() => {}}
-          onPointerLeave={() => {}}
-          onFocus={() => {}}
-          onBlur={() => {}}
+          interactive={false}
+          onPress={() => {}}
+          onHighlightStart={() => {}}
+          onHighlightEnd={() => {}}
         />
       </svg>
     </div>
@@ -114,12 +104,10 @@ export const DifferentOctaves: Story = () => (
           octaveNum={4}
           pressed={new NoteList(['C4'])}
           highlighted={new NoteList()}
-          focusable={false}
-          onClick={() => {}}
-          onPointerEnter={() => {}}
-          onPointerLeave={() => {}}
-          onFocus={() => {}}
-          onBlur={() => {}}
+          interactive={false}
+          onPress={() => {}}
+          onHighlightStart={() => {}}
+          onHighlightEnd={() => {}}
         />
       </svg>
     </div>
@@ -130,12 +118,10 @@ export const DifferentOctaves: Story = () => (
           octaveNum={5}
           pressed={new NoteList(['C5'])}
           highlighted={new NoteList()}
-          focusable={false}
-          onClick={() => {}}
-          onPointerEnter={() => {}}
-          onPointerLeave={() => {}}
-          onFocus={() => {}}
-          onBlur={() => {}}
+          interactive={false}
+          onPress={() => {}}
+          onHighlightStart={() => {}}
+          onHighlightEnd={() => {}}
         />
       </svg>
     </div>

@@ -59,18 +59,16 @@ export const Interactive: Story = () => {
         <Piano
           pressed={pressed}
           highlighted={highlighted}
-          focusable={true}
-          onClick={note => {
+          interactive={true}
+          onPress={note => {
             setPressed(prev =>
               prev.includes(note)
                 ? prev.filter(n => n !== note)
                 : [...prev, note],
             )
           }}
-          onPointerEnter={note => setHighlighted([note])}
-          onPointerLeave={() => setHighlighted([])}
-          onFocus={note => setHighlighted([note])}
-          onBlur={() => setHighlighted([])}
+          onHighlightStart={note => setHighlighted([note])}
+          onHighlightEnd={() => setHighlighted([])}
         />
       </div>
       <div style={{ fontFamily: 'monospace' }}>

@@ -24,8 +24,8 @@ describe('Piano', () => {
     expect(svg?.getAttribute('role')).toBe('img')
   })
 
-  it('should have role="group" when focusable', () => {
-    const { container } = render(<Piano focusable={true} />)
+  it('should have role="group" when interactive', () => {
+    const { container } = render(<Piano interactive={true} />)
     const svg = container.querySelector('svg')
     expect(svg?.getAttribute('role')).toBe('group')
   })
@@ -34,6 +34,20 @@ describe('Piano', () => {
     const { container } = render(<Piano keyboardShortcuts={true} />)
     const svg = container.querySelector('svg')
     expect(svg?.getAttribute('role')).toBe('group')
+  })
+
+  it('should have tabIndex={0} when keyboardShortcuts without interactive', () => {
+    const { container } = render(
+      <Piano keyboardShortcuts={true} interactive={false} />,
+    )
+    const svg = container.querySelector('svg')
+    expect(svg?.tabIndex).toBe(0)
+  })
+
+  it('should not have tabIndex when interactive', () => {
+    const { container } = render(<Piano interactive={true} />)
+    const svg = container.querySelector('svg')
+    expect(svg?.tabIndex).toBe(-1)
   })
 
   it('should have title element', () => {
@@ -113,40 +127,46 @@ describe('Piano', () => {
     expect(f4?.getAttribute('data-highlighted')).toBe('true')
   })
 
-  it('should call onClick when a key is clicked', async () => {
+  it('should call onPress when a key is clicked', async () => {
     const user = userEvent.setup()
-    const onClick = vi.fn()
-    const { container } = render(<Piano onClick={onClick} />)
+    const onPress = vi.fn()
+    const { container } = render(<Piano interactive={true} onPress={onPress} />)
     const c4 = container.querySelector('.diatonic-piano-key-C4')
 
     if (c4) {
       await user.click(c4)
-      expect(onClick).toHaveBeenCalledWith('C4')
+      expect(onPress).toHaveBeenCalledTimes(1)
+      expect(onPress.mock.calls[0]![0]).toBe('C4')
+      expect(onPress.mock.calls[0]![1]).toBeInstanceOf(MouseEvent)
     }
   })
 
-  it('should call onPointerEnter when hovering a key', async () => {
+  it('should call onHighlightStart when hovering a key', async () => {
     const user = userEvent.setup()
-    const onPointerEnter = vi.fn()
-    const { container } = render(<Piano onPointerEnter={onPointerEnter} />)
+    const onHighlightStart = vi.fn()
+    const { container } = render(
+      <Piano interactive={true} onHighlightStart={onHighlightStart} />,
+    )
     const c4 = container.querySelector('.diatonic-piano-key-C4')
 
     if (c4) {
       await user.hover(c4)
-      expect(onPointerEnter).toHaveBeenCalledWith('C4')
+      expect(onHighlightStart).toHaveBeenCalledTimes(1)
+      expect(onHighlightStart.mock.calls[0]![0]).toBe('C4')
+      expect(onHighlightStart.mock.calls[0]![1]).toBeInstanceOf(PointerEvent)
     }
   })
 
-  it('should make keys focusable when focusable prop is true', () => {
-    const { container } = render(<Piano focusable={true} />)
+  it('should make keys focusable when interactive prop is true', () => {
+    const { container } = render(<Piano interactive={true} />)
     const keys = container.querySelectorAll('path')
     keys.forEach(key => {
       expect(key.tabIndex).toBeGreaterThan(0)
     })
   })
 
-  it('should make keys non-focusable when focusable prop is false', () => {
-    const { container } = render(<Piano focusable={false} />)
+  it('should make keys non-focusable when interactive prop is false', () => {
+    const { container } = render(<Piano interactive={false} />)
     const keys = container.querySelectorAll('path')
     keys.forEach(key => {
       expect(key.tabIndex).toBe(-1)
@@ -174,11 +194,27 @@ describe('Piano', () => {
 
   it('should display static aria-label when interactive', () => {
     const { container } = render(
-      <Piano pressed={['C4', 'E4']} focusable={true} />,
+      <Piano pressed={['C4', 'E4']} interactive={true} />,
     )
     const svg = container.querySelector('svg')
     const ariaLabel = svg?.getAttribute('aria-label')
     expect(ariaLabel).toBe('Piano keyboard')
+  })
+
+  it('should display keyboard shortcuts aria-label when only keyboardShortcuts enabled', () => {
+    const { container } = render(<Piano keyboardShortcuts={true} />)
+    const svg = container.querySelector('svg')
+    const ariaLabel = svg?.getAttribute('aria-label')
+    expect(ariaLabel).toBe('Piano keyboard - use QWERTY to play')
+  })
+
+  it('should display combined aria-label when both interactive and keyboardShortcuts enabled', () => {
+    const { container } = render(
+      <Piano interactive={true} keyboardShortcuts={true} />,
+    )
+    const svg = container.querySelector('svg')
+    const ariaLabel = svg?.getAttribute('aria-label')
+    expect(ariaLabel).toBe('Piano keyboard - click keys or use QWERTY to play')
   })
 
   it('should have description with pressed notes when not interactive', () => {
@@ -187,14 +223,14 @@ describe('Piano', () => {
   })
 
   it('should not have description when interactive', () => {
-    render(<Piano pressed={['C4', 'E4']} focusable={true} />)
+    render(<Piano pressed={['C4', 'E4']} interactive={true} />)
     expect(screen.queryByText(/Pressed keys:/)).toBeNull()
   })
 
   describe('keyboard shortcuts', () => {
-    it('should call onClick when keyboard shortcut is pressed', () => {
-      const onClick = vi.fn()
-      render(<Piano keyboardShortcuts={true} onClick={onClick} />)
+    it('should call onPress when keyboard shortcut is pressed', () => {
+      const onPress = vi.fn()
+      render(<Piano keyboardShortcuts={true} onPress={onPress} />)
 
       // Simulate keydown event for 'A' key
       const event = new KeyboardEvent('keydown', {
@@ -202,12 +238,14 @@ describe('Piano', () => {
       })
       document.dispatchEvent(event)
 
-      expect(onClick).toHaveBeenCalledWith('C4')
+      expect(onPress).toHaveBeenCalledTimes(1)
+      expect(onPress.mock.calls[0]![0]).toBe('C4')
+      expect(onPress.mock.calls[0]![1]).toBeInstanceOf(KeyboardEvent)
     })
 
     it('should transpose note when shift is pressed', () => {
-      const onClick = vi.fn()
-      render(<Piano keyboardShortcuts={true} onClick={onClick} />)
+      const onPress = vi.fn()
+      render(<Piano keyboardShortcuts={true} onPress={onPress} />)
 
       // Simulate keydown event with shift key
       const event = new KeyboardEvent('keydown', {
@@ -216,19 +254,21 @@ describe('Piano', () => {
       })
       document.dispatchEvent(event)
 
-      expect(onClick).toHaveBeenCalledWith('C#4')
+      expect(onPress).toHaveBeenCalledTimes(1)
+      expect(onPress.mock.calls[0]![0]).toBe('C#4')
+      expect(onPress.mock.calls[0]![1]).toBeInstanceOf(KeyboardEvent)
     })
 
     it('should not respond to keyboard when keyboardShortcuts is false', () => {
-      const onClick = vi.fn()
-      render(<Piano keyboardShortcuts={false} onClick={onClick} />)
+      const onPress = vi.fn()
+      render(<Piano keyboardShortcuts={false} onPress={onPress} />)
 
       const event = new KeyboardEvent('keydown', {
         key: 'A',
       })
       document.dispatchEvent(event)
 
-      expect(onClick).not.toHaveBeenCalled()
+      expect(onPress).not.toHaveBeenCalled()
     })
   })
 

@@ -13,12 +13,10 @@ export interface OctaveProps {
   octaveNum: number
   pressed: NoteList
   highlighted: NoteList
-  focusable: boolean
-  onClick: (note: string) => void
-  onPointerEnter: (note: string) => void
-  onPointerLeave: (note: string) => void
-  onFocus: (note: string) => void
-  onBlur: (note: string) => void
+  interactive: boolean
+  onPress: (note: string, event: MouseEvent | KeyboardEvent) => void
+  onHighlightStart: (note: string, event: PointerEvent | FocusEvent) => void
+  onHighlightEnd: (note: string, event: PointerEvent | FocusEvent) => void
 }
 
 /**
@@ -76,14 +74,12 @@ export function Octave(props: OctaveProps) {
       >
         <Key
           note={pitch}
-          focusable={props.focusable}
+          interactive={props.interactive}
           isPressed={isPressed(pitch, pitchClass)}
           isHighlighted={isHighlighted(pitch, pitchClass)}
-          onClick={props.onClick}
-          onPointerEnter={props.onPointerEnter}
-          onPointerLeave={props.onPointerLeave}
-          onFocus={props.onFocus}
-          onBlur={props.onBlur}
+          onPress={props.onPress}
+          onHighlightStart={props.onHighlightStart}
+          onHighlightEnd={props.onHighlightEnd}
         />
       </g>
     )

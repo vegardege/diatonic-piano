@@ -1,4 +1,5 @@
 import type { Note } from 'kamasi'
+import type React from 'react'
 import {
   CHROMATIC_KEY_HEIGHT,
   CHROMATIC_KEY_WIDTH,
@@ -16,12 +17,10 @@ export interface KeyProps {
   note: Note
   isPressed: boolean
   isHighlighted: boolean
-  focusable: boolean
-  onClick: (note: string) => void
-  onPointerEnter: (note: string) => void
-  onPointerLeave: (note: string) => void
-  onFocus: (note: string) => void
-  onBlur: (note: string) => void
+  interactive: boolean
+  onPress: (note: string, event: MouseEvent | KeyboardEvent) => void
+  onHighlightStart: (note: string, event: PointerEvent | FocusEvent) => void
+  onHighlightEnd: (note: string, event: PointerEvent | FocusEvent) => void
 }
 
 /**
@@ -47,7 +46,7 @@ export function Key(props: KeyProps) {
   // Calculate tab index for left-to-right navigation across octaves
   // Add offset of 24 (2 octaves) to handle negative octave numbers gracefully
   const pitchClass = props.note.toPitchClass().toString()
-  const calculatedTabIndex = props.focusable
+  const calculatedTabIndex = props.interactive
     ? (props.note.octave + 2) * 12 + props.note.chromaticOffset
     : -1
 
@@ -61,11 +60,39 @@ export function Key(props: KeyProps) {
       ? 'highlighted'
       : 'default'
   const colors = KEY_COLORS[keyType][state]
-  const cursor = props.focusable ? 'pointer' : 'auto'
+  const cursor = props.interactive ? 'pointer' : 'auto'
+
+  // Event handlers that pass both note and event
+  const handleClick = (e: React.MouseEvent<SVGPathElement>) => {
+    props.onPress(props.note.toString(), e.nativeEvent)
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent<SVGPathElement>) => {
+    if (e.key === 'Enter') {
+      props.onPress(props.note.toString(), e.nativeEvent)
+    }
+  }
+
+  const handlePointerEnter = (e: React.PointerEvent<SVGPathElement>) => {
+    props.onHighlightStart(props.note.toString(), e.nativeEvent)
+  }
+
+  const handlePointerLeave = (e: React.PointerEvent<SVGPathElement>) => {
+    props.onHighlightEnd(props.note.toString(), e.nativeEvent)
+  }
+
+  const handleFocus = (e: React.FocusEvent<SVGPathElement>) => {
+    props.onHighlightStart(props.note.toString(), e.nativeEvent)
+  }
+
+  const handleBlur = (e: React.FocusEvent<SVGPathElement>) => {
+    props.onHighlightEnd(props.note.toString(), e.nativeEvent)
+  }
 
   return (
+    // biome-ignore lint/a11y/noStaticElementInteractions: Role is conditionally set to 'button' when interactive
     <path
-      role="button"
+      role={props.interactive ? 'button' : 'presentation'}
       className={`diatonic-piano-key
                   diatonic-piano-key-${props.note.toString().replace('#', 's')}
                   diatonic-piano-key-${pitchClass.replace('#', 's')}`}
@@ -84,20 +111,12 @@ export function Key(props: KeyProps) {
       strokeWidth={KEY_STROKE_WIDTH}
       style={{ outline: 'none', cursor: cursor }}
       tabIndex={calculatedTabIndex}
-      onKeyDown={
-        props.focusable
-          ? e => {
-              e.key === 'Enter'
-                ? props.onClick(props.note.toString())
-                : undefined
-            }
-          : undefined
-      }
-      onClick={() => props.onClick(props.note.toString())}
-      onPointerEnter={() => props.onPointerEnter(props.note.toString())}
-      onPointerLeave={() => props.onPointerLeave(props.note.toString())}
-      onFocus={() => props.onFocus(props.note.toString())}
-      onBlur={() => props.onBlur(props.note.toString())}
+      onKeyDown={props.interactive ? handleKeyDown : undefined}
+      onClick={props.interactive ? handleClick : undefined}
+      onPointerEnter={props.interactive ? handlePointerEnter : undefined}
+      onPointerLeave={props.interactive ? handlePointerLeave : undefined}
+      onFocus={props.interactive ? handleFocus : undefined}
+      onBlur={props.interactive ? handleBlur : undefined}
     />
   )
 }

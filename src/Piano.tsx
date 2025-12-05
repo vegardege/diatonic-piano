@@ -52,26 +52,41 @@ export interface PianoProps {
   /** Keys to render as highlighted. @defaultValue `[]` */
   highlighted?: NoteInput
 
-  /** Enable keyboard shortcuts (Q-U, A-J, Z-M). @defaultValue `false` */
+  /**
+   * Enable direct key interaction via mouse/touch and keyboard focus.
+   * When true, keys are focusable (Tab navigation) and clickable.
+   * @defaultValue `false`
+   */
+  interactive?: boolean
+
+  /**
+   * Enable QWERTY keyboard shortcuts for playing notes (Q-U, A-J, Z-M).
+   * Works independently of `interactive` - you can have keyboard shortcuts
+   * without making individual keys interactive.
+   * @defaultValue `false`
+   */
   keyboardShortcuts?: boolean
 
-  /** Enable keyboard navigation via Tab and Enter. @defaultValue `false` */
-  focusable?: boolean
+  /**
+   * Called when a key is pressed via click, Enter key, or keyboard shortcut.
+   * @param note - The note string (e.g., 'C4')
+   * @param event - The originating event (MouseEvent, KeyboardEvent, or FocusEvent)
+   */
+  onPress?: (note: string, event: MouseEvent | KeyboardEvent) => void
 
-  /** Called when a key is clicked. Receives note string (e.g., 'C4'). */
-  onClick?: (note: string) => void
+  /**
+   * Called when a key is highlighted via pointer enter or focus.
+   * @param note - The note string (e.g., 'C4')
+   * @param event - The originating event (PointerEvent or FocusEvent)
+   */
+  onHighlightStart?: (note: string, event: PointerEvent | FocusEvent) => void
 
-  /** Called when pointer enters a key. Receives note string. Works with mouse, touch, and pen. */
-  onPointerEnter?: (note: string) => void
-
-  /** Called when pointer leaves a key. Receives note string. Works with mouse, touch, and pen. */
-  onPointerLeave?: (note: string) => void
-
-  /** Called when a key receives focus (when focusable). Receives note string. */
-  onFocus?: (note: string) => void
-
-  /** Called when a key loses focus (when focusable). Receives note string. */
-  onBlur?: (note: string) => void
+  /**
+   * Called when a key highlight ends via pointer leave or blur.
+   * @param note - The note string (e.g., 'C4')
+   * @param event - The originating event (PointerEvent or FocusEvent)
+   */
+  onHighlightEnd?: (note: string, event: PointerEvent | FocusEvent) => void
 }
 
 /**
@@ -148,13 +163,11 @@ export function Piano({
   octaves = 2,
   pressed = [],
   highlighted = [],
+  interactive = false,
   keyboardShortcuts = false,
-  focusable = false,
-  onClick = () => undefined,
-  onPointerEnter = () => undefined,
-  onPointerLeave = () => undefined,
-  onFocus = () => undefined,
-  onBlur = () => undefined,
+  onPress = () => undefined,
+  onHighlightStart = () => undefined,
+  onHighlightEnd = () => undefined,
 }: PianoProps) {
   // If configured, map keyboard to notes. The shift key will transpose the
   // note up one semitone, allowing you to play black keys.
@@ -188,10 +201,11 @@ export function Piano({
       const noteString = noteMap[e.key.toUpperCase()]
       if (noteString !== undefined) {
         const note = Note.fromString(noteString)
-        onClick(
+        onPress(
           e.shiftKey
             ? note.transpose('m2').simplify().toString()
             : note.toString(),
+          e,
         )
       }
     }
@@ -201,7 +215,7 @@ export function Piano({
     return () => {
       document.removeEventListener('keydown', handleKeyDown)
     }
-  }, [keyboardShortcuts, onClick])
+  }, [keyboardShortcuts, onPress])
 
   // Center around octave number 4
   const octaveCount = octaves
@@ -228,19 +242,38 @@ export function Piano({
           octaveNum={firstOctave + octaveNum}
           pressed={pressedNotes}
           highlighted={highlightedNotes}
-          focusable={focusable}
-          onClick={onClick}
-          onPointerEnter={onPointerEnter}
-          onPointerLeave={onPointerLeave}
-          onFocus={onFocus}
-          onBlur={onBlur}
+          interactive={interactive}
+          onPress={onPress}
+          onHighlightStart={onHighlightStart}
+          onHighlightEnd={onHighlightEnd}
         />
       </g>
     )
   })
 
   // Determine if the piano is interactive or just a display
-  const isInteractive = focusable || keyboardShortcuts
+  const isInteractive = interactive || keyboardShortcuts
+
+  // When keyboard shortcuts are enabled but keys aren't interactive,
+  // the SVG itself needs to be focusable to receive keyboard events
+  const needsPianoFocus = keyboardShortcuts && !interactive
+
+  // Generate appropriate aria-label based on interaction modes
+  const getAriaLabel = () => {
+    if (!isInteractive) {
+      return `Piano with pressed keys: ${pressedNotes.toString() || 'none'}`
+    }
+    if (interactive && keyboardShortcuts) {
+      return 'Piano keyboard - click keys or use QWERTY to play'
+    }
+    if (interactive) {
+      return 'Piano keyboard'
+    }
+    if (keyboardShortcuts) {
+      return 'Piano keyboard - use QWERTY to play'
+    }
+    return 'Piano keyboard'
+  }
 
   return (
     <svg
@@ -248,11 +281,8 @@ export function Piano({
       preserveAspectRatio={preserveAspectRatio}
       className="diatonic-piano"
       role={isInteractive ? 'group' : 'img'}
-      aria-label={
-        isInteractive
-          ? 'Piano keyboard'
-          : `Piano with pressed keys: ${pressedNotes.toString() || 'none'}`
-      }
+      tabIndex={needsPianoFocus ? 0 : undefined}
+      aria-label={getAriaLabel()}
       viewBox={viewBox}
       width={width}
       height={height}

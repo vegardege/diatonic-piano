@@ -9,12 +9,10 @@ describe('Key', () => {
     note: new Note('C', '').toPitch(4),
     isPressed: false,
     isHighlighted: false,
-    focusable: false,
-    onClick: vi.fn(),
-    onPointerEnter: vi.fn(),
-    onPointerLeave: vi.fn(),
-    onFocus: vi.fn(),
-    onBlur: vi.fn(),
+    interactive: false,
+    onPress: vi.fn(),
+    onHighlightStart: vi.fn(),
+    onHighlightEnd: vi.fn(),
   }
 
   it('should render a path element', () => {
@@ -26,10 +24,20 @@ describe('Key', () => {
     expect(container.querySelector('path')).toBeTruthy()
   })
 
-  it('should have role="button"', () => {
+  it('should have role="presentation" when not interactive', () => {
     const { container } = render(
       <svg>
         <Key {...defaultProps} />
+      </svg>,
+    )
+    const path = container.querySelector('path')
+    expect(path?.getAttribute('role')).toBe('presentation')
+  })
+
+  it('should have role="button" when interactive', () => {
+    const { container } = render(
+      <svg>
+        <Key {...defaultProps} interactive={true} />
       </svg>,
     )
     const path = container.querySelector('path')
@@ -111,20 +119,20 @@ describe('Key', () => {
     expect(path?.getAttribute('data-key-type')).toBe('chromatic')
   })
 
-  it('should have tabIndex -1 when not focusable', () => {
+  it('should have tabIndex -1 when not interactive', () => {
     const { container } = render(
       <svg>
-        <Key {...defaultProps} focusable={false} />
+        <Key {...defaultProps} interactive={false} />
       </svg>,
     )
     const path = container.querySelector('path')
     expect(path?.tabIndex).toBe(-1)
   })
 
-  it('should have positive tabIndex when focusable', () => {
+  it('should have positive tabIndex when interactive', () => {
     const { container } = render(
       <svg>
-        <Key {...defaultProps} focusable={true} />
+        <Key {...defaultProps} interactive={true} />
       </svg>,
     )
     const path = container.querySelector('path')
@@ -132,80 +140,119 @@ describe('Key', () => {
     expect(path?.tabIndex).toBeGreaterThan(0)
   })
 
-  it('should call onClick when clicked', async () => {
+  it('should call onPress when clicked', async () => {
     const user = userEvent.setup()
-    const onClick = vi.fn()
+    const onPress = vi.fn()
     const { container } = render(
       <svg>
-        <Key {...defaultProps} onClick={onClick} />
+        <Key {...defaultProps} interactive={true} onPress={onPress} />
       </svg>,
     )
     const path = container.querySelector('path')
     if (path) {
       await user.click(path)
-      expect(onClick).toHaveBeenCalledWith('C4')
+      expect(onPress).toHaveBeenCalledTimes(1)
+      expect(onPress.mock.calls[0]![0]).toBe('C4')
+      expect(onPress.mock.calls[0]![1]).toBeInstanceOf(MouseEvent)
     }
   })
 
-  it('should call onPointerEnter when pointer enters', async () => {
+  it('should call onHighlightStart when pointer enters', async () => {
     const user = userEvent.setup()
-    const onPointerEnter = vi.fn()
+    const onHighlightStart = vi.fn()
     const { container } = render(
       <svg>
-        <Key {...defaultProps} onPointerEnter={onPointerEnter} />
+        <Key
+          {...defaultProps}
+          interactive={true}
+          onHighlightStart={onHighlightStart}
+        />
       </svg>,
     )
     const path = container.querySelector('path')
     if (path) {
       await user.hover(path)
-      expect(onPointerEnter).toHaveBeenCalledWith('C4')
+      expect(onHighlightStart).toHaveBeenCalledTimes(1)
+      expect(onHighlightStart.mock.calls[0]![0]).toBe('C4')
+      expect(onHighlightStart.mock.calls[0]![1]).toBeInstanceOf(PointerEvent)
     }
   })
 
-  it('should call onFocus when focused', async () => {
+  it('should call onHighlightStart when focused', async () => {
     const user = userEvent.setup()
-    const onFocus = vi.fn()
+    const onHighlightStart = vi.fn()
     const { container } = render(
       <svg>
-        <Key {...defaultProps} focusable={true} onFocus={onFocus} />
+        <Key
+          {...defaultProps}
+          interactive={true}
+          onHighlightStart={onHighlightStart}
+        />
       </svg>,
     )
     const path = container.querySelector('path')
     if (path) {
       await user.tab()
-      expect(onFocus).toHaveBeenCalledWith('C4')
+      expect(onHighlightStart).toHaveBeenCalledTimes(1)
+      expect(onHighlightStart.mock.calls[0]![0]).toBe('C4')
+      expect(onHighlightStart.mock.calls[0]![1]).toBeInstanceOf(FocusEvent)
     }
   })
 
-  it('should call onClick when Enter is pressed and focusable', async () => {
+  it('should call onPress when Enter is pressed and interactive', async () => {
     const user = userEvent.setup()
-    const onClick = vi.fn()
+    const onPress = vi.fn()
     const { container } = render(
       <svg>
-        <Key {...defaultProps} focusable={true} onClick={onClick} />
+        <Key {...defaultProps} interactive={true} onPress={onPress} />
       </svg>,
     )
     const path = container.querySelector('path')
     if (path) {
       path.focus()
       await user.keyboard('{Enter}')
-      expect(onClick).toHaveBeenCalledWith('C4')
+      expect(onPress).toHaveBeenCalledTimes(1)
+      expect(onPress.mock.calls[0]![0]).toBe('C4')
+      expect(onPress.mock.calls[0]![1]).toBeInstanceOf(KeyboardEvent)
     }
   })
 
-  it('should not call onClick when other keys are pressed', async () => {
+  it('should not call onPress when other keys are pressed', async () => {
     const user = userEvent.setup()
-    const onClick = vi.fn()
+    const onPress = vi.fn()
     const { container } = render(
       <svg>
-        <Key {...defaultProps} focusable={true} onClick={onClick} />
+        <Key {...defaultProps} interactive={true} onPress={onPress} />
       </svg>,
     )
     const path = container.querySelector('path')
     if (path) {
       path.focus()
       await user.keyboard('a')
-      expect(onClick).not.toHaveBeenCalled()
+      expect(onPress).not.toHaveBeenCalled()
+    }
+  })
+
+  it('should not call handlers when not interactive', async () => {
+    const user = userEvent.setup()
+    const onPress = vi.fn()
+    const onHighlightStart = vi.fn()
+    const { container } = render(
+      <svg>
+        <Key
+          {...defaultProps}
+          interactive={false}
+          onPress={onPress}
+          onHighlightStart={onHighlightStart}
+        />
+      </svg>,
+    )
+    const path = container.querySelector('path')
+    if (path) {
+      await user.click(path)
+      await user.hover(path)
+      expect(onPress).not.toHaveBeenCalled()
+      expect(onHighlightStart).not.toHaveBeenCalled()
     }
   })
 })

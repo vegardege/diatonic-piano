@@ -8,12 +8,10 @@ describe('Octave', () => {
     octaveNum: 4,
     pressed: new NoteList(),
     highlighted: new NoteList(),
-    focusable: false,
-    onClick: vi.fn(),
-    onPointerEnter: vi.fn(),
-    onPointerLeave: vi.fn(),
-    onFocus: vi.fn(),
-    onBlur: vi.fn(),
+    interactive: false,
+    onPress: vi.fn(),
+    onHighlightStart: vi.fn(),
+    onHighlightEnd: vi.fn(),
   }
 
   it('should render a g element with correct class name', () => {

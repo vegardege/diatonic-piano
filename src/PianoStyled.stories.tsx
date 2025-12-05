@@ -67,8 +67,8 @@ export const Interactive: Story = () => {
                 : [...prev, note],
             )
           }}
-          onMouseEnter={note => setHighlighted([note])}
-          onMouseLeave={() => setHighlighted([])}
+          onPointerEnter={note => setHighlighted([note])}
+          onPointerLeave={() => setHighlighted([])}
           onFocus={note => setHighlighted([note])}
           onBlur={() => setHighlighted([])}
         />

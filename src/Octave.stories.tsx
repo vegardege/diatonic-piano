@@ -12,8 +12,8 @@ export const DefaultOctave: Story = () => (
       highlighted={new NoteList()}
       focusable={false}
       onClick={note => console.log('Clicked:', note)}
-      onMouseEnter={() => {}}
-      onMouseLeave={() => {}}
+      onPointerEnter={() => {}}
+      onPointerLeave={() => {}}
       onFocus={() => {}}
       onBlur={() => {}}
     />
@@ -28,8 +28,8 @@ export const PressedChord: Story = () => (
       highlighted={new NoteList()}
       focusable={false}
       onClick={note => console.log('Clicked:', note)}
-      onMouseEnter={() => {}}
-      onMouseLeave={() => {}}
+      onPointerEnter={() => {}}
+      onPointerLeave={() => {}}
       onFocus={() => {}}
       onBlur={() => {}}
     />
@@ -44,8 +44,8 @@ export const HighlightedScale: Story = () => (
       highlighted={new NoteList(['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4'])}
       focusable={false}
       onClick={note => console.log('Clicked:', note)}
-      onMouseEnter={() => {}}
-      onMouseLeave={() => {}}
+      onPointerEnter={() => {}}
+      onPointerLeave={() => {}}
       onFocus={() => {}}
       onBlur={() => {}}
     />
@@ -71,8 +71,8 @@ export const InteractiveOctave: Story = () => {
                 : [...prev, note],
             )
           }}
-          onMouseEnter={note => setHighlighted([note])}
-          onMouseLeave={() => setHighlighted([])}
+          onPointerEnter={note => setHighlighted([note])}
+          onPointerLeave={() => setHighlighted([])}
           onFocus={() => {}}
           onBlur={() => {}}
         />
@@ -100,8 +100,8 @@ export const DifferentOctaves: Story = () => (
           highlighted={new NoteList()}
           focusable={false}
           onClick={() => {}}
-          onMouseEnter={() => {}}
-          onMouseLeave={() => {}}
+          onPointerEnter={() => {}}
+          onPointerLeave={() => {}}
           onFocus={() => {}}
           onBlur={() => {}}
         />
@@ -116,8 +116,8 @@ export const DifferentOctaves: Story = () => (
           highlighted={new NoteList()}
           focusable={false}
           onClick={() => {}}
-          onMouseEnter={() => {}}
-          onMouseLeave={() => {}}
+          onPointerEnter={() => {}}
+          onPointerLeave={() => {}}
           onFocus={() => {}}
           onBlur={() => {}}
         />
@@ -132,8 +132,8 @@ export const DifferentOctaves: Story = () => (
           highlighted={new NoteList()}
           focusable={false}
           onClick={() => {}}
-          onMouseEnter={() => {}}
-          onMouseLeave={() => {}}
+          onPointerEnter={() => {}}
+          onPointerLeave={() => {}}
           onFocus={() => {}}
           onBlur={() => {}}
         />

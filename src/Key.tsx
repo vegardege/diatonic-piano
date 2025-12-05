@@ -18,8 +18,8 @@ export interface KeyProps {
   isHighlighted: boolean
   focusable: boolean
   onClick: (note: string) => void
-  onMouseEnter: (note: string) => void
-  onMouseLeave: (note: string) => void
+  onPointerEnter: (note: string) => void
+  onPointerLeave: (note: string) => void
   onFocus: (note: string) => void
   onBlur: (note: string) => void
 }
@@ -94,8 +94,8 @@ export function Key(props: KeyProps) {
           : undefined
       }
       onClick={() => props.onClick(props.note.toString())}
-      onMouseEnter={() => props.onMouseEnter(props.note.toString())}
-      onMouseLeave={() => props.onMouseLeave(props.note.toString())}
+      onPointerEnter={() => props.onPointerEnter(props.note.toString())}
+      onPointerLeave={() => props.onPointerLeave(props.note.toString())}
       onFocus={() => props.onFocus(props.note.toString())}
       onBlur={() => props.onBlur(props.note.toString())}
     />

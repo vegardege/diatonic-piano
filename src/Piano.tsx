@@ -61,11 +61,11 @@ export interface PianoProps {
   /** Called when a key is clicked. Receives note string (e.g., 'C4'). */
   onClick?: (note: string) => void
 
-  /** Called when mouse enters a key. Receives note string. */
-  onMouseEnter?: (note: string) => void
+  /** Called when pointer enters a key. Receives note string. Works with mouse, touch, and pen. */
+  onPointerEnter?: (note: string) => void
 
-  /** Called when mouse leaves a key. Receives note string. */
-  onMouseLeave?: (note: string) => void
+  /** Called when pointer leaves a key. Receives note string. Works with mouse, touch, and pen. */
+  onPointerLeave?: (note: string) => void
 
   /** Called when a key receives focus (when focusable). Receives note string. */
   onFocus?: (note: string) => void
@@ -151,8 +151,8 @@ export function Piano({
   keyboardShortcuts = false,
   focusable = false,
   onClick = () => undefined,
-  onMouseEnter = () => undefined,
-  onMouseLeave = () => undefined,
+  onPointerEnter = () => undefined,
+  onPointerLeave = () => undefined,
   onFocus = () => undefined,
   onBlur = () => undefined,
 }: PianoProps) {
@@ -230,8 +230,8 @@ export function Piano({
           highlighted={highlightedNotes}
           focusable={focusable}
           onClick={onClick}
-          onMouseEnter={onMouseEnter}
-          onMouseLeave={onMouseLeave}
+          onPointerEnter={onPointerEnter}
+          onPointerLeave={onPointerLeave}
           onFocus={onFocus}
           onBlur={onBlur}
         />

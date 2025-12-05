@@ -10,8 +10,8 @@ describe('Octave', () => {
     highlighted: new NoteList(),
     focusable: false,
     onClick: vi.fn(),
-    onMouseEnter: vi.fn(),
-    onMouseLeave: vi.fn(),
+    onPointerEnter: vi.fn(),
+    onPointerLeave: vi.fn(),
     onFocus: vi.fn(),
     onBlur: vi.fn(),
   }

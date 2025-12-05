@@ -123,8 +123,8 @@ export const Interactive: Story = () => {
                 : [...prev, note],
             )
           }}
-          onMouseEnter={note => setHighlighted([note])}
-          onMouseLeave={() => setHighlighted([])}
+          onPointerEnter={note => setHighlighted([note])}
+          onPointerLeave={() => setHighlighted([])}
           onFocus={note => setHighlighted([note])}
           onBlur={() => setHighlighted([])}
         />
@@ -192,8 +192,8 @@ export const SynchronizedPianos: Story = () => {
             highlighted={highlighted}
             focusable={true}
             onClick={n => setPressed(state => state.toggle(n))}
-            onMouseEnter={n => setHighlighted(new NoteList([n]))}
-            onMouseLeave={() => setHighlighted(new NoteList())}
+            onPointerEnter={n => setHighlighted(new NoteList([n]))}
+            onPointerLeave={() => setHighlighted(new NoteList())}
           />
         </div>
       </div>

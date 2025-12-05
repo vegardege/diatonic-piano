@@ -11,8 +11,8 @@ describe('Key', () => {
     isHighlighted: false,
     focusable: false,
     onClick: vi.fn(),
-    onMouseEnter: vi.fn(),
-    onMouseLeave: vi.fn(),
+    onPointerEnter: vi.fn(),
+    onPointerLeave: vi.fn(),
     onFocus: vi.fn(),
     onBlur: vi.fn(),
   }
@@ -147,18 +147,18 @@ describe('Key', () => {
     }
   })
 
-  it('should call onMouseEnter when mouse enters', async () => {
+  it('should call onPointerEnter when pointer enters', async () => {
     const user = userEvent.setup()
-    const onMouseEnter = vi.fn()
+    const onPointerEnter = vi.fn()
     const { container } = render(
       <svg>
-        <Key {...defaultProps} onMouseEnter={onMouseEnter} />
+        <Key {...defaultProps} onPointerEnter={onPointerEnter} />
       </svg>,
     )
     const path = container.querySelector('path')
     if (path) {
       await user.hover(path)
-      expect(onMouseEnter).toHaveBeenCalledWith('C4')
+      expect(onPointerEnter).toHaveBeenCalledWith('C4')
     }
   })
 

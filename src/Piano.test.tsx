@@ -125,15 +125,15 @@ describe('Piano', () => {
     }
   })
 
-  it('should call onMouseEnter when hovering a key', async () => {
+  it('should call onPointerEnter when hovering a key', async () => {
     const user = userEvent.setup()
-    const onMouseEnter = vi.fn()
-    const { container } = render(<Piano onMouseEnter={onMouseEnter} />)
+    const onPointerEnter = vi.fn()
+    const { container } = render(<Piano onPointerEnter={onPointerEnter} />)
     const c4 = container.querySelector('.diatonic-piano-key-C4')
 
     if (c4) {
       await user.hover(c4)
-      expect(onMouseEnter).toHaveBeenCalledWith('C4')
+      expect(onPointerEnter).toHaveBeenCalledWith('C4')
     }
   })
 

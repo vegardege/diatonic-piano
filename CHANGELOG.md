@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.4.0] - 2025-12-06
+
+### Breaking Changes
+
+- **Switched to semantic event handlers:**
+  - `onClick` → `onPress`
+  - `onPointerEnter` or `onFocus` → `onHighlightStart`
+  - `onPointerLeave` or `onBlur` → `onHighlightEnd`
+- **Removed `focusable` prop** - Replaced with `interactive` prop, which enables mouse and focus simultaneously
+- **Event handler signatures changed** - All handlers now receive `(note: string, event: Event)` instead of just `(note: string)`
+
+### Changed
+
+- Switched from the black/white default theme to a softer, off-white theme
+- Clearer separation between `interactive` (direct key interaction) and `keyboardShortcuts` (QWERTY playing)
+- Better accessibility:
+  - Proper `role` attributes based on interactivity (`presentation` when not interactive, `button` when interactive)
+  - Simplified `aria-label` always includes pressed keys for screen readers
+  - Keyboard shortcuts work at document level without requiring SVG focus
+
+### Bugfixes
+
+- Pressed keys styling is given presedence over highlighted keys
+- Keyboard shortcuts now only trigger for notes within visible octave range
+
 ## [0.3.1] - 2025-12-02
 
 ### Security

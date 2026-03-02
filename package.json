@@ -70,19 +70,19 @@
     "kamasi": "^0.3.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.3.0",
-    "@ladle/react": "^5.1.0",
+    "@biomejs/biome": "^2.4.5",
+    "@ladle/react": "^5.1.1",
     "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/react": "^16.3.0",
+    "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.2",
-    "@vitest/coverage-v8": "^4.0.3",
-    "@vitest/ui": "^4.0.3",
-    "happy-dom": "^20.0.8",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitest/coverage-v8": "^4.0.18",
+    "@vitest/ui": "^4.0.18",
+    "happy-dom": "^20.7.0",
     "tsup": "^8.5.1",
-    "typedoc": "^0.28.14",
+    "typedoc": "^0.28.17",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.3"
+    "vitest": "^4.0.18"
   }
 }

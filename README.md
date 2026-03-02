@@ -244,7 +244,7 @@ export default App;
 
 ![Interactive pianos](https://raw.githubusercontent.com/vegardege/diatonic-piano/main/assets/diatonic-piano-interactive.gif)
 
-See [kamasi's](https://github.com/vegardege/kamasi) documentation for more manipulation you can do, or check the [Diatonic](https://github.com/vegardege/kamasi) web app for inspiration.
+See [kamasi's](https://github.com/vegardege/kamasi) documentation for more manipulation you can do, or check the [Diatonic](https://github.com/vegardege/diatonic) web app for inspiration.
 
 ### Accessibility
 

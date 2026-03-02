@@ -1,5 +1,5 @@
 import { Note, NoteList } from 'kamasi'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import {
   DIATONIC_KEY_HEIGHT,
   DIATONIC_KEY_WIDTH,
@@ -176,6 +176,11 @@ export function Piano({
   const firstOctave = 4 - Math.floor((octaves - 1) / 2)
   const lastOctave = firstOctave + octaves - 1
 
+  // Keep a ref to the latest onPress so the effect doesn't need to re-run
+  // every time the callback changes (e.g. when the consumer hasn't memoized it)
+  const onPressRef = useRef(onPress)
+  onPressRef.current = onPress
+
   // If configured, map keyboard to notes. The shift key will transpose the
   // note up one semitone, allowing you to play black keys.
   // Only map keys that correspond to visible octaves.
@@ -187,7 +192,7 @@ export function Piano({
       if (noteString !== undefined) {
         const note = Note.fromString(noteString)
         if (note.octave >= firstOctave && note.octave <= lastOctave) {
-          onPress(
+          onPressRef.current(
             e.shiftKey
               ? note.transpose('m2').simplify().toString()
               : note.toString(),
@@ -200,7 +205,7 @@ export function Piano({
     return () => {
       document.removeEventListener('keydown', handleKeyDown)
     }
-  }, [keyboardShortcuts, onPress, firstOctave, lastOctave])
+  }, [keyboardShortcuts, firstOctave, lastOctave])
 
   // The SVG element fills its container unless otherwise specified
   // ViewBox must add the stroke width to prevent clipping on edges

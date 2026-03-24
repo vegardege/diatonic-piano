@@ -15,9 +15,6 @@
   "author": "Vegard Egeland",
   "license": "MIT",
   "type": "module",
-  "engines": {
-    "node": ">=20.0.0"
-  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -37,9 +34,13 @@
   "files": [
     "dist"
   ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "build": "tsup",
     "dev": "ladle serve",
+    "prepublishOnly": "npm run build && npm run test:run && npm run check",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:run": "vitest run",
@@ -51,17 +52,8 @@
     "format": "biome format .",
     "format:fix": "biome format . --write",
     "docs": "typedoc",
-    "docs:watch": "typedoc --watch",
-    "prepublishOnly": "npm run build && npm run test:run && npm run check"
+    "docs:watch": "typedoc --watch"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/vegardege/diatonic-piano.git"
-  },
-  "bugs": {
-    "url": "https://github.com/vegardege/diatonic-piano/issues"
-  },
-  "homepage": "https://github.com/vegardege/diatonic-piano#readme",
   "peerDependencies": {
     "react": "^17.0.0 || ^18.0.0 || ^19.0.0",
     "react-dom": "^17.0.0 || ^18.0.0 || ^19.0.0"
@@ -84,5 +76,13 @@
     "typedoc": "^0.28.17",
     "typescript": "^5.9.3",
     "vitest": "^4.1.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vegardege/diatonic-piano.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vegardege/diatonic-piano/issues"
+  },
+  "homepage": "https://github.com/vegardege/diatonic-piano#readme"
 }

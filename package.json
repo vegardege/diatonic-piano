@@ -62,20 +62,20 @@
     "kamasi": "^0.3.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.10",
+    "@biomejs/biome": "^2.6.4",
     "@ladle/react": "^5.1.1",
-    "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/react": "^16.3.2",
-    "@testing-library/user-event": "^14.6.1",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
-    "@vitest/coverage-v8": "^4.1.3",
-    "@vitest/ui": "^4.1.3",
-    "happy-dom": "^20.8.9",
-    "tsup": "^8.5.1",
-    "typedoc": "^0.28.18",
-    "typescript": "^5.9.3",
-    "vitest": "^4.1.3"
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.8",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitest/coverage-v8": "^5.0.5",
+    "@vitest/ui": "^5.0.5",
+    "happy-dom": "^21.0.4",
+    "tsup": "^9.0.0",
+    "typedoc": "^0.28.20",
+    "typescript": "~6.0",
+    "vitest": "^5.0.5"
   },
   "repository": {
     "type": "git",
@@ -84,5 +84,8 @@
   "bugs": {
     "url": "https://github.com/vegardege/diatonic-piano/issues"
   },
-  "homepage": "https://github.com/vegardege/diatonic-piano#readme"
+  "homepage": "https://github.com/vegardege/diatonic-piano#readme",
+  "overrides": {
+    "minimatch": "^11.0.1"
+  }
 }

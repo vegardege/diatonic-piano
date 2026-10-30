@@ -26,10 +26,10 @@ npm install @diatonic/piano
 Then import the component:
 
 ```jsx
-import { Piano } from "@diatonic/piano";
+import { Piano } from '@diatonic/piano'
 
 function App() {
-  return <Piano />;
+  return <Piano />
 }
 ```
 
@@ -56,15 +56,15 @@ The following props can be set to modify the SVG representation static piano:
 
 Two props can be used to set a key as _pressed_ or _highlighted_. There are no real differences between the two, but it can be used to separate permanently pressed keys from the key currently being hovered, or to mark a chord and a scale at the same time. Highlighted keys are lighter in the default style. The two props are:
 
-| Prop        | Description               | Default |
-| ----------- | ------------------------- | ------- |
-| pressed     | Keys will be pressed      | `[]`    |
-| highlighted | Keys will be highlighted  | `[]`    |
+| Prop        | Description              | Default |
+| ----------- | ------------------------ | ------- |
+| pressed     | Keys will be pressed     | `[]`    |
+| highlighted | Keys will be highlighted | `[]`    |
 
 As an example, you can press _F4_, _A4_, and _C#5_ to highlight an F augmented chord:
 
 ```jsx
-<Piano pressed={["F4", "A4", "C#5"]} />
+<Piano pressed={['F4', 'A4', 'C#5']} />
 ```
 
 ![Pressed keys](https://raw.githubusercontent.com/vegardege/diatonic-piano/main/assets/diatonic-piano-pressed.png)
@@ -72,9 +72,9 @@ As an example, you can press _F4_, _A4_, and _C#5_ to highlight an F augmented c
 Internally, the component uses [kamasi](https://github.com/vegardege/kamasi) to figure out which notes to highlight. The component also accepts kamasi objects as input. So if your cool friends want to improvise over a D minor blues scale, you're just a single line from knowing which keys to use:
 
 ```jsx
-import { scale } from "kamasi";
+import { scale } from 'kamasi'
 
-<Piano highlighted={scale("D blues minor")} />;
+<Piano highlighted={scale('D blues minor')} />
 ```
 
 ![Highlighted scale](https://raw.githubusercontent.com/vegardege/diatonic-piano/main/assets/diatonic-piano-highlighted.png)
@@ -86,7 +86,7 @@ import { scale } from "kamasi";
 The piano includes built-in default colors via SVG presentation attributes, so it works out-of-the-box with sensible default colors:
 
 ```jsx
-import { Piano } from "@diatonic/piano";
+import { Piano } from '@diatonic/piano'
 
 <Piano />
 ```
@@ -96,7 +96,7 @@ import { Piano } from "@diatonic/piano";
 Import the default stylesheet to override variables:
 
 ```jsx
-import "@diatonic/piano/styles.css";
+import '@diatonic/piano/styles.css'
 ```
 
 ```css
@@ -120,21 +120,21 @@ import "@diatonic/piano/styles.css";
 
 **All available CSS variables:**
 
-| Variable                                   | Description                             | Default            |
-| ------------------------------------------ | --------------------------------------- | ------------------ |
-| `--piano-key-diatonic-fill`                | White key default color                 | `#f7f5f0`          |
-| `--piano-key-diatonic-pressed-fill`        | White key pressed color                 | `#e07858`          |
-| `--piano-key-diatonic-highlighted-fill`    | White key highlighted color             | `#eca088`          |
-| `--piano-key-chromatic-fill`               | Black key default color                 | `#4a423c`          |
-| `--piano-key-chromatic-pressed-fill`       | Black key pressed color                 | `#c04838`          |
-| `--piano-key-chromatic-highlighted-fill`   | Black key highlighted color             | `#b86850`          |
-| `--piano-key-diatonic-stroke`              | White key border color                  | `#c0b8b0`          |
-| `--piano-key-diatonic-pressed-stroke`      | White key pressed border                | `#b8624c`          |
-| `--piano-key-diatonic-highlighted-stroke`  | White key highlighted border            | `#b8624c`          |
-| `--piano-key-chromatic-stroke`             | Black key border color                  | `#4a423c`          |
-| `--piano-key-chromatic-pressed-stroke`     | Black key pressed border                | `#4a423c`          |
-| `--piano-key-chromatic-highlighted-stroke` | Black key highlighted border            | `#4a423c`          |
-| `--piano-key-stroke-width`                 | Border width for all keys               | `2`                |
+| Variable                                   | Description                  | Default   |
+| ------------------------------------------ | ---------------------------- | --------- |
+| `--piano-key-diatonic-fill`                | White key default color      | `#f7f5f0` |
+| `--piano-key-diatonic-pressed-fill`        | White key pressed color      | `#e07858` |
+| `--piano-key-diatonic-highlighted-fill`    | White key highlighted color  | `#eca088` |
+| `--piano-key-chromatic-fill`               | Black key default color      | `#4a423c` |
+| `--piano-key-chromatic-pressed-fill`       | Black key pressed color      | `#c04838` |
+| `--piano-key-chromatic-highlighted-fill`   | Black key highlighted color  | `#b86850` |
+| `--piano-key-diatonic-stroke`              | White key border color       | `#c0b8b0` |
+| `--piano-key-diatonic-pressed-stroke`      | White key pressed border     | `#b8624c` |
+| `--piano-key-diatonic-highlighted-stroke`  | White key highlighted border | `#b8624c` |
+| `--piano-key-chromatic-stroke`             | Black key border color       | `#4a423c` |
+| `--piano-key-chromatic-pressed-stroke`     | Black key pressed border     | `#4a423c` |
+| `--piano-key-chromatic-highlighted-stroke` | Black key highlighted border | `#4a423c` |
+| `--piano-key-stroke-width`                 | Border width for all keys    | `2`       |
 
 #### Advanced CSS Targeting
 
@@ -197,9 +197,9 @@ For maximum control, target CSS classes and data attributes directly:
 
 Enable direct interaction with piano keys using the `interactive` prop and event handlers:
 
-| Prop             | Description                                                                      |
-| ---------------- | -------------------------------------------------------------------------------- |
-| interactive      | Enables clicking, hovering, and keyboard navigation of keys                      |
+| Prop             | Description                                                                     |
+| ---------------- | ------------------------------------------------------------------------------- |
+| interactive      | Enables clicking, hovering, and keyboard navigation of keys                     |
 | onPress          | Called with `(note, event)` when a key is clicked or activated with Enter       |
 | onHighlightStart | Called with `(note, event)` when pointer enters a key or the key receives focus |
 | onHighlightEnd   | Called with `(note, event)` when pointer leaves a key or the key loses focus    |
@@ -213,33 +213,33 @@ The component is fully stateless and relies on the parent to update `pressed` an
 Using [React hooks](https://reactjs.org/docs/hooks-intro.html), you only need a few lines of code. The following is the complete `App.js` file showing two pianos where the second mirrors the first, transposed a perfect fifth:
 
 ```jsx
-import { useState } from "react";
-import { Piano } from "@diatonic/piano";
-import { NoteList } from "kamasi";
+import { useState } from 'react'
+import { Piano } from '@diatonic/piano'
+import { NoteList } from 'kamasi'
 
 function App() {
-  const [pressed, setPressed] = useState(new NoteList());
-  const [highlighted, setHighlighted] = useState(new NoteList());
+  const [pressed, setPressed] = useState(new NoteList())
+  const [highlighted, setHighlighted] = useState(new NoteList())
 
   return (
-    <div style={{ width: "300px" }}>
+    <div style={{ width: '300px' }}>
       <Piano
         interactive={true}
         pressed={pressed}
         highlighted={highlighted}
-        onPress={(n) => setPressed((note) => note.toggle(n))}
-        onHighlightStart={(n) => setHighlighted(new NoteList([n]))}
+        onPress={n => setPressed(note => note.toggle(n))}
+        onHighlightStart={n => setHighlighted(new NoteList([n]))}
         onHighlightEnd={() => setHighlighted(new NoteList())}
       />
       <Piano
-        pressed={pressed.transpose("P5")}
-        highlighted={highlighted.transpose("P5")}
+        pressed={pressed.transpose('P5')}
+        highlighted={highlighted.transpose('P5')}
       />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
 ```
 
 ![Interactive pianos](https://raw.githubusercontent.com/vegardege/diatonic-piano/main/assets/diatonic-piano-interactive.gif)
@@ -257,10 +257,10 @@ The aria-label always includes the currently pressed keys for screen reader user
 
 The component offers two complementary modes of keyboard access:
 
-| Prop              | Description                                                    | Default |
-| ----------------- | -------------------------------------------------------------- | ------- |
-| interactive       | Enables keyboard navigation with \<Tab\> and \<Enter\>         | `false` |
-| keyboardShortcuts | Enables QWERTY keyboard shortcuts to play notes                | `false` |
+| Prop              | Description                                            | Default |
+| ----------------- | ------------------------------------------------------ | ------- |
+| interactive       | Enables keyboard navigation with \<Tab\> and \<Enter\> | `false` |
+| keyboardShortcuts | Enables QWERTY keyboard shortcuts to play notes        | `false` |
 
 **Direct key navigation** (`interactive={true}`): Users can traverse through keys in chromatic order (left to right) using Tab, and activate a key with Enter. This works for all visible keys on the piano. The `onPress` event fires whether the key is clicked or activated with Enter, and `onHighlightStart`/`onHighlightEnd` work for both pointer hover and keyboard focus.
 

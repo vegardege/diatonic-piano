@@ -12,9 +12,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
+      # Version is detected from package-lock.json
       - uses: biomejs/setup-biome@v2
-        with:
-          version: "2.6.9"
       - name: Run Biome
         run: biome ci .
 

@@ -86,6 +86,9 @@
   },
   "homepage": "https://github.com/vegardege/diatonic-piano#readme",
   "overrides": {
-    "minimatch": "^11.0.1"
+    "minimatch": "^11.0.1",
+    "tsconfck": {
+      "typescript": "$typescript"
+    }
   }
 }
